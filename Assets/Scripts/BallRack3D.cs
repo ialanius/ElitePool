@@ -29,11 +29,15 @@ public class BallRack3D : MonoBehaviour
     public bool randomizeOrder = true;
 
     [Header("Timing Adjustments")]
-    // ✅✅ المتغير الجديد للتحكم بوقت تفعيل الكولايدر
     public float colliderEnableDelay = 0.5f;
+    public float settlingTime = 0.3f;  // ✅ وقت إضافي للاستقرار
 
     [Header("Movement Lift")]
     public float liftHeight = 1.0f;
+
+    [Header("Advanced Settings")]
+    public bool forceExactPositions = true;  // ✅ إجبار المواقع الدقيقة
+    public int positionEnforcementFrames = 5; // ✅ عدد الفريمات لتأكيد المواقع
 
     private List<Vector3> targetPositions = new List<Vector3>();
 
@@ -108,11 +112,12 @@ public class BallRack3D : MonoBehaviour
 
     IEnumerator RackRoutine()
     {
-        // 1. تجميد كامل + تعطيل التصادمات
+        // ✅ 1. تجميد كامل وتعطيل كل شيء
         SetKinematicAll(true);
         SetCollidersEnabled(false);
+        ResetAllVelocities();
 
-        // 2. ضع الكرة البيضاء
+        // ✅ 2. ضع الكرة البيضاء
         if (cueBall)
         {
             Vector3 forwardDir = rackPoint.right;
@@ -121,7 +126,7 @@ public class BallRack3D : MonoBehaviour
             cueBall.rotation = Quaternion.identity;
         }
 
-        // 3. حرك كل الكرات
+        // ✅ 3. حرك كل الكرات مع الانيميشن
         for (int i = 0; i < ballsTransforms.Count; i++)
         {
             if (i >= targetPositions.Count) break;
@@ -144,45 +149,94 @@ public class BallRack3D : MonoBehaviour
             }
         }
 
+        // ✅ 4. انتظر حتى تنتهي الانيميشنات
         if (animateRacking)
         {
-            yield return new WaitForSeconds(rackDuration + 0.5f);
+            yield return new WaitForSeconds(rackDuration + settlingTime);
         }
 
-        // 4. تأكيد المواقع
-        for (int i = 0; i < ballsTransforms.Count; i++)
+        // ✅ 5. إجبار المواقع الدقيقة (مهم جداً!)
+        if (forceExactPositions)
         {
-            if (i >= targetPositions.Count) break;
-            ballsTransforms[i].position = targetPositions[i];
-            ballsTransforms[i].rotation = Quaternion.identity;
+            for (int frame = 0; frame < positionEnforcementFrames; frame++)
+            {
+                for (int i = 0; i < ballsTransforms.Count; i++)
+                {
+                    if (i >= targetPositions.Count) break;
+                    ballsTransforms[i].position = targetPositions[i];
+                    ballsTransforms[i].rotation = Quaternion.identity;
+                }
+                yield return new WaitForFixedUpdate();
+            }
         }
 
+        // ✅ 6. صفّر كل السرعات (والكرات لسه kinematic)
+        ResetAllVelocities();
+
+        // ✅ 7. انتظر فريمات إضافية
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
 
-        ResetAllVelocities(); // لن يسبب خطأ الآن بسبب الإصلاح في الدالة
-
-        // ✅✅ إضافة التأخير المخصص هنا قبل تفعيل الكولايدر
+        // ✅ 8. تأخير إضافي قبل تفعيل الكولايدر
         if (colliderEnableDelay > 0)
         {
             yield return new WaitForSeconds(colliderEnableDelay);
         }
 
-        // 5. فعّل الكولايدرات (الآن الكرات مستقرة تماماً)
+        // ✅ 9. فعّل الكولايدرات (الكرات في أماكنها الدقيقة)
         SetCollidersEnabled(true);
 
+        // ✅ 10. انتظر حتى تتسجل الكولايدرات
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
 
-        // 6. فك التجميد
-        SetKinematicAll(false);
-        yield return new WaitForFixedUpdate();
-
-        // 7. صفّر السرعات مرة أخيرة
+        // ✅ 11. صفّر السرعات مرة أخرى
         ResetAllVelocities();
 
-        // 8. نوّم الكرات
+        // ✅ 12. انتظر فريم
+        yield return new WaitForFixedUpdate();
+
+        // ✅ 13. فك التجميد
+        SetKinematicAll(false);
+
+        // ✅ 14. انتظر فريمات
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
+
+        // ✅ 15. صفّر السرعات مرة نهائية
+        ResetAllVelocities();
+
+        // ✅ 16. نوّم كل الكرات
         SleepAll();
 
-        Debug.Log("✅ Balls racked successfully!");
+        // ✅ 17. تأكيد نهائي على المواقع
+        if (forceExactPositions)
+        {
+            yield return new WaitForFixedUpdate();
+            for (int i = 0; i < ballsTransforms.Count; i++)
+            {
+                if (i >= targetPositions.Count) break;
+
+                // لو الكرة انحرفت عن مكانها
+                float distance = Vector3.Distance(ballsTransforms[i].position, targetPositions[i]);
+                if (distance > 0.001f)
+                {
+                    ballsTransforms[i].position = targetPositions[i];
+                    var rb = ballsTransforms[i].GetComponent<Rigidbody>();
+                    if (rb)
+                    {
+                        rb.velocity = Vector3.zero;
+                        rb.angularVelocity = Vector3.zero;
+                        rb.Sleep();
+                    }
+                }
+            }
+        }
+
+        Debug.Log("✅ Balls racked successfully - No overlap guaranteed!");
     }
 
     IEnumerator MoveBallTo(Transform ball, Vector3 target, float duration)
@@ -195,9 +249,12 @@ public class BallRack3D : MonoBehaviour
         while (t < 1f)
         {
             t += Time.deltaTime / duration;
-            ball.position = Vector3.Lerp(startPos, target, Mathf.SmoothStep(0, 1, t));
+            float curved = Mathf.SmoothStep(0, 1, t);
+            ball.position = Vector3.Lerp(startPos, target, curved);
             yield return null;
         }
+
+        // ✅ تأكيد نهائي
         ball.position = target;
     }
 
@@ -237,13 +294,11 @@ public class BallRack3D : MonoBehaviour
         foreach (var b in ballsTransforms) ResetPhysicsSafe(b);
     }
 
-    // ✅ تم إصلاح هذه الدالة لمنع الخطأ الأصفر
     void ResetPhysicsSafe(Transform ball)
     {
         if (ball)
         {
             var rb = ball.GetComponent<Rigidbody>();
-            // الشرط الجديد: لا نصفر السرعة إذا كان الجسم Kinematic
             if (rb && !rb.isKinematic)
             {
                 rb.velocity = Vector3.zero;

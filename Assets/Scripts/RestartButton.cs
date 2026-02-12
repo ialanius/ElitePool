@@ -38,6 +38,8 @@ public class RestartButton : MonoBehaviour
         {
             cueStick.Hide();
             cueStick.StopAllCoroutines();
+            // ✅✅ إضافة جديدة: قفل السلايدر فوراً عند بدء الرص
+            cueStick.SetSliderInteractable(false);
         }
 
         if (resetCo != null) { StopCoroutine(resetCo); resetCo = null; }
@@ -123,6 +125,8 @@ public class RestartButton : MonoBehaviour
         if (cueStick)
         {
             cueStick.ResetStickBehindCueBall(false);
+            // ✅✅ إضافة جديدة: فتح السلايدر الآن فقط
+            cueStick.SetSliderInteractable(true);
         }
 
         resetCo = null;

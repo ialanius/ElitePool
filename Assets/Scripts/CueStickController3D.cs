@@ -627,4 +627,13 @@ public class CueStickController3D : MonoBehaviour
         if (!showStick && hideWhenReleased)
             visualRoot.gameObject.SetActive(false);
     }
+
+    // أضف هذه الدالة في آخر الملف
+    public void SetSliderInteractable(bool state)
+    {
+        if (powerSlider)
+        {
+            powerSlider.interactable = state; // True = شغال، False = مقفول (رمادي)
+        }
+    }
 }
