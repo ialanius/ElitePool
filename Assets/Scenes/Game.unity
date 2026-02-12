@@ -133,9 +133,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4067705}
   - component: {fileID: 4067706}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_21
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -217,9 +217,9 @@ GameObject:
   m_Component:
   - component: {fileID: 15160196}
   - component: {fileID: 15160197}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_20
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,9 +270,9 @@ GameObject:
   m_Component:
   - component: {fileID: 15417243}
   - component: {fileID: 15417244}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_12
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -323,9 +323,9 @@ GameObject:
   m_Component:
   - component: {fileID: 20899017}
   - component: {fileID: 20899018}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_15
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -592,9 +592,9 @@ GameObject:
   m_Component:
   - component: {fileID: 39059481}
   - component: {fileID: 39059482}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_16
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -645,9 +645,9 @@ GameObject:
   m_Component:
   - component: {fileID: 58996865}
   - component: {fileID: 58996866}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_3
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -713,20 +713,20 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62773521}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 764993790}
   - {fileID: 1375885650}
-  m_Father: {fileID: 156200471}
+  m_Father: {fileID: 2127805773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -20}
+  m_AnchoredPosition: {x: 99.99999, y: -50}
   m_SizeDelta: {x: 50, y: 300}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &62773523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,9 +775,9 @@ GameObject:
   m_Component:
   - component: {fileID: 71137839}
   - component: {fileID: 71137840}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_0
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -892,9 +892,9 @@ GameObject:
   m_Component:
   - component: {fileID: 82538610}
   - component: {fileID: 82538611}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_21
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -945,9 +945,9 @@ GameObject:
   m_Component:
   - component: {fileID: 82977599}
   - component: {fileID: 82977600}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_12
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1137,9 +1137,9 @@ GameObject:
   m_Component:
   - component: {fileID: 97681476}
   - component: {fileID: 97681477}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_11
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1190,9 +1190,9 @@ GameObject:
   m_Component:
   - component: {fileID: 106133441}
   - component: {fileID: 106133442}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_14
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1376,9 +1376,9 @@ GameObject:
   m_Component:
   - component: {fileID: 138758421}
   - component: {fileID: 138758422}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_25
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1513,16 +1513,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2127805773}
   - {fileID: 972813394}
-  - {fileID: 246712656}
-  - {fileID: 768709800}
-  - {fileID: 62773522}
-  - {fileID: 2109838185}
-  - {fileID: 467871880}
-  - {fileID: 353293489}
-  - {fileID: 1611259161}
-  - {fileID: 634221225}
-  - {fileID: 717611088}
   - {fileID: 971588536}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1541,9 +1533,9 @@ GameObject:
   m_Component:
   - component: {fileID: 158786875}
   - component: {fileID: 158786876}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_0
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1557,7 +1549,7 @@ Transform:
   m_GameObject: {fileID: 158786874}
   serializedVersion: 2
   m_LocalRotation: {x: 0.9366722, y: -0, z: 0.35020736, w: 0}
-  m_LocalPosition: {x: 6.9011364, y: 0.26400024, z: -3.75338}
+  m_LocalPosition: {x: 6.9066, y: 0.26400024, z: -3.746}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1582,7 +1574,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.03285367, y: 0.5, z: 0.06789535}
+  m_Size: {x: 0.03285367, y: 0.5, z: 0.2}
   m_Center: {x: 0.06695854, y: 0, z: -0.15359193}
 --- !u!1 &159012847
 GameObject:
@@ -1728,9 +1720,9 @@ GameObject:
   m_Component:
   - component: {fileID: 161114587}
   - component: {fileID: 161114588}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_2
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1781,9 +1773,9 @@ GameObject:
   m_Component:
   - component: {fileID: 165663498}
   - component: {fileID: 165663499}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_18
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1834,9 +1826,9 @@ GameObject:
   m_Component:
   - component: {fileID: 168840349}
   - component: {fileID: 168840350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_9
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1899,9 +1891,9 @@ GameObject:
   m_Component:
   - component: {fileID: 204069562}
   - component: {fileID: 204069563}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_5
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2293,9 +2285,9 @@ GameObject:
   m_Component:
   - component: {fileID: 232387786}
   - component: {fileID: 232387787}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_7
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2532,14 +2524,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 246712655}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 296415963}
   - {fileID: 1274599729}
-  m_Father: {fileID: 156200471}
+  - {fileID: 467871880}
+  - {fileID: 717611088}
+  m_Father: {fileID: 2127805773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2594,9 +2588,9 @@ GameObject:
   m_Component:
   - component: {fileID: 253375076}
   - component: {fileID: 253375077}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_11
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2610,7 +2604,7 @@ Transform:
   m_GameObject: {fileID: 253375075}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000020497604, y: 0.8011842, z: -0.000000027802264, w: -0.59841794}
-  m_LocalPosition: {x: 0.19275653, y: 0.26400024, z: -3.8705177}
+  m_LocalPosition: {x: 0.19275653, y: 0.26400024, z: -3.861276}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2647,9 +2641,9 @@ GameObject:
   m_Component:
   - component: {fileID: 255710349}
   - component: {fileID: 255710350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_19
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2700,9 +2694,9 @@ GameObject:
   m_Component:
   - component: {fileID: 264571844}
   - component: {fileID: 264571845}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bound_Left
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2752,9 +2746,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 269388535}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Guard_TM_Arc
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2784,9 +2778,9 @@ GameObject:
   m_Component:
   - component: {fileID: 281246336}
   - component: {fileID: 281246337}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_9
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2863,9 +2857,9 @@ RectTransform:
   - {fileID: 76766671}
   m_Father: {fileID: 246712656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 510, y: -105}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -549, y: -105}
   m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &296415964
@@ -2939,9 +2933,8 @@ MonoBehaviour:
   cueBall: {fileID: 945044960}
   lineRenderer: {fileID: 309189570}
   gameState: {fileID: 903815555}
-  lineLength: 10
+  lineLength: 5
   lineWidth: 0.05
-  segments: 100
   lineColor: {r: 1, g: 1, b: 1, a: 1}
   ballRadius: 0.25
   ghostBallPrefab: {fileID: 4726782335354609949, guid: 4e2c633cb8b86f046b6e1c318c92b3a6,
@@ -2949,21 +2942,24 @@ MonoBehaviour:
   collisionPointPrefab: {fileID: 3545000095359488887, guid: 1a64ccc232211444081978b0384259fe,
     type: 3}
   showCollisionPoint: 1
+  bounceLineRenderer: {fileID: 0}
+  showBounce: 1
+  bounceLength: 2.5
   targetBallPathRenderer: {fileID: 0}
   showTargetPath: 1
   targetPathLength: 2
-  targetPathColor: {r: 1, g: 1, b: 1, a: 1}
-  bounceLineRenderer: {fileID: 0}
-  showBounce: 1
-  maxBounces: 2
-  bounceColor: {r: 1, g: 1, b: 1, a: 1}
   ballMask:
     serializedVersion: 2
     m_Bits: 512
   wallMask:
     serializedVersion: 2
     m_Bits: 128
-  checkDistance: 5
+  pocketMask:
+    serializedVersion: 2
+    m_Bits: 256
+  boundsMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!120 &309189570
 LineRenderer:
   serializedVersion: 2
@@ -3077,7 +3073,7 @@ Transform:
   m_GameObject: {fileID: 309189568}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0, z: -0.88}
+  m_LocalPosition: {x: 1.5, y: 0.25, z: -0.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3093,9 +3089,9 @@ GameObject:
   m_Component:
   - component: {fileID: 322613190}
   - component: {fileID: 322613191}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_23
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3146,9 +3142,9 @@ GameObject:
   m_Component:
   - component: {fileID: 323864596}
   - component: {fileID: 323864597}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_7
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3211,9 +3207,9 @@ GameObject:
   m_Component:
   - component: {fileID: 335320055}
   - component: {fileID: 335320056}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_4
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3264,9 +3260,9 @@ GameObject:
   m_Component:
   - component: {fileID: 339684409}
   - component: {fileID: 339684410}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_14
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3317,9 +3313,9 @@ GameObject:
   m_Component:
   - component: {fileID: 344332445}
   - component: {fileID: 344332446}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bound_Bottom
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3385,7 +3381,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353293488}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3393,7 +3389,7 @@ RectTransform:
   - {fileID: 1528341834}
   - {fileID: 124449864}
   - {fileID: 572973391}
-  m_Father: {fileID: 156200471}
+  m_Father: {fileID: 2127805773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3460,9 +3456,9 @@ GameObject:
   m_Component:
   - component: {fileID: 354625271}
   - component: {fileID: 354625272}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_4
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3545,9 +3541,9 @@ GameObject:
   m_Component:
   - component: {fileID: 364761609}
   - component: {fileID: 364761610}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_14
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3597,9 +3593,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 365498556}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Guard_BL_Arc
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3629,9 +3625,9 @@ GameObject:
   m_Component:
   - component: {fileID: 371546356}
   - component: {fileID: 371546357}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_17
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3713,9 +3709,9 @@ GameObject:
   m_Component:
   - component: {fileID: 386991015}
   - component: {fileID: 386991016}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_20
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3879,9 +3875,9 @@ GameObject:
   m_Component:
   - component: {fileID: 432740987}
   - component: {fileID: 432740988}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_6
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4007,9 +4003,9 @@ GameObject:
   m_Component:
   - component: {fileID: 466470109}
   - component: {fileID: 466470110}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_20
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4076,17 +4072,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467871879}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1583247568}
-  m_Father: {fileID: 156200471}
+  m_Father: {fileID: 246712656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -200, y: -100}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 840, y: -103}
   m_SizeDelta: {x: 100, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &467871881
@@ -4193,9 +4189,9 @@ GameObject:
   m_Component:
   - component: {fileID: 480123345}
   - component: {fileID: 480123346}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_10
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4354,9 +4350,9 @@ GameObject:
   m_Component:
   - component: {fileID: 493339559}
   - component: {fileID: 493339560}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_14
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4407,9 +4403,9 @@ GameObject:
   m_Component:
   - component: {fileID: 504276754}
   - component: {fileID: 504276755}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bound_Right
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4561,9 +4557,9 @@ GameObject:
   m_Component:
   - component: {fileID: 532820267}
   - component: {fileID: 532820268}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_24
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4614,9 +4610,9 @@ GameObject:
   m_Component:
   - component: {fileID: 533863692}
   - component: {fileID: 533863693}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_2
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4667,9 +4663,9 @@ GameObject:
   m_Component:
   - component: {fileID: 541208660}
   - component: {fileID: 541208661}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_18
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4854,9 +4850,9 @@ GameObject:
   m_Component:
   - component: {fileID: 551439750}
   - component: {fileID: 551439751}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_12
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4870,7 +4866,7 @@ Transform:
   m_GameObject: {fileID: 551439749}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0070158807, y: 0.7523689, z: 0.0061421506, w: -0.65867597}
-  m_LocalPosition: {x: 0.12760651, y: 0.26400024, z: -3.887987}
+  m_LocalPosition: {x: 0.12760651, y: 0.26400024, z: -3.871}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4907,9 +4903,9 @@ GameObject:
   m_Component:
   - component: {fileID: 556322931}
   - component: {fileID: 556322932}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_25
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4960,9 +4956,9 @@ GameObject:
   m_Component:
   - component: {fileID: 557441594}
   - component: {fileID: 557441595}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_13
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5013,9 +5009,9 @@ GameObject:
   m_Component:
   - component: {fileID: 564451783}
   - component: {fileID: 564451784}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_18
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5344,9 +5340,9 @@ GameObject:
   m_Component:
   - component: {fileID: 584790854}
   - component: {fileID: 584790855}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_6
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5360,7 +5356,7 @@ Transform:
   m_GameObject: {fileID: 584790853}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00000003315633, y: 0.9456415, z: -0.000000028218246, w: -0.32521102}
-  m_LocalPosition: {x: 0.48071334, y: 0.26400024, z: -3.6808553}
+  m_LocalPosition: {x: 0.48071334, y: 0.26400024, z: -3.6716135}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5400,7 +5396,7 @@ GameObject:
   - component: {fileID: 592568856}
   - component: {fileID: 592568855}
   m_Layer: 6
-  m_Name: Rails_Pockets
+  m_Name: RailsPocketsIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5504,9 +5500,9 @@ GameObject:
   m_Component:
   - component: {fileID: 597369993}
   - component: {fileID: 597369994}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_14
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5557,9 +5553,9 @@ GameObject:
   m_Component:
   - component: {fileID: 597562498}
   - component: {fileID: 597562499}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_9
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5781,9 +5777,9 @@ GameObject:
   m_Component:
   - component: {fileID: 609005179}
   - component: {fileID: 609005180}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_15
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5968,9 +5964,9 @@ GameObject:
   m_Component:
   - component: {fileID: 613279536}
   - component: {fileID: 613279537}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_13
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6021,9 +6017,9 @@ GameObject:
   m_Component:
   - component: {fileID: 620383326}
   - component: {fileID: 620383327}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_9
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6037,7 +6033,7 @@ Transform:
   m_GameObject: {fileID: 620383325}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00000002279747, y: 0.84937096, z: -0.000000025949818, w: -0.52779645}
-  m_LocalPosition: {x: 0.31776142, y: 0.26400024, z: -3.8180783}
+  m_LocalPosition: {x: 0.31776142, y: 0.26400024, z: -3.8088365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6250,9 +6246,9 @@ GameObject:
   m_Component:
   - component: {fileID: 624499357}
   - component: {fileID: 624499358}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_15
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6402,17 +6398,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634221224}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1359372817}
-  m_Father: {fileID: 156200471}
+  m_Father: {fileID: 2127805773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &634221226
@@ -6463,9 +6459,9 @@ GameObject:
   m_Component:
   - component: {fileID: 637842215}
   - component: {fileID: 637842216}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_13
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6528,9 +6524,9 @@ GameObject:
   m_Component:
   - component: {fileID: 641138546}
   - component: {fileID: 641138547}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_12
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6764,9 +6760,9 @@ GameObject:
   m_Component:
   - component: {fileID: 648897037}
   - component: {fileID: 648897038}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_26
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7134,9 +7130,9 @@ GameObject:
   m_Component:
   - component: {fileID: 665344670}
   - component: {fileID: 665344671}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_17
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7187,9 +7183,9 @@ GameObject:
   m_Component:
   - component: {fileID: 679550849}
   - component: {fileID: 679550850}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_5
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7240,9 +7236,9 @@ GameObject:
   m_Component:
   - component: {fileID: 684536489}
   - component: {fileID: 684536490}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_7
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7256,7 +7252,7 @@ Transform:
   m_GameObject: {fileID: 684536488}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000030191845, y: 0.9233823, z: -0.000000027909064, w: -0.3838817}
-  m_LocalPosition: {x: 0.43350786, y: 0.26400024, z: -3.7354321}
+  m_LocalPosition: {x: 0.43350786, y: 0.26400024, z: -3.7261903}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7283,6 +7279,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.03285367, y: 0.5, z: 0.078}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &687633826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 687633827}
+  - component: {fileID: 687633828}
+  m_Layer: 10
+  m_Name: Arc_29
+  m_TagString: Bounds
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &687633827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687633826}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000000050328943, y: 0.99999315, z: -0.000000027326372, w: 0.0036999579}
+  m_LocalPosition: {x: 0.556, y: 0.26400024, z: -3.459}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114137051}
+  m_LocalEulerAnglesHint: {x: 0, y: 33.263, z: 0}
+--- !u!65 &687633828
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687633826}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.033588983, y: 0.5, z: 0.08582414}
+  m_Center: {x: 0.003781561, y: 0, z: 0.008819327}
 --- !u!1 &697299988
 GameObject:
   m_ObjectHideFlags: 0
@@ -7293,9 +7342,9 @@ GameObject:
   m_Component:
   - component: {fileID: 697299989}
   - component: {fileID: 697299990}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_3
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7382,9 +7431,9 @@ GameObject:
   m_Component:
   - component: {fileID: 705679767}
   - component: {fileID: 705679768}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_12
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7560,7 +7609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &717611086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7606,7 +7655,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717611085}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7614,11 +7663,11 @@ RectTransform:
   - {fileID: 225019398}
   - {fileID: 1460718890}
   - {fileID: 1157954439}
-  m_Father: {fileID: 156200471}
+  m_Father: {fileID: 246712656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -200, y: -270}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 840, y: -273}
   m_SizeDelta: {x: 100, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &718216892
@@ -7738,9 +7787,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 731159725}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Guard_BR_Arc
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7770,9 +7819,9 @@ GameObject:
   m_Component:
   - component: {fileID: 738731734}
   - component: {fileID: 738731735}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_25
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7825,6 +7874,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1423008668}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &753984896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 753984897}
+  - component: {fileID: 753984898}
+  m_Layer: 10
+  m_Name: Arc_31
+  m_TagString: Bounds
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &753984897
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753984896}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.4947004, z: -0, w: -0.8690636}
+  m_LocalPosition: {x: -7.5928, y: 0.26400024, z: -2.998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114137051}
+  m_LocalEulerAnglesHint: {x: 0, y: 239.3, z: 0}
+--- !u!65 &753984898
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753984896}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.03285367, y: 0.5, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &764993789
 GameObject:
   m_ObjectHideFlags: 0
@@ -7940,12 +8042,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768709799}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 156200471}
+  m_Father: {fileID: 2127805773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -8059,9 +8161,9 @@ GameObject:
   m_Component:
   - component: {fileID: 769421314}
   - component: {fileID: 769421315}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_19
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8143,9 +8245,9 @@ GameObject:
   m_Component:
   - component: {fileID: 795270837}
   - component: {fileID: 795270838}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_8
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8385,9 +8487,9 @@ GameObject:
   m_Component:
   - component: {fileID: 809588006}
   - component: {fileID: 809588007}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_25
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8439,9 +8541,9 @@ GameObject:
   m_Component:
   - component: {fileID: 819366853}
   - component: {fileID: 819366854}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_24
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8504,9 +8606,9 @@ GameObject:
   m_Component:
   - component: {fileID: 823507707}
   - component: {fileID: 823507708}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_0
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8557,9 +8659,9 @@ GameObject:
   m_Component:
   - component: {fileID: 830982738}
   - component: {fileID: 830982739}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_23
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8610,9 +8712,9 @@ GameObject:
   m_Component:
   - component: {fileID: 838618522}
   - component: {fileID: 838618523}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_6
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8687,9 +8789,9 @@ GameObject:
   m_Component:
   - component: {fileID: 871988897}
   - component: {fileID: 871988898}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_15
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8874,9 +8976,9 @@ GameObject:
   m_Component:
   - component: {fileID: 875691119}
   - component: {fileID: 875691120}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_22
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8927,9 +9029,9 @@ GameObject:
   m_Component:
   - component: {fileID: 884692829}
   - component: {fileID: 884692830}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_1
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9209,9 +9311,9 @@ GameObject:
   m_Component:
   - component: {fileID: 916730388}
   - component: {fileID: 916730389}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_24
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9262,9 +9364,9 @@ GameObject:
   m_Component:
   - component: {fileID: 938297817}
   - component: {fileID: 938297818}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_2
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9339,9 +9441,9 @@ GameObject:
   m_Component:
   - component: {fileID: 946926237}
   - component: {fileID: 946926238}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_22
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9428,9 +9530,9 @@ GameObject:
   m_Component:
   - component: {fileID: 964727703}
   - component: {fileID: 964727704}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_5
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9546,9 +9648,9 @@ GameObject:
   m_Component:
   - component: {fileID: 970635672}
   - component: {fileID: 970635673}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_23
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9926,9 +10028,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1006039346}
   - component: {fileID: 1006039347}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_14
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9993,6 +10095,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 33290644}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1011713139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1011713140}
+  - component: {fileID: 1011713141}
+  m_Layer: 10
+  m_Name: Arc_30
+  m_TagString: Bounds
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1011713140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011713139}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000000050328943, y: 0.99999315, z: -0.000000027326372, w: 0.0036999579}
+  m_LocalPosition: {x: -0.5407, y: 0.26400024, z: -3.4786}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114137051}
+  m_LocalEulerAnglesHint: {x: 0, y: 33.263, z: 0}
+--- !u!65 &1011713141
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011713139}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.033588983, y: 0.5, z: 0.08582414}
+  m_Center: {x: 0.003781561, y: 0, z: 0.008819327}
 --- !u!1 &1013130339
 GameObject:
   m_ObjectHideFlags: 0
@@ -10197,9 +10352,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1043928199}
   - component: {fileID: 1043928200}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_25
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10250,9 +10405,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1044013942}
   - component: {fileID: 1044013943}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_9
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10303,9 +10458,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1093038004}
   - component: {fileID: 1093038005}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_20
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10356,9 +10511,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1111462905}
   - component: {fileID: 1111462906}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_19
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10408,9 +10563,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1114137051}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bounds
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10463,6 +10618,7 @@ Transform:
   - {fileID: 1708635675}
   - {fileID: 1743574937}
   - {fileID: 823507707}
+  - {fileID: 1238338458}
   - {fileID: 1174528752}
   - {fileID: 1725729964}
   - {fileID: 697299989}
@@ -10489,6 +10645,7 @@ Transform:
   - {fileID: 916730388}
   - {fileID: 138758421}
   - {fileID: 648897037}
+  - {fileID: 1656270508}
   - {fileID: 731159725}
   - {fileID: 158786875}
   - {fileID: 1410292021}
@@ -10517,8 +10674,10 @@ Transform:
   - {fileID: 1311453812}
   - {fileID: 556322931}
   - {fileID: 1338474338}
+  - {fileID: 1782388275}
   - {fileID: 365498556}
   - {fileID: 71137839}
+  - {fileID: 1735054554}
   - {fileID: 884692829}
   - {fileID: 161114587}
   - {fileID: 1524197278}
@@ -10545,8 +10704,10 @@ Transform:
   - {fileID: 532820267}
   - {fileID: 1953356138}
   - {fileID: 1258888183}
+  - {fileID: 753984897}
   - {fileID: 269388535}
   - {fileID: 1373065853}
+  - {fileID: 2085521511}
   - {fileID: 2094559359}
   - {fileID: 1243754463}
   - {fileID: 432740987}
@@ -10568,8 +10729,10 @@ Transform:
   - {fileID: 946926237}
   - {fileID: 1695470701}
   - {fileID: 809588006}
+  - {fileID: 1568281603}
   - {fileID: 1289160060}
   - {fileID: 938297817}
+  - {fileID: 687633827}
   - {fileID: 1995734493}
   - {fileID: 1421155304}
   - {fileID: 584790854}
@@ -10591,6 +10754,7 @@ Transform:
   - {fileID: 875691119}
   - {fileID: 1246916387}
   - {fileID: 1043928199}
+  - {fileID: 1011713140}
   m_Father: {fileID: 1705917971}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1123620189
@@ -10933,9 +11097,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1145015079}
   - component: {fileID: 1145015080}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_18
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11118,9 +11282,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1169464309}
   - component: {fileID: 1169464310}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_16
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11171,9 +11335,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1174528752}
   - component: {fileID: 1174528753}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_1
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11224,9 +11388,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1182985941}
   - component: {fileID: 1182985942}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_13
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11239,13 +11403,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1182985940}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000015071729, y: 0.71040815, z: -0.000000024984683, w: -0.70378995}
-  m_LocalPosition: {x: 0.059655726, y: 0.26400024, z: -3.888815}
+  m_LocalRotation: {x: 0, y: 0.74191743, z: -0, w: -0.67049134}
+  m_LocalPosition: {x: 0.059655726, y: 0.26400024, z: -3.883}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1114137051}
-  m_LocalEulerAnglesHint: {x: 0, y: 123.15, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 264.21, z: 0}
 --- !u!65 &1182985942
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11277,9 +11441,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1192215474}
   - component: {fileID: 1192215475}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_11
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11330,9 +11494,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1195157338}
   - component: {fileID: 1195157339}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_13
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11592,9 +11756,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1234010131}
   - component: {fileID: 1234010132}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_8
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11635,6 +11799,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.03285367, y: 0.5, z: 0.06789535}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1238338457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1238338458}
+  - component: {fileID: 1238338459}
+  m_Layer: 10
+  m_Name: Arc_35
+  m_TagString: Bounds
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1238338458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238338457}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.3125836, y: 0, z: -0.94989026, w: 0}
+  m_LocalPosition: {x: -6.839, y: 0.26400024, z: 3.693}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114137051}
+  m_LocalEulerAnglesHint: {x: 0, y: -36.43, z: -180}
+--- !u!65 &1238338459
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238338457}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.03285367, y: 0.5, z: 0.14}
+  m_Center: {x: 0.06695854, y: 0, z: -0.15359193}
 --- !u!1 &1243754462
 GameObject:
   m_ObjectHideFlags: 0
@@ -11645,9 +11862,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1243754463}
   - component: {fileID: 1243754464}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_5
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11698,9 +11915,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1246916387}
   - component: {fileID: 1246916388}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_23
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11751,9 +11968,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1258888183}
   - component: {fileID: 1258888184}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_26
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11830,9 +12047,9 @@ RectTransform:
   - {fileID: 1563788699}
   m_Father: {fileID: 246712656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -510, y: -105}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 549, y: -105}
   m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1274599730
@@ -11883,9 +12100,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1279665196}
   - component: {fileID: 1279665197}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_15
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11966,9 +12183,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1289160060}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Guard_BM_Arc
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11998,9 +12215,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1291371573}
   - component: {fileID: 1291371574}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_21
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12221,9 +12438,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1311453812}
   - component: {fileID: 1311453813}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_24
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12445,9 +12662,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1324522739}
   - component: {fileID: 1324522740}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_16
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12498,9 +12715,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1338474338}
   - component: {fileID: 1338474339}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_26
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12600,9 +12817,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1346860162}
   - component: {fileID: 1346860163}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_6
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12653,9 +12870,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1352401868}
   - component: {fileID: 1352401869}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_17
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12840,9 +13057,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1360253447}
   - component: {fileID: 1360253448}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_19
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13001,9 +13218,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1373065853}
   - component: {fileID: 1373065854}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_2
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13018,7 +13235,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000027326372, y: -0.0036999579, z: -0.000000050328943,
     w: 0.99999315}
-  m_LocalPosition: {x: -0.5328275, y: 0.26400024, z: 3.5099306}
+  m_LocalPosition: {x: -0.54482746, y: 0.26400024, z: 3.4849308}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13055,9 +13272,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1373747548}
   - component: {fileID: 1373747549}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_17
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13216,9 +13433,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1374972296}
   - component: {fileID: 1374972297}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_0
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13231,13 +13448,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374972295}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.35020736, z: -0, w: 0.9366722}
+  m_LocalRotation: {x: 0, y: 0.34078977, z: 0, w: 0.9401396}
   m_LocalPosition: {x: 6.895736, y: 0.26400024, z: 3.7479196}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1114137051}
-  m_LocalEulerAnglesHint: {x: 0, y: 41, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 39.85, z: 0}
 --- !u!65 &1374972297
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13257,7 +13474,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.03285367, y: 0.5, z: 0.06789535}
+  m_Size: {x: 0.03285367, y: 0.5, z: 0.29}
   m_Center: {x: 0.06695854, y: 0, z: -0.15359193}
 --- !u!1 &1375885649
 GameObject:
@@ -13359,9 +13576,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1379307921}
   - component: {fileID: 1379307922}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_16
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13436,9 +13653,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1410292021}
   - component: {fileID: 1410292022}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_1
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13513,9 +13730,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1421155304}
   - component: {fileID: 1421155305}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_5
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13529,7 +13746,7 @@ Transform:
   m_GameObject: {fileID: 1421155303}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000041379565, y: 0.97791594, z: -0.000000032708932, w: -0.20899883}
-  m_LocalPosition: {x: 0.5164674, y: 0.26400024, z: -3.6203673}
+  m_LocalPosition: {x: 0.5164674, y: 0.26400024, z: -3.6111255}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13689,7 +13906,7 @@ Transform:
   m_GameObject: {fileID: 1428315814}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.70625, y: 0.225, z: -0.020749867}
+  m_LocalPosition: {x: 4.70625, y: 0.3, z: -0.020749867}
   m_LocalScale: {x: 0.625, y: 1, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13711,9 +13928,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1443232715}
   - component: {fileID: 1443232716}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_21
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13896,9 +14113,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1470031656}
   - component: {fileID: 1470031657}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_3
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14203,9 +14420,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1515169235}
   - component: {fileID: 1515169236}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_18
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14256,9 +14473,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1516068217}
   - component: {fileID: 1516068218}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_4
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14309,9 +14526,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1520708913}
   - component: {fileID: 1520708914}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_13
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14362,9 +14579,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1524197278}
   - component: {fileID: 1524197279}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_3
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14549,9 +14766,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1532820597}
   - component: {fileID: 1532820598}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_5
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14713,9 +14930,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1542206626}
   - component: {fileID: 1542206627}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_7
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14928,6 +15145,60 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3fe9d3f5e8fbf1499e8cf7cc7834aff, type: 3}
+--- !u!1 &1568281602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1568281603}
+  - component: {fileID: 1568281604}
+  m_Layer: 10
+  m_Name: Arc_28
+  m_TagString: Bounds
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1568281603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568281602}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000027326372, y: -0.0036999579, z: -0.000000050328943,
+    w: 0.99999315}
+  m_LocalPosition: {x: 0.5645, y: 0.26400024, z: 3.4439}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114137051}
+  m_LocalEulerAnglesHint: {x: 0, y: 33.263, z: 0}
+--- !u!65 &1568281604
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568281602}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.033588983, y: 0.5, z: 0.08582414}
+  m_Center: {x: 0.003781561, y: 0, z: 0.008819327}
 --- !u!1 &1575805018
 GameObject:
   m_ObjectHideFlags: 0
@@ -14938,9 +15209,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1575805019}
   - component: {fileID: 1575805020}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_1
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15066,9 +15337,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1590148906}
   - component: {fileID: 1590148907}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_8
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15826,7 +16097,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611259158}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15834,7 +16105,7 @@ RectTransform:
   - {fileID: 908646700}
   - {fileID: 1892987771}
   - {fileID: 577843407}
-  m_Father: {fileID: 156200471}
+  m_Father: {fileID: 2127805773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -15925,9 +16196,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1624813305}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PocketGuards
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16102,9 +16373,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1642413116}
   - component: {fileID: 1642413117}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_6
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16155,9 +16426,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1645611986}
   - component: {fileID: 1645611987}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_21
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16197,6 +16468,59 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.03285367, y: 0.5, z: 0.06789535}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1656270507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1656270508}
+  - component: {fileID: 1656270509}
+  m_Layer: 10
+  m_Name: Arc_34
+  m_TagString: Bounds
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1656270508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656270507}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.8424522, y: 0, z: 0.53877103, w: -0}
+  m_LocalPosition: {x: -7.603, y: 0.26400024, z: 3.001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114137051}
+  m_LocalEulerAnglesHint: {x: -180, y: 294.8, z: 0}
+--- !u!65 &1656270509
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656270507}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.03285367, y: 0.5, z: 0.14}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1658058215
 PrefabInstance:
@@ -16326,9 +16650,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1676478995}
   - component: {fileID: 1676478996}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_16
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16379,9 +16703,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1677399994}
   - component: {fileID: 1677399995}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_8
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16432,9 +16756,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1683378694}
   - component: {fileID: 1683378695}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_10
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16497,9 +16821,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1695470701}
   - component: {fileID: 1695470702}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_23
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16658,9 +16982,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1704218607}
   - component: {fileID: 1704218608}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_19
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16744,9 +17068,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1708635675}
   - component: {fileID: 1708635676}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_26
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16785,7 +17109,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.03285367, y: 0.5, z: 0.06789535}
+  m_Size: {x: 0.03285367, y: 0.5, z: 0.27}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1715443697
 GameObject:
@@ -16797,9 +17121,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1715443698}
   - component: {fileID: 1715443699}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bound_Top
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16850,9 +17174,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1725729964}
   - component: {fileID: 1725729965}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_2
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16893,6 +17217,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.033588983, y: 0.5, z: 0.08582414}
   m_Center: {x: 0.003781561, y: 0, z: 0.008819327}
+--- !u!1 &1735054553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1735054554}
+  - component: {fileID: 1735054555}
+  m_Layer: 10
+  m_Name: Arc_32
+  m_TagString: Bounds
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1735054554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735054553}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000011539725, y: 0.9678495, z: 0.0000000043145256, w: -0.25153002}
+  m_LocalPosition: {x: -6.805, y: 0.26400024, z: -3.667}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114137051}
+  m_LocalEulerAnglesHint: {x: 0, y: 209.136, z: 0}
+--- !u!65 &1735054555
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735054553}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.03285367, y: 0.5, z: 0.14}
+  m_Center: {x: 0.06695854, y: 0, z: -0.15359193}
 --- !u!1 &1735195915
 GameObject:
   m_ObjectHideFlags: 0
@@ -16903,9 +17280,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1735195916}
   - component: {fileID: 1735195917}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_7
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17031,9 +17408,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1741208244}
   - component: {fileID: 1741208245}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_11
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17083,9 +17460,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1743574937}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Guard_TL_Arc
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17115,9 +17492,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1743976117}
   - component: {fileID: 1743976118}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_22
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17168,9 +17545,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1754052366}
   - component: {fileID: 1754052367}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_2
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17221,9 +17598,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1759584814}
   - component: {fileID: 1759584815}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_10
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17274,9 +17651,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1763437311}
   - component: {fileID: 1763437312}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_8
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17327,9 +17704,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1773718814}
   - component: {fileID: 1773718815}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_22
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17425,6 +17802,59 @@ CapsuleCollider:
   m_Height: 6.198711
   m_Direction: 2
   m_Center: {x: 0.05603744, y: 0, z: 0.20286608}
+--- !u!1 &1782388274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1782388275}
+  - component: {fileID: 1782388276}
+  m_Layer: 10
+  m_Name: Arc_33
+  m_TagString: Bounds
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1782388275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782388274}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5560055, y: 0, z: -0.83117867, w: 0}
+  m_LocalPosition: {x: 7.609, y: 0.26400024, z: -3.009}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114137051}
+  m_LocalEulerAnglesHint: {x: 0, y: 292.44, z: 180}
+--- !u!65 &1782388276
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782388274}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.03285367, y: 0.5, z: 0.14}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1789161636 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2309751977705382585, guid: c3fe9d3f5e8fbf1499e8cf7cc7834aff,
@@ -17555,9 +17985,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1802835853}
   - component: {fileID: 1802835854}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_10
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17608,9 +18038,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1817394649}
   - component: {fileID: 1817394650}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_20
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17661,9 +18091,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1822976126}
   - component: {fileID: 1822976127}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_15
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17738,9 +18168,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1839560430}
   - component: {fileID: 1839560431}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_19
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17791,9 +18221,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1839620299}
   - component: {fileID: 1839620300}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_21
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17983,9 +18413,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1887281748}
   - component: {fileID: 1887281749}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_17
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18199,9 +18629,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1903369026}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Guard_TR_Arc
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18473,9 +18903,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1951769852}
   - component: {fileID: 1951769853}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_16
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18526,9 +18956,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1953356138}
   - component: {fileID: 1953356139}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_25
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18579,9 +19009,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1957298595}
   - component: {fileID: 1957298596}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_22
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18632,9 +19062,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1969223789}
   - component: {fileID: 1969223790}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_10
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18648,7 +19078,7 @@ Transform:
   m_GameObject: {fileID: 1969223788}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000022110374, y: 0.83526385, z: -0.000000026537691, w: -0.54984945}
-  m_LocalPosition: {x: 0.25688156, y: 0.26400024, z: -3.8473628}
+  m_LocalPosition: {x: 0.25688156, y: 0.26400024, z: -3.838121}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18685,9 +19115,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1973105027}
   - component: {fileID: 1973105028}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_10
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18738,9 +19168,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1980051861}
   - component: {fileID: 1980051862}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_9
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18791,9 +19221,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1981456163}
   - component: {fileID: 1981456164}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_8
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18807,7 +19237,7 @@ Transform:
   m_GameObject: {fileID: 1981456162}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000024317751, y: 0.87959313, z: -0.000000024530893, w: -0.47572678}
-  m_LocalPosition: {x: 0.37767127, y: 0.26400024, z: -3.7835517}
+  m_LocalPosition: {x: 0.37767127, y: 0.26400024, z: -3.7743099}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18844,9 +19274,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1982482676}
   - component: {fileID: 1982482677}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_20
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18928,9 +19358,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1988461548}
   - component: {fileID: 1988461549}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_11
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18981,9 +19411,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1995734493}
   - component: {fileID: 1995734494}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_4
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18997,7 +19427,7 @@ Transform:
   m_GameObject: {fileID: 1995734492}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000049441265, y: 0.9968044, z: -0.000000034619134, w: -0.07988164}
-  m_LocalPosition: {x: 0.5339442, y: 0.26400024, z: -3.5582418}
+  m_LocalPosition: {x: 0.5339442, y: 0.26400024, z: -3.549}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19034,9 +19464,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2010581376}
   - component: {fileID: 2010581377}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_6
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19087,9 +19517,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2016031533}
   - component: {fileID: 2016031534}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_22
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19140,9 +19570,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2027597575}
   - component: {fileID: 2027597576}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_7
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19193,9 +19623,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2044122462}
   - component: {fileID: 2044122463}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_18
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19246,9 +19676,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2045257976}
   - component: {fileID: 2045257977}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_11
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19396,9 +19826,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2071941407}
   - component: {fileID: 2071941408}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_23
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19451,6 +19881,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1af20f14bfdbe4a9c30d1f445cfd57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2085521510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2085521511}
+  - component: {fileID: 2085521512}
+  m_Layer: 10
+  m_Name: Arc_27
+  m_TagString: Bounds
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2085521511
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085521510}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000027326372, y: -0.0036999579, z: -0.000000050328943,
+    w: 0.99999315}
+  m_LocalPosition: {x: -0.5502, y: 0.2640002, z: 3.44}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1114137051}
+  m_LocalEulerAnglesHint: {x: 0, y: 33.263, z: 0}
+--- !u!65 &2085521512
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085521510}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.033588983, y: 0.5, z: 0.08582414}
+  m_Center: {x: 0.003781561, y: 0, z: 0.008819327}
 --- !u!1 &2091893277
 GameObject:
   m_ObjectHideFlags: 0
@@ -19595,9 +20079,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2094559359}
   - component: {fileID: 2094559360}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_4
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19648,9 +20132,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2099707194}
   - component: {fileID: 2099707195}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_12
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19716,12 +20200,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109838184}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 156200471}
+  m_Father: {fileID: 2127805773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -19825,6 +20309,101 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2109838184}
   m_CullTransparentMesh: 1
+--- !u!1 &2127805772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2127805773}
+  - component: {fileID: 2127805776}
+  - component: {fileID: 2127805775}
+  - component: {fileID: 2127805774}
+  m_Layer: 5
+  m_Name: SafeArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2127805773
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127805772}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 246712656}
+  - {fileID: 768709800}
+  - {fileID: 2109838185}
+  - {fileID: 634221225}
+  - {fileID: 353293489}
+  - {fileID: 1611259161}
+  - {fileID: 62773522}
+  m_Father: {fileID: 156200471}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.055687204, y: 0.053846154}
+  m_AnchorMax: {x: 0.9443128, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2127805774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127805772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70de8df0caea270428fc40de297fb9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2127805775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127805772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2127805776
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2127805772}
+  m_CullTransparentMesh: 1
 --- !u!1 &2129951261
 GameObject:
   m_ObjectHideFlags: 0
@@ -19835,9 +20414,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2129951262}
   - component: {fileID: 2129951263}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_4
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19924,9 +20503,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2138416339}
   - component: {fileID: 2138416340}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arc_17
-  m_TagString: Untagged
+  m_TagString: Bounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
