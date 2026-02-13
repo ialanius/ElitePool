@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 
 public class CueStickController3D : MonoBehaviour
 {
@@ -67,6 +68,9 @@ public class CueStickController3D : MonoBehaviour
     [Header("Audio")]
     public AudioSource cueAudioSource;
     public AudioClip cueHitSound;
+
+    [Header("Spin System")]
+    public SpinController spinController;
 
     // State
     enum ShootState { Aiming, ReadyToShoot, Shooting }
@@ -319,8 +323,15 @@ public class CueStickController3D : MonoBehaviour
         // ✅ الضربة باتجاه shotDir
         if (ball != null)
             ball.Shoot(dir, finalPower);
+
         else
             rb.AddForce(dir.normalized * finalPower, ForceMode.VelocityChange);
+
+        // ✅ تطبيق الـSpin
+        if (spinController)
+        {
+            spinController.ApplySpin(rb, dir, finalPower);
+        }
 
         if (PoolGameManager3D.Instance)
             PoolGameManager3D.Instance.RegisterShot(rb);
