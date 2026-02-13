@@ -109,8 +109,8 @@ public class GameUI : MonoBehaviour
         {
             string group = gameState.GetPlayerGroupText(Player.Player1);
             player1GroupText.text = group == "Unassigned" ? "-" : group;
-            if (group == "Solids") player1GroupText.color = new Color(0.0f, 0.0f, 0.0f);
-            else if (group == "Stripes") player1GroupText.color = new Color(0.0f, 0.0f, 0.0f);
+            if (group == "Solids") player1GroupText.color = new Color(1.0f, 1.0f, 1.0f);
+            else if (group == "Stripes") player1GroupText.color = new Color(1.0f, 1.0f, 1.0f);
             else player1GroupText.color = Color.gray;
         }
 
@@ -118,8 +118,8 @@ public class GameUI : MonoBehaviour
         {
             string group = gameState.GetPlayerGroupText(Player.Player2);
             player2GroupText.text = group == "Unassigned" ? "-" : group;
-            if (group == "Solids") player2GroupText.color = new Color(0.0f, 0.0f, 0.0f);
-            else if (group == "Stripes") player2GroupText.color = new Color(0.0f, 0.0f, 0.0f);
+            if (group == "Solids") player2GroupText.color = new Color(1.0f, 1.0f, 1.0f);
+            else if (group == "Stripes") player2GroupText.color = new Color(1.0f, 1.0f, 1.0f);
             else player2GroupText.color = Color.gray;
         }
         UpdateCurrentPlayerDisplay();

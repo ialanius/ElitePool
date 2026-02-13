@@ -636,4 +636,18 @@ public class CueStickController3D : MonoBehaviour
             powerSlider.interactable = state; // True = شغال، False = مقفول (رمادي)
         }
     }
+
+    // ✅ دالة جديدة للضبط الدقيق (يتم استدعاؤها من العجلة)
+    public void RotateStickFine(float angleDelta)
+    {
+        if (currentState != ShootState.Aiming && currentState != ShootState.ReadyToShoot) return;
+
+        // تدوير متجه التصويب بزاوية صغيرة حول المحور Y
+        Quaternion rot = Quaternion.Euler(0f, angleDelta, 0f);
+        shotDir = rot * shotDir;
+        shotDir.Normalize();
+
+        // تحديث شكل العصا وخط التصويب فوراً
+        UpdateStick(power01);
+    }
 }
