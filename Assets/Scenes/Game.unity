@@ -3156,7 +3156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 0.65
+  pocketRadius: 2
   enterDepth: 0.15
   minSpeed: 0.01
   dotThreshold: 0.25
@@ -3182,7 +3182,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.75
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &246222501
 Transform:
@@ -7362,7 +7362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 0.65
+  pocketRadius: 2
   enterDepth: 0.15
   minSpeed: 0.01
   dotThreshold: 0.25
@@ -7388,7 +7388,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.75
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &598830946
 Transform:
@@ -8143,8 +8143,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 300, y: 150}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 380, y: 190}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &634221226
 MonoBehaviour:
@@ -8345,7 +8345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 0.65
+  pocketRadius: 2
   enterDepth: 0.15
   minSpeed: 0.01
   dotThreshold: 0.25
@@ -8371,7 +8371,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.75
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &642667458
 Transform:
@@ -13656,7 +13656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 0.65
+  pocketRadius: 2
   enterDepth: 0.15
   minSpeed: 0.01
   dotThreshold: 0.25
@@ -13682,7 +13682,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.75
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1125624617
 Transform:
@@ -15851,7 +15851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 0.65
+  pocketRadius: 2
   enterDepth: 0.15
   minSpeed: 0.01
   dotThreshold: 0.25
@@ -15877,7 +15877,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.75
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1321285764
 Transform:
@@ -16624,7 +16624,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 30}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1359372818
@@ -16674,13 +16674,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -18083,7 +18083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 0.65
+  pocketRadius: 2
   enterDepth: 0.15
   minSpeed: 0.01
   dotThreshold: 0.25
@@ -18109,7 +18109,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.75
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1478671039
 Transform:
@@ -18674,7 +18674,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 350, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1528341835
 MonoBehaviour:
@@ -18723,13 +18723,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -25905,8 +25905,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 246712656}
-  - {fileID: 2109838185}
   - {fileID: 634221225}
+  - {fileID: 2109838185}
   - {fileID: 353293489}
   - {fileID: 1611259161}
   - {fileID: 62773522}

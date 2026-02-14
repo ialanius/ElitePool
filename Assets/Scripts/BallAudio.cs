@@ -64,6 +64,11 @@ public class BallAudio : MonoBehaviour
 
     void PlaySound(AudioClip clip, float speed, float volScale)
     {
+        // ✅✅ الإضافة هنا في البداية:
+        // إذا كان مصدر الصوت غير موجود أو معطل، أو الكرة مخفية -> اخرج فوراً
+        if (!audioSource || !audioSource.isActiveAndEnabled || !gameObject.activeInHierarchy)
+            return;
+
         if (randomizePitch)
             audioSource.pitch = Random.Range(minPitch, maxPitch);
 
