@@ -145,7 +145,8 @@ public class BallRack3D : MonoBehaviour
             else
             {
                 ball.position = target;
-                ball.rotation = Quaternion.identity;
+                // ✅ التعديل هنا: تدوير الكرة 90 درجة ليظهر الرقم للأعلى
+                ball.rotation = Quaternion.Euler(90f, 0f, 0f);
             }
         }
 
@@ -164,7 +165,7 @@ public class BallRack3D : MonoBehaviour
                 {
                     if (i >= targetPositions.Count) break;
                     ballsTransforms[i].position = targetPositions[i];
-                    ballsTransforms[i].rotation = Quaternion.identity;
+                    ballsTransforms[i].rotation = Quaternion.Euler(90f, 0f, 0f); ;
                 }
                 yield return new WaitForFixedUpdate();
             }
