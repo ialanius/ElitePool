@@ -12,10 +12,12 @@ public class MenuManager : MonoBehaviour
     [Header("🎮 Main Menu Buttons")]
     public Button playVsPlayerButton;
     public Button playVsAIButton;
+    public Button ChallengesButton;
 
     [Header("📝 Scene Names")]
-    public string pvpSceneName = "PvP_Scene";
-    public string pvaiSceneName = "PvAI_Scene";
+    public string pvpSceneName = "PvP_Mode";
+    public string pvaiSceneName = "PvAI_Mode";
+    public string ChallengessceneName = "Challenges_Mode";
 
     void Start()
     {
@@ -29,6 +31,9 @@ public class MenuManager : MonoBehaviour
 
         if (playVsAIButton)
             playVsAIButton.onClick.AddListener(LoadPvAIScene);
+        
+        if (ChallengesButton)
+            ChallengesButton.onClick.AddListener(LoadChallengesScene);
     }
 
     public void LoadPvPScene()
@@ -39,6 +44,11 @@ public class MenuManager : MonoBehaviour
     public void LoadPvAIScene() 
     {
         SceneManager.LoadScene(pvaiSceneName);
+    }
+
+    public void LoadChallengesScene() 
+    {
+        SceneManager.LoadScene(ChallengessceneName);
     }
     //==========================================
     public void OpenSettings()

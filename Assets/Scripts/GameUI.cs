@@ -8,9 +8,15 @@ public class GameUI : MonoBehaviour
     [Header("References")]
     public GameStateManager gameState;
     public CueStickController3D cueStick;
+    public AIPlayer aiPlayer;
 
-    [Header("AI Reference (New)")]
-    public AIPlayer aiPlayer; // ✅ أضفنا هذا لنعرف حالة الـ AI
+    [Header("Mode Panels")]
+    public GameObject standardGamePanel;
+    public GameObject challengePanel;
+
+    [Header("Challenge UI")]
+    public TextMeshProUGUI shotsLeftText;
+    public TextMeshProUGUI levelNameText;
 
     [Header("Audio Settings")]
     public AudioSource uiAudioSource;
@@ -18,7 +24,7 @@ public class GameUI : MonoBehaviour
     public AudioClip loseSound;
     public AudioClip foulSound;
 
-    [Header("Player Display")]
+    [Header("Player Display (Standard)")]
     public TextMeshProUGUI currentPlayerText;
     public TextMeshProUGUI player1NameText;
     public TextMeshProUGUI player2NameText;
@@ -26,33 +32,34 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI player2ScoreText;
     public TextMeshProUGUI player1GroupText;
     public TextMeshProUGUI player2GroupText;
-
-    [Header("Player Highlights")]
     public Image player1Highlight;
     public Image player2Highlight;
     public Color activeColor = new Color(0.2f, 0.8f, 0.2f, 0.5f);
     public Color inactiveColor = new Color(0.3f, 0.3f, 0.3f, 0.3f);
 
-    [Header("Power Meter")]
+    [Header("Common UI")]
     public GameObject powerMeterPanel;
     public Slider powerSlider;
     public Image powerFillImage;
     public Gradient powerGradient;
     public TextMeshProUGUI powerPercentText;
 
-    [Header("Game Messages")]
+    [Header("Messages")]
     public TextMeshProUGUI messageText;
-    public float messageDuration = 2f;
+    public float messageDuration = 2f; // ✅ تمت إضافته (كان ناقصاً)
     private float messageTimer = 0f;
 
-    [Header("Win Screen")]
+    [Header("End Screens")]
     public GameObject winPanel;
     public TextMeshProUGUI winnerText;
-    public Button restartButton;
-
-    [Header("Lose Screen")]
     public GameObject losePanel;
     public TextMeshProUGUI loseReasonText;
+    public Button restartButton;
+
+    // ✅✅✅ 1. قائمة الأزرار المراد قفلها
+    [Header("Buttons Lock 🔒")]
+    public Button[] gameplayButtons; // اسحب هنا كل الأزرار (Spin, Camera, TopView, etc)
+    public GameObject fineTuneWheel; // 🎡 اسحب كائن العجلة هنا
 
     [Header("Foul Indicator")]
     public GameObject foulPanel;
@@ -66,8 +73,6 @@ public class GameUI : MonoBehaviour
     {
         if (!gameState) gameState = GameStateManager.Instance;
         if (!uiAudioSource) uiAudioSource = GetComponent<AudioSource>();
-
-        // ✅ محاولة العثور على AIPlayer تلقائياً إذا نسيت سحبه
         if (!aiPlayer) aiPlayer = FindObjectOfType<AIPlayer>();
 
         if (gameState)
@@ -79,20 +84,96 @@ public class GameUI : MonoBehaviour
             gameState.OnFoulCommitted.AddListener(OnFoulCommitted);
         }
 
-        if (cueStick && powerMeterPanel)
-        {
-            cueStick.powerSliderPanel = powerMeterPanel;
-            cueStick.powerSlider = powerSlider;
-        }
+        if (restartButton) restartButton.onClick.AddListener(OnRestartButtonClicked);
 
+        // إخفاء اللوحات المبدئية
         if (powerMeterPanel) powerMeterPanel.SetActive(false);
         if (winPanel) winPanel.SetActive(false);
+        if (losePanel) losePanel.SetActive(false);
         if (foulPanel) foulPanel.SetActive(false);
         if (MenuPanel) MenuPanel.SetActive(false);
 
-        if (restartButton) restartButton.onClick.AddListener(OnRestartButtonClicked);
+        // ✅✅✅ الحل السحري: نادِ دالة التحديث فوراً
+        RefreshReferences();
 
+        SetupModeUI();
         UpdateUI();
+    }
+
+    // ✅✅✅ 2. دالة الإيقاف الشاملة (المعدلة)
+    public void SetGameplayControlsActive(bool isActive)
+    {
+        // 1. الأزرار (Spin, Camera, TopView)
+        if (gameplayButtons != null)
+        {
+            foreach (var btn in gameplayButtons)
+            {
+                if (btn) btn.interactable = isActive;
+            }
+        }
+
+        // 2. العجلة (إخفاء/إظهار)
+        if (fineTuneWheel)
+        {
+            fineTuneWheel.SetActive(isActive); // تخفي العجلة تماماً عند الخسارة
+        }
+
+        // 3. العصا والسلايدر
+        if (cueStick)
+        {
+            cueStick.enabled = isActive; // شلل العصا
+
+            // قفل السلايدر (يصبح رمادي ولا يتحرك)
+            cueStick.SetSliderInteractable(isActive);
+
+            // إخفاء العصا عند التوقف
+            if (!isActive) cueStick.Hide();
+            else cueStick.ResetStickBehindCueBall(true); // إظهارها عند العودة
+        }
+
+        // تأكيد إضافي لقفل السلايدر
+        if (powerSlider) powerSlider.interactable = isActive;
+    }
+
+    // 👇👇 أضف هذه الدالة الجديدة في أي مكان في السكربت (مثلاً في النهاية)
+    public void RefreshReferences()
+    {
+        // 1. إذا العصا ضائعة، ابحث عنها في المشهد
+        if (cueStick == null)
+        {
+            cueStick = FindObjectOfType<CueStickController3D>();
+        }
+
+        // 2. إذا وجدنا العصا، نعطيها السلايدر (حقن التبعيات)
+        if (cueStick != null)
+        {
+            if (powerMeterPanel) cueStick.powerSliderPanel = powerMeterPanel;
+            if (powerSlider) cueStick.powerSlider = powerSlider;
+
+            // تحديث إعدادات العصا لضمان ظهورها
+            cueStick.SetSliderInteractable(true);
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ GameUI: Still cannot find CueStick!");
+        }
+    }
+
+    void SetupModeUI()
+    {
+        bool isChallenge = (gameState && gameState.isChallengeMode);
+
+        if (standardGamePanel) standardGamePanel.SetActive(!isChallenge);
+        if (challengePanel) challengePanel.SetActive(isChallenge);
+
+        if (isChallenge)
+        {
+            if (ChallengeManager.Instance && ChallengeManager.Instance.currentLevel)
+            {
+                UpdateChallengeText(ChallengeManager.Instance.currentLevel.maxShots);
+                if (levelNameText) levelNameText.text = ChallengeManager.Instance.currentLevel.levelName;
+            }
+        }
     }
 
     void Update()
@@ -101,48 +182,39 @@ public class GameUI : MonoBehaviour
         UpdateMessage();
     }
 
+    public void UpdateChallengeText(int shotsLeft)
+    {
+        if (shotsLeftText)
+        {
+            shotsLeftText.text = $"Shots: {shotsLeft}";
+            if (shotsLeft <= 1) shotsLeftText.color = Color.red;
+            else shotsLeftText.color = Color.white;
+        }
+    }
+
     void UpdateUI()
     {
         if (!gameState) return;
+        if (gameState.isChallengeMode) return;
 
-        // تحديث اسم اللاعب الأول
         if (player1NameText) player1NameText.text = "Player 1";
-
-        // ✅✅✅ هنا التعديل الذكي
-        if (player2NameText)
-        {
-            // إذا كان الـ AI موجوداً ومفعلاً، نكتب اسمه وصعوبته
-            if (aiPlayer && aiPlayer.isAIEnabled)
-            {
-                player2NameText.text = $"AI"; // مثال: AI (Medium)
-            }
-            else
-            {
-                // إذا لم يكن مفعلاً، يعني أننا في مود لاعب ضد لاعب
-                player2NameText.text = "Player 2";
-            }
-        }
+        if (player2NameText) player2NameText.text = (aiPlayer && aiPlayer.isAIEnabled) ? "AI" : "Player 2";
 
         if (player1ScoreText) player1ScoreText.text = gameState.player1Score.ToString();
         if (player2ScoreText) player2ScoreText.text = gameState.player2Score.ToString();
 
         UpdateGroupText(player1GroupText, Player.Player1);
         UpdateGroupText(player2GroupText, Player.Player2);
-
         UpdateCurrentPlayerDisplay();
     }
 
-    // دالة مساعدة لتحديث نصوص المجموعات
     void UpdateGroupText(TextMeshProUGUI textUI, Player player)
     {
         if (textUI)
         {
             string group = gameState.GetPlayerGroupText(player);
             textUI.text = group == "Unassigned" ? "-" : group;
-
-            if (group == "Solids") textUI.color = Color.white;
-            else if (group == "Stripes") textUI.color = Color.white;
-            else textUI.color = Color.gray;
+            textUI.color = Color.white;
         }
     }
 
@@ -151,26 +223,12 @@ public class GameUI : MonoBehaviour
         if (!gameState) return;
         Player current = gameState.currentPlayer;
 
-        // ✅ تحديث نص "دور فلان"
         if (currentPlayerText)
         {
-            string pName = current.ToString(); // الافتراضي Player1 أو Player2
-
-            // إذا كان دور اللاعب الثاني وهو AI، نغير الاسم في الرسالة أيضاً
-            if (current == Player.Player2 && aiPlayer && aiPlayer.isAIEnabled)
-            {
-                pName = "AI";
-            }
-            // تحسين شكلي للاعب 1
-            else if (current == Player.Player1)
-            {
-                pName = "Player 1";
-            }
-            // تحسين شكلي للاعب 2 (بشري)
-            else if (current == Player.Player2)
-            {
-                pName = "Player 2";
-            }
+            string pName = current.ToString();
+            if (current == Player.Player2 && aiPlayer && aiPlayer.isAIEnabled) pName = "AI";
+            else if (current == Player.Player1) pName = "Player 1";
+            else if (current == Player.Player2) pName = "Player 2";
 
             currentPlayerText.text = $"{pName}'s Turn";
         }
@@ -210,54 +268,50 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    // ====== Audio & Panels ======
-    public void PlayWinSound() { if (uiAudioSource && winSound) uiAudioSource.PlayOneShot(winSound); }
-    public void PlayLoseSound() { if (uiAudioSource && loseSound) uiAudioSource.PlayOneShot(loseSound); }
-
     public void ShowWinPanel(string winnerName)
     {
         if (winPanel) winPanel.SetActive(true);
 
-        // ✅ تعديل اسم الفائز في لوحة الفوز أيضاً
-        string displayName = winnerName;
-        if (winnerName == "Player2" && aiPlayer && aiPlayer.isAIEnabled)
-        {
-            displayName = "AI";
-        }
+        // 🛑 قفل كل شيء
+        SetGameplayControlsActive(false);
 
-        if (winnerText) winnerText.text = $"{displayName} WINS!";
+        if (winnerText)
+        {
+            if (gameState.isChallengeMode)
+                winnerText.text = "CHALLENGE COMPLETE!";
+            else
+            {
+                string displayName = winnerName;
+                if (winnerName == "Player2" && aiPlayer && aiPlayer.isAIEnabled) displayName = "AI";
+                winnerText.text = $"{displayName} WINS!";
+            }
+        }
+        PlayWinSound();
     }
 
     public void ShowLosePanel(string reason)
     {
         if (losePanel) losePanel.SetActive(true);
+
+        // 🛑 قفل كل شيء
+        SetGameplayControlsActive(false);
+
         if (loseReasonText) loseReasonText.text = reason;
         PlayLoseSound();
     }
 
     // ====== Event Callbacks ======
-    void OnPlayerChanged(Player newPlayer)
-    {
-        UpdateUI();
-        // لن نظهر رسالة هنا لأن UpdateUI ستقوم بتحديث نص الدور في الأعلى
-        // ShowMessage($"{newPlayer}'s Turn"); 
-    }
+    void OnPlayerChanged(Player newPlayer) { UpdateUI(); }
+    void OnScoreChanged(Player p, int s) { UpdateUI(); }
+    void OnGameWon(Player w) { ShowWinPanel(w.ToString()); }
 
+    // ✅✅✅ تمت إضافة الدالة الناقصة هنا
     void OnGroupAssigned(Player player, BallGroup group)
     {
         UpdateUI();
-
         string pName = player.ToString();
         if (player == Player.Player2 && aiPlayer && aiPlayer.isAIEnabled) pName = "AI";
-
-        ShowMessage($"{pName} → {group}");
-    }
-
-    void OnScoreChanged(Player player, int newScore) => UpdateUI();
-
-    void OnGameWon(Player winner)
-    {
-        ShowWinPanel(winner.ToString());
+        ShowMessage($"{pName} Assigned {group}");
     }
 
     void OnFoulCommitted()
@@ -271,19 +325,28 @@ public class GameUI : MonoBehaviour
         ShowMessage("Foul committed!");
     }
 
-    void HideFoulPanel()
-    {
-        if (foulPanel) foulPanel.SetActive(false);
-    }
+    void HideFoulPanel() { if (foulPanel) foulPanel.SetActive(false); }
 
     public void OnRestartButtonClicked()
     {
         if (winPanel) winPanel.SetActive(false);
         if (losePanel) losePanel.SetActive(false);
+        // ✅✅✅ الإضافة هنا: إخفاء المينو أيضاً عند الريستارت
+        MenuPanelHide();
 
-        var restartBtn = FindObjectOfType<RestartButton>();
-        if (restartBtn) restartBtn.RestartGame();
+        // ▶️ تشغيل كل شيء
+        SetGameplayControlsActive(true);
 
+        if (gameState && gameState.isChallengeMode && ChallengeManager.Instance)
+        {
+            ChallengeManager.Instance.StartChallenge(ChallengeManager.Instance.currentLevel);
+        }
+        else
+        {
+            var restartBtn = FindObjectOfType<RestartButton>();
+            if (restartBtn) restartBtn.RestartGame();
+            else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
         UpdateUI();
     }
 
@@ -295,4 +358,7 @@ public class GameUI : MonoBehaviour
 
     public void MenuPanelDisplay() { if (MenuPanel) MenuPanel.SetActive(true); }
     public void MenuPanelHide() { if (MenuPanel) MenuPanel.SetActive(false); }
+
+    public void PlayWinSound() { if (uiAudioSource && winSound) uiAudioSource.PlayOneShot(winSound); }
+    public void PlayLoseSound() { if (uiAudioSource && loseSound) uiAudioSource.PlayOneShot(loseSound); }
 }

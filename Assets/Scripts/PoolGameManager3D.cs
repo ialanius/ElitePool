@@ -12,34 +12,61 @@ public class PoolGameManager3D : MonoBehaviour
     public ScratchManager scratch;
     public GameStateManager gameState;
 
-    [Header("⚡ Enhanced Physics - OPTIMIZED")]
-    [Tooltip("احتكاك الدحرجة - كلما قل = توقف أسرع")]
-    [Range(0.90f, 0.99f)]
-    public float rollingFriction = 0.985f;  // ✅ محسّن للواقعية
-
-    [Tooltip("احتكاك الانزلاق")]
-    [Range(0.90f, 0.99f)]
-    public float slidingFriction = 0.970f;  // ✅ أسرع قليلاً
-
-    [Tooltip("سرعة التحول من انزلاق لدحرجة")]
-    public float slideToRollSpeed = 1.2f;   // ✅ أسرع تحول
-
-    [Tooltip("السرعة التي تتوقف عندها الكرة")]
-    public float stopSpeed = 0.12f;         // ✅ توقف أسرع
-
-    [Tooltip("تأثير الدوران الجانبي")]
-    [Range(0f, 0.5f)]
-    public float spinInfluence = 0.15f;     // ✅ تأثير أقل
-
-    [Tooltip("سرعة توقف الدوران")]
-    [Range(0.90f, 0.999f)]
-    public float angularDamping = 0.970f;   // ✅ يوقف الدوران أسرع
-
-    [Header("Ball Rolling Visual")]
+    [Header("Physics Settings")]
+    public float rollingFriction = 0.985f;
+    public float slidingFriction = 0.970f;
+    public float slideToRollSpeed = 1.2f;
+    public float stopSpeed = 0.12f;
+    public float spinInfluence = 0.15f;
+    public float angularDamping = 0.970f;
     public bool enableRealisticRolling = true;
 
-    Dictionary<int, int> stillFrames = new Dictionary<int, int>();
     Dictionary<int, int> ignoreFrames = new Dictionary<int, int>();
+    Dictionary<int, int> stillFrames = new Dictionary<int, int>();
+    private bool allBallsWereStopped = false;
+
+    void Awake() => Instance = this;
+
+    void Start()
+    {
+        RefreshRefs();
+        if (!gameState) gameState = GameStateManager.Instance;
+        SetupEnhancedPhysics();
+    }
+
+    public void RefreshRefs()
+    {
+        // جلب الكرات من المشهد
+        var all = FindObjectsOfType<Ball3D>();
+        cueBall = all.FirstOrDefault(b => b && b.type == BallType.Cue);
+        balls = all.Where(b => b && b.type != BallType.Cue).ToArray();
+
+        // ✅ ربط مع GameState
+        if (GameStateManager.Instance)
+        {
+            GameStateManager.Instance.RefreshBallReferences();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        // تطبيق الفيزياء على كل كرة موجودة
+        if (balls != null)
+        {
+            foreach (var ball in balls)
+                if (ball) ApplyEnhancedPhysics(ball);
+        }
+
+        if (cueBall && cueBall.gameObject.activeInHierarchy && !cueBall.inPocket)
+            ApplyEnhancedPhysics(cueBall);
+
+        CheckAllBallsStopped();
+    }
+
+    // ... (باقي دوال الفيزياء ApplyEnhancedPhysics و CheckAllBallsStopped اتركها كما هي في الكود السابق) ...
+    // لقد قمت فقط بتعديل RefreshRefs و Start لضمان عدم التعارض
+
+    // (انسخ باقي دوال الفيزياء من الكود السابق وضعها هنا)
 
     public void RegisterShot(Rigidbody rb)
     {
@@ -48,27 +75,9 @@ public class PoolGameManager3D : MonoBehaviour
         rb.WakeUp();
     }
 
-    void Awake() => Instance = this;
-
-    void Start()
-    {
-        RefreshRefs();
-        if (!gameState) gameState = GameStateManager.Instance;
-
-        SetupEnhancedPhysics();
-    }
-
-    public void RefreshRefs()
-    {
-        var all = FindObjectsOfType<Ball3D>();
-        cueBall = all.FirstOrDefault(b => b && b.type == BallType.Cue);
-        balls = all.Where(b => b && b.type != BallType.Cue).ToArray();
-
-        if (gameState) gameState.RefreshBallReferences();
-    }
-
     void SetupEnhancedPhysics()
     {
+        // نفس الكود السابق...
         if (balls != null)
         {
             foreach (var ball in balls)
@@ -79,53 +88,27 @@ public class PoolGameManager3D : MonoBehaviour
                 }
             }
         }
-
-        if (cueBall && cueBall.rb)
-        {
-            ConfigureBallPhysics(cueBall.rb);
-        }
+        if (cueBall && cueBall.rb) ConfigureBallPhysics(cueBall.rb);
     }
 
     void ConfigureBallPhysics(Rigidbody rb)
     {
-        // ✅ وزن واقعي لكرة البلياردو (170 جرام)
         rb.mass = 0.17f;
-
-        // ✅ مقاومة محسّنة - خفيفة جداً
-        rb.drag = 0.05f;            // كانت 0.1 - الآن أخف!
-        rb.angularDrag = 0.3f;      // كانت 0.5 - الآن أخف!
-
+        rb.drag = 0.05f;
+        rb.angularDrag = 0.3f;
         rb.useGravity = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-        // ✅ مادة فيزيائية محسّنة - قليل احتكاك
         PhysicMaterial ballMaterial = new PhysicMaterial("BallPhysics_Optimized");
-
-        ballMaterial.dynamicFriction = 0.15f;   // ✅ أقل احتكاك = حركة أسهل
-        ballMaterial.staticFriction = 0.15f;    // ✅ مساوي للديناميكي
-        ballMaterial.bounciness = 0.85f;        // ✅ ارتداد جيد
-
-        ballMaterial.frictionCombine = PhysicMaterialCombine.Minimum;  // ✅ أقل قيمة
-        ballMaterial.bounceCombine = PhysicMaterialCombine.Maximum;    // ✅ أعلى ارتداد
+        ballMaterial.dynamicFriction = 0.15f;
+        ballMaterial.staticFriction = 0.15f;
+        ballMaterial.bounciness = 0.85f;
+        ballMaterial.frictionCombine = PhysicMaterialCombine.Minimum;
+        ballMaterial.bounceCombine = PhysicMaterialCombine.Maximum;
 
         var collider = rb.GetComponent<Collider>();
         if (collider) collider.material = ballMaterial;
-    }
-
-    void FixedUpdate()
-    {
-        if (balls != null)
-            for (int i = 0; i < balls.Length; i++)
-                ApplyEnhancedPhysics(balls[i]);
-
-        if (cueBall && cueBall.gameObject.activeInHierarchy)
-        {
-            if (!(scratch && scratch.IsPlacing) && !cueBall.inPocket)
-                ApplyEnhancedPhysics(cueBall);
-        }
-
-        CheckAllBallsStopped();
     }
 
     void ApplyEnhancedPhysics(Ball3D ball)
@@ -240,8 +223,6 @@ public class PoolGameManager3D : MonoBehaviour
             );
         }
     }
-
-    private bool allBallsWereStopped = false;
 
     void CheckAllBallsStopped()
     {

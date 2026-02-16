@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Events;
 
 public enum Player { None, Player1, Player2 }
@@ -8,6 +9,9 @@ public enum BallGroup { Unassigned, Solids, Stripes }
 public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance;
+
+    [Header("Game Mode Settings")]
+    public bool isChallengeMode = false; // ✅ يحدد الوضع تلقائياً
 
     [Header("Game State")]
     public Player currentPlayer = Player.Player1;
@@ -27,8 +31,6 @@ public class GameStateManager : MonoBehaviour
     public bool canShoot = true;
     public bool gameOver = false;
     public Player winner = Player.None;
-
-    [Header("Foul Tracking")]
     public bool foulCommitted = false;
     public bool scratchOnBreak = false;
 
@@ -45,9 +47,9 @@ public class GameStateManager : MonoBehaviour
     public PoolGameManager3D poolManager;
     public Ball3D cueBall;
     public Ball3D eightBall;
-    public Ball3D[] allBalls;
+    public List<Ball3D> allBalls = new List<Ball3D>(); // ✅ جعلناها List للمرونة
 
-    [Header("UI & Audio Integration")]
+    [Header("UI & Audio")]
     public GameUI gameUI;
     public AudioSource gameAudioSource;
     public AudioClip foulSound;
@@ -70,26 +72,46 @@ public class GameStateManager : MonoBehaviour
         if (!gameUI) gameUI = FindObjectOfType<GameUI>();
         if (!gameAudioSource) gameAudioSource = GetComponent<AudioSource>();
 
-        RefreshBallReferences();
-        ResetGame();
+        // ✅ 1. كشف الوضع تلقائياً
+        if (FindObjectOfType<ChallengeManager>())
+        {
+            isChallengeMode = true;
+            Debug.Log("🧩 Challenge Mode Detected!");
+            // في التحدي، ننتظر ChallengeManager ينشئ الكرات، فلا نفعل شيئاً هنا
+        }
+        else
+        {
+            // في الوضع العادي، نبدأ فوراً
+            RefreshBallReferences();
+            ResetGame();
+        }
     }
 
+    // ✅ 2. دالة ذكية لجلب الكرات في أي وضع
     public void RefreshBallReferences()
     {
-        if (!poolManager) poolManager = PoolGameManager3D.Instance;
-        if (poolManager)
+        allBalls.Clear();
+
+        // أ) الوضع العادي: نأخذ الكرات من PoolManager
+        if (!isChallengeMode)
         {
-            cueBall = poolManager.cueBall;
-            allBalls = poolManager.balls;
-            foreach (var ball in allBalls)
+            if (!poolManager) poolManager = PoolGameManager3D.Instance;
+            if (poolManager && poolManager.balls != null)
             {
-                if (ball.number == 8 || ball.type == BallType.Eight)
-                {
-                    eightBall = ball;
-                    break;
-                }
+                cueBall = poolManager.cueBall;
+                allBalls = new List<Ball3D>(poolManager.balls);
             }
         }
+        // ب) وضع التحدي: نبحث في المشهد لأن PoolManager قد لا يملك الكرات الجديدة
+        else
+        {
+            Ball3D[] found = FindObjectsOfType<Ball3D>();
+            allBalls = found.ToList();
+            cueBall = allBalls.FirstOrDefault(b => b.type == BallType.Cue);
+        }
+
+        // البحث عن الـ 8 في القائمة الجديدة
+        eightBall = allBalls.FirstOrDefault(b => b.number == 8 || b.type == BallType.Eight);
     }
 
     public void ResetGame()
@@ -107,9 +129,8 @@ public class GameStateManager : MonoBehaviour
         scratchOnBreak = false;
         shotInProgress = false;
         ResetShotTracking();
-        OnPlayerChanged?.Invoke(currentPlayer);
 
-        // تصفير النقاط في الواجهة أيضاً
+        OnPlayerChanged?.Invoke(currentPlayer);
         OnScoreChanged?.Invoke(Player.Player1, 0);
         OnScoreChanged?.Invoke(Player.Player2, 0);
     }
@@ -120,6 +141,12 @@ public class GameStateManager : MonoBehaviour
         ResetShotTracking();
         shotInProgress = true;
         canShoot = false;
+
+        // ✅ إبلاغ نظام التحديات إذا كان فعالاً
+        if (isChallengeMode && ChallengeManager.Instance)
+        {
+            ChallengeManager.Instance.OnShotTaken();
+        }
     }
 
     public void OnAllBallsStopped()
@@ -135,13 +162,25 @@ public class GameStateManager : MonoBehaviour
 
     public void OnBallPocketed(Ball3D ball)
     {
-        if (!ball || gameOver) return;
-        if (!shotInProgress) return;
+        if (!ball || gameOver || !shotInProgress) return;
 
         ballsPocketedThisShot.Add(ball);
         anyBallPocketed = true;
 
-        // 1. الكرة البيضاء (Scracth)
+        // هذا يضمن أنه إذا أدخل الـ 8 في التحدي، يفوز فوراً ويتجاهل باقي القوانين
+        if ((ball.type == BallType.Eight || ball.number == 8) && ChallengeManager.Instance && ChallengeManager.Instance.isChallengeActive)
+        {
+            ChallengeManager.Instance.WinChallenge();
+            return; // 🛑 توقف هنا ولا تكمل منطق اللعبة العادي
+        }
+
+        // ✅ منطق خاص للتحديات (الفوز الفوري)
+        if (isChallengeMode && (ball.type == BallType.Eight || ball.number == 8))
+        {
+            if (ChallengeManager.Instance) ChallengeManager.Instance.WinChallenge();
+            return;
+        }
+
         if (ball.type == BallType.Cue)
         {
             if (isBreakShot) scratchOnBreak = true;
@@ -149,39 +188,34 @@ public class GameStateManager : MonoBehaviour
             return;
         }
 
-        // 2. الكرة السوداء رقم 8
         if (ball.type == BallType.Eight || ball.number == 8)
         {
             pocketedEightBall = true;
             return;
         }
 
-        // 3. الكرات الملونة
-        BallGroup ballGroup = (ball.type == BallType.Solid) ? BallGroup.Solids : BallGroup.Stripes;
-        BallGroup playerGroup = GetPlayerGroup(currentPlayer);
+        // منطق اللعبة العادية (Solids/Stripes)
+        if (!isChallengeMode)
+        {
+            BallGroup ballGroup = (ball.type == BallType.Solid) ? BallGroup.Solids : BallGroup.Stripes;
+            BallGroup playerGroup = GetPlayerGroup(currentPlayer);
 
-        // الحالة أ: الطاولة مفتوحة (لم يتم تحديد المجموعات بعد)
-        if (player1Group == BallGroup.Unassigned && player2Group == BallGroup.Unassigned)
-        {
-            AssignGroup(currentPlayer, ballGroup);
-            pocketedOwnBall = true;
-            AddScore(currentPlayer); // النقطة للاعب الحالي لأنه حدد المجموعة
-        }
-        // الحالة ب: الكرة تابعة لمجموعة اللاعب الحالي
-        else if (playerGroup == ballGroup)
-        {
-            pocketedOwnBall = true;
-            AddScore(currentPlayer); // نقطة لي
-        }
-        // الحالة ج: الكرة تابعة للخصم
-        else
-        {
-            // ✅✅ القاعدة الجديدة: النقطة تذهب للخصم
-            Player opponent = (currentPlayer == Player.Player1) ? Player.Player2 : Player.Player1;
-            AddScore(opponent);
-
-            Debug.Log($"Oops! Pocketed opponent's ball. Point given to {opponent}");
-            // ملاحظة: بما أن pocketedOwnBall ستبقى false، سينتهي الدور تلقائياً في EvaluateShot
+            if (player1Group == BallGroup.Unassigned && player2Group == BallGroup.Unassigned)
+            {
+                AssignGroup(currentPlayer, ballGroup);
+                pocketedOwnBall = true;
+                AddScore(currentPlayer);
+            }
+            else if (playerGroup == ballGroup)
+            {
+                pocketedOwnBall = true;
+                AddScore(currentPlayer);
+            }
+            else
+            {
+                Player opponent = (currentPlayer == Player.Player1) ? Player.Player2 : Player.Player1;
+                AddScore(opponent);
+            }
         }
     }
 
@@ -189,217 +223,143 @@ public class GameStateManager : MonoBehaviour
     {
         if (validHit || !hitBall || !shotInProgress) return;
 
+        // في التحدي، أي ضربة تعتبر صحيحة مبدئياً لتسهيل اللعب
+        if (isChallengeMode)
+        {
+            validHit = true;
+            return;
+        }
+
         BallGroup playerGroup = GetPlayerGroup(currentPlayer);
 
-        // إذا الطاولة مفتوحة، أي كرة تعتبر ضربة صحيحة (ما عدا 8 إذا لم تكن هي الهدف)
         if (player1Group == BallGroup.Unassigned && player2Group == BallGroup.Unassigned)
         {
-            // لا تضرب 8 أولاً إلا إذا لم يبق سواها (نادرة في البداية)
             if (hitBall.type != BallType.Eight) validHit = true;
             return;
         }
 
         BallGroup hitGroup = (hitBall.type == BallType.Solid) ? BallGroup.Solids : BallGroup.Stripes;
 
-        if (hitGroup == playerGroup)
-        {
-            validHit = true;
-        }
-        else if (hitBall.type == BallType.Eight && AllOwnBallsPocketed(currentPlayer))
-        {
-            validHit = true;
-        }
-        else
-        {
-            // ضربت كرة الخصم أولاً
-            foulCommitted = true;
-        }
+        if (hitGroup == playerGroup) validHit = true;
+        else if (hitBall.type == BallType.Eight && AllOwnBallsPocketed(currentPlayer)) validHit = true;
+        else foulCommitted = true;
     }
 
     public void OnBallHitCushion(Ball3D ball)
     {
-        if (!shotInProgress) return;
-        hitAnyCushion = true;
+        if (shotInProgress) hitAnyCushion = true;
     }
 
     void EvaluateShot()
     {
-        // 1) سكراتش في الكسرة
+        // =========================================================
+        // 🧩 منطق وضع التحدي (Challenge Mode Logic)
+        // =========================================================
+        if (isChallengeMode)
+        {
+            // 1. إذا التحدي انتهى بالفعل (فوز أو خسارة سابقة)، لا تفعل شيئاً
+            if (ChallengeManager.Instance && !ChallengeManager.Instance.isChallengeActive)
+            {
+                ResetShotTracking();
+                return;
+            }
+
+            // 2. التحقق من الخسارة: سقوط الكرة البيضاء (Scratch)
+            if (anyBallPocketed && ballsPocketedThisShot.Any(b => b.type == BallType.Cue))
+            {
+                Debug.Log("💀 Lost: Cue Ball Scratched!");
+                if (ChallengeManager.Instance) ChallengeManager.Instance.LoseChallenge();
+            }
+
+            // 3. التحقق من الخسارة: انتهاء عدد الضربات
+            // (نصل هنا فقط إذا لم نفز، لأن الفوز يتم التقاطه فوراً في OnBallPocketed)
+            else if (ChallengeManager.Instance && ChallengeManager.Instance.shotsTaken >= ChallengeManager.Instance.currentLevel.maxShots)
+            {
+                Debug.Log("💀 Lost: Out of Shots!");
+                ChallengeManager.Instance.LoseChallenge();
+            }
+
+            ResetShotTracking();
+            return; // 🛑 توقف هنا، لا تكمل منطق اللعبة العادية
+        }
+
+        // =========================================================
+        // 🎱 منطق اللعبة العادية (Standard Game Logic)
+        // =========================================================
+
         if (scratchOnBreak)
         {
-            TriggerFoulSound();
-            SwitchPlayer();
-            ResetShotTracking();
-            return;
+            TriggerFoulSound(); SwitchPlayer(); ResetShotTracking(); return;
         }
+        if (!validHit && !isBreakShot) foulCommitted = true;
+        if (!isBreakShot && validHit && !foulCommitted && !anyBallPocketed && !hitAnyCushion) foulCommitted = true;
 
-        // 2) لم تضرب أي كرة
-        if (!validHit && !isBreakShot)
-        {
-            foulCommitted = true;
-        }
-
-        // 3) قاعدة الكوشن (يجب أن تلمس أي كرة الكوشن بعد الاصطدام)
-        if (!isBreakShot && validHit && !foulCommitted)
-        {
-            if (!anyBallPocketed && !hitAnyCushion)
-            {
-                foulCommitted = true;
-            }
-        }
-
-        // 4) معالجة الفاولات
         if (foulCommitted)
         {
-            OnFoulCommitted?.Invoke();
-            TriggerFoulSound();
-            SwitchPlayer();
-            ResetShotTracking();
-            return;
+            OnFoulCommitted?.Invoke(); TriggerFoulSound(); SwitchPlayer(); ResetShotTracking(); return;
         }
 
-        // 5) منطق الكرة 8
         if (pocketedEightBall)
         {
-            if (AllOwnBallsPocketed(currentPlayer))
-            {
-                WinGame(currentPlayer);
-            }
-            else
-            {
-                LoseGame("Potted 8-Ball Early!");
-            }
+            if (AllOwnBallsPocketed(currentPlayer)) WinGame(currentPlayer);
+            else LoseGame("Potted 8-Ball Early!");
             return;
         }
 
-        // 6) الاستمرار أو تغيير الدور
-        // إذا أدخلت كرتي (حتى لو أدخلت كرة خصم معها)، أستمر
-        // إذا أدخلت كرة خصم فقط، pocketedOwnBall تكون false ويتغير الدور
-        if (pocketedOwnBall)
-        {
-            // Player continues
-        }
-        else
-        {
-            SwitchPlayer();
-        }
+        if (pocketedOwnBall) { /* Continue */ }
+        else SwitchPlayer();
 
         isBreakShot = false;
         ResetShotTracking();
     }
 
-    void TriggerFoulSound()
-    {
-        if (gameAudioSource && foulSound)
-        {
-            gameAudioSource.PlayOneShot(foulSound);
-        }
-        else if (gameUI && gameUI.uiAudioSource && gameUI.foulSound)
-        {
-            gameUI.uiAudioSource.PlayOneShot(gameUI.foulSound);
-        }
-    }
+    // دوال مساعدة
+    void TriggerFoulSound() { if (gameAudioSource && foulSound) gameAudioSource.PlayOneShot(foulSound); }
 
     void WinGame(Player player)
     {
-        gameOver = true;
-        winner = player;
-        canShoot = false;
-        shotInProgress = false;
-
+        gameOver = true; winner = player; canShoot = false; shotInProgress = false;
         OnGameWon?.Invoke(player);
-
-        if (gameUI)
-        {
-            gameUI.ShowWinPanel(player.ToString());
-            if (player == Player.Player1) gameUI.PlayWinSound();
-            else gameUI.PlayLoseSound();
-        }
+        if (gameUI) { gameUI.ShowWinPanel(player.ToString()); if (player == Player.Player1) gameUI.PlayWinSound(); else gameUI.PlayLoseSound(); }
     }
 
     void LoseGame(string reason)
     {
-        gameOver = true;
-        canShoot = false;
-        shotInProgress = false;
-
-        Debug.Log($" {currentPlayer} LOST! Reason: {reason}");
-
-        if (gameUI)
-        {
-            gameUI.ShowLosePanel(reason);
-        }
+        gameOver = true; canShoot = false; shotInProgress = false;
+        if (gameUI) gameUI.ShowLosePanel(reason);
     }
 
     void ResetShotTracking()
     {
-        validHit = false;
-        hitAnyCushion = false;
-        anyBallPocketed = false;
-        pocketedOwnBall = false;
-        pocketedEightBall = false;
-        foulCommitted = false;
-        scratchOnBreak = false;
-        ballsPocketedThisShot.Clear();
+        validHit = false; hitAnyCushion = false; anyBallPocketed = false;
+        pocketedOwnBall = false; pocketedEightBall = false; foulCommitted = false;
+        scratchOnBreak = false; ballsPocketedThisShot.Clear();
     }
 
-    void SwitchPlayer()
-    {
-        currentPlayer = (currentPlayer == Player.Player1) ? Player.Player2 : Player.Player1;
-        OnPlayerChanged?.Invoke(currentPlayer);
-    }
+    void SwitchPlayer() { currentPlayer = (currentPlayer == Player.Player1) ? Player.Player2 : Player.Player1; OnPlayerChanged?.Invoke(currentPlayer); }
 
     void AssignGroup(Player player, BallGroup group)
     {
-        if (player == Player.Player1)
-        {
-            player1Group = group;
-            player2Group = (group == BallGroup.Solids) ? BallGroup.Stripes : BallGroup.Solids;
-        }
-        else
-        {
-            player2Group = group;
-            player1Group = (group == BallGroup.Solids) ? BallGroup.Stripes : BallGroup.Solids;
-        }
+        if (player == Player.Player1) { player1Group = group; player2Group = (group == BallGroup.Solids) ? BallGroup.Stripes : BallGroup.Solids; }
+        else { player2Group = group; player1Group = (group == BallGroup.Solids) ? BallGroup.Stripes : BallGroup.Solids; }
         OnGroupAssigned?.Invoke(player, group);
     }
 
-    void AddScore(Player player)
-    {
-        if (player == Player.Player1) player1Score++;
-        else player2Score++;
-        OnScoreChanged?.Invoke(player, GetPlayerScore(player));
-    }
+    void AddScore(Player player) { if (player == Player.Player1) player1Score++; else player2Score++; OnScoreChanged?.Invoke(player, GetPlayerScore(player)); }
 
     bool AllOwnBallsPocketed(Player player)
     {
         BallGroup group = GetPlayerGroup(player);
         if (group == BallGroup.Unassigned) return false;
-
         foreach (var ball in allBalls)
         {
-            if (!ball || ball.inPocket) continue;
-            if (ball.type == BallType.Eight) continue;
-
-            BallGroup ballGroup = (ball.type == BallType.Solid) ? BallGroup.Solids : BallGroup.Stripes;
-            if (ballGroup == group) return false;
+            if (!ball || ball.inPocket) continue; if (ball.type == BallType.Eight) continue;
+            BallGroup bg = (ball.type == BallType.Solid) ? BallGroup.Solids : BallGroup.Stripes; if (bg == group) return false;
         }
         return true;
     }
 
-    public BallGroup GetPlayerGroup(Player player)
-    {
-        return (player == Player.Player1) ? player1Group : player2Group;
-    }
-
-    public int GetPlayerScore(Player player)
-    {
-        return (player == Player.Player1) ? player1Score : player2Score;
-    }
-
-    public string GetPlayerGroupText(Player player)
-    {
-        BallGroup group = GetPlayerGroup(player);
-        return group == BallGroup.Unassigned ? "Unassigned" : group.ToString();
-    }
+    public BallGroup GetPlayerGroup(Player player) => (player == Player.Player1) ? player1Group : player2Group;
+    public int GetPlayerScore(Player player) => (player == Player.Player1) ? player1Score : player2Score;
+    public string GetPlayerGroupText(Player player) { BallGroup g = GetPlayerGroup(player); return g == BallGroup.Unassigned ? "Unassigned" : g.ToString(); }
 }

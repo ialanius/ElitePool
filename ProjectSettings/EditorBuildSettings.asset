@@ -15,8 +15,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 31f83186c416e5540bf1f01ba3548746
   - enabled: 1
-    path: Assets/Scenes/PvAI_Scene.unity
+    path: Assets/Scenes/PvP_Mode.unity
+    guid: 37e3ae4407224ff419a302a21b3a83b1
+  - enabled: 1
+    path: Assets/Scenes/PvAI_Mode.unity
     guid: 085ab04b1fdc5b4489ee629c8d946305
+  - enabled: 1
+    path: Assets/Scenes/Challenges_Mode.unity
+    guid: 79671ed8d370b794c92ef8f9a6819035
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 7b92a5b31b7bb124e817c78fcb432dde,
       type: 2}

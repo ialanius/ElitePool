@@ -1039,7 +1039,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 294207966}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 498347406}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: LoadChallengesScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &294207966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1740,7 +1752,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &498347405
 Transform:
   m_ObjectHideFlags: 0
@@ -1772,10 +1784,12 @@ MonoBehaviour:
   profilePanel: {fileID: 232941742}
   MainMenuPanel: {fileID: 1524767980}
   ChangeNamePanel: {fileID: 295720210}
-  playVsPlayerButton: {fileID: 0}
-  playVsAIButton: {fileID: 0}
-  pvpSceneName: PvP_Scene
-  pvaiSceneName: PvAI_Scene
+  playVsPlayerButton: {fileID: 786850561}
+  playVsAIButton: {fileID: 947826705}
+  ChallengesButton: {fileID: 294207965}
+  pvpSceneName: PvP_Mode
+  pvaiSceneName: PvAI_Mode
+  ChallengessceneName: Challenges_Mode
 --- !u!1 &500325573
 GameObject:
   m_ObjectHideFlags: 0
@@ -2522,7 +2536,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 498347406}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: LoadPvPScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2693,8 +2707,10 @@ MonoBehaviour:
   ChangeNamePanel: {fileID: 295720210}
   playVsPlayerButton: {fileID: 786850561}
   playVsAIButton: {fileID: 947826705}
+  ChallengesButton: {fileID: 0}
   pvpSceneName: PvP_Scene
   pvaiSceneName: PvAI_Scene
+  ChallengessceneName: Challenges_Mode
 --- !u!1 &810762137
 GameObject:
   m_ObjectHideFlags: 0
@@ -3510,7 +3526,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 947826706}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 498347406}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: LoadPvAIScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &947826706
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,6 +25,7 @@ public class CueStickController3D : MonoBehaviour
     public float maxPower = 12f;
     public AnimationCurve powerCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     public float breakBoost = 1.35f;
+    public GameObject wheelButton;
 
     [Header("Aiming")]
     public float stickDistance = 0.14f;
@@ -193,7 +194,7 @@ public class CueStickController3D : MonoBehaviour
 
         // ✅ إضافة: إظهار السلايدر فوراً عند تجهيز العصا
         if (powerSliderPanel) powerSliderPanel.SetActive(true);
-
+        if (wheelButton) wheelButton.SetActive(true);
         UpdateStick(0f);
     }
 
@@ -224,7 +225,7 @@ public class CueStickController3D : MonoBehaviour
             activeFingerId = -1;
 
             currentState = ShootState.ReadyToShoot;
-
+            if (wheelButton) wheelButton.SetActive(true);
             if (powerSliderPanel) powerSliderPanel.SetActive(true);
             if (powerSlider) powerSlider.value = 0f;
             power01 = 0f;
@@ -309,7 +310,7 @@ public class CueStickController3D : MonoBehaviour
 
         if (powerSliderPanel) powerSliderPanel.SetActive(false);
         if (aimLine) aimLine.Hide();
-
+        if (wheelButton) wheelButton.SetActive(false);
         if (!cueBall) return;
 
         var rb = cueBall.GetComponent<Rigidbody>();
@@ -478,6 +479,9 @@ public class CueStickController3D : MonoBehaviour
 
         if (powerSlider)
             powerSlider.value = 0f;
+
+        if (wheelButton)
+            wheelButton.SetActive(false);
     }
 
 

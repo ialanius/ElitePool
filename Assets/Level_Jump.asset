@@ -16,4 +16,8 @@ MonoBehaviour:
   description: Sink the 8-ball in 1 shot!
   maxShots: 1
   cueBallPosition: {x: -5.1235, y: 0.25, z: -0.88}
-  targetBalls: []
+  targetBalls:
+  - position: {x: 5.116, y: 0.25, z: -0.872}
+    type: 1
+  - position: {x: 6.148, y: 0.25, z: -0.872}
+    type: 3

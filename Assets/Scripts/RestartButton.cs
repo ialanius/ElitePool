@@ -11,8 +11,8 @@ public class RestartButton : MonoBehaviour
     public GameUI gameUI;
 
     [Header("Balls")]
-    public Rigidbody[] allBalls;   // 16 Rigidbodies
-    public Ball3D[] ballScripts;   // 16 Ball3D
+    public Rigidbody[] allBalls;
+    public Ball3D[] ballScripts;
 
     [Header("Cue Ball Settings")]
     public Vector3 cueBallResetPos = new Vector3(-5.1235f, 0.25f, -0.88f);
@@ -24,21 +24,49 @@ public class RestartButton : MonoBehaviour
         if (!gameState) gameState = GameStateManager.Instance;
         if (!gameUI) gameUI = FindObjectOfType<GameUI>();
 
-        if (allBalls == null || allBalls.Length == 0)
-            allBalls = FindObjectsOfType<Rigidbody>();
+        // تحديث المراجع في البداية
+        RefreshBallReferences();
+    }
 
-        if (ballScripts == null || ballScripts.Length == 0)
-            ballScripts = FindObjectsOfType<Ball3D>();
+    // دالة مساعدة لتحديث مراجع الكرات
+    void RefreshBallReferences()
+    {
+        allBalls = FindObjectsOfType<Rigidbody>();
+        ballScripts = FindObjectsOfType<Ball3D>();
     }
 
     public void RestartGame()
     {
-        // 1. إخفاء العصا
+        // ✅ 1. فحص ذكي: هل نحن في وضع التحدي؟
+        if (gameState && gameState.isChallengeMode)
+        {
+            Debug.Log("🔄 Restarting Challenge Level...");
+
+            // نخفي لوحات الفوز والخسارة أولاً
+            if (gameUI)
+            {
+                if (gameUI.winPanel) gameUI.winPanel.SetActive(false);
+                if (gameUI.losePanel) gameUI.losePanel.SetActive(false);
+                if (gameUI.foulPanel) gameUI.foulPanel.SetActive(false);
+            }
+
+            // نوجه الأمر لمدير التحديات ليعيد بناء المرحلة
+            if (ChallengeManager.Instance && ChallengeManager.Instance.currentLevel)
+            {
+                ChallengeManager.Instance.StartChallenge(ChallengeManager.Instance.currentLevel);
+            }
+            return; // 🛑 توقف هنا! لا تكمل كود الرص العادي
+        }
+
+        // ==========================================================
+        // 👇 كود اللعبة العادية (لن يتم تنفيذه إذا كنا في تحدي) 👇
+        // ==========================================================
+
+        // 1. إخفاء العصا وقفل السلايدر
         if (cueStick)
         {
             cueStick.Hide();
             cueStick.StopAllCoroutines();
-            // ✅✅ إضافة جديدة: قفل السلايدر فوراً عند بدء الرص
             cueStick.SetSliderInteractable(false);
         }
 
@@ -48,12 +76,12 @@ public class RestartButton : MonoBehaviour
         if (gameState) gameState.ResetGame();
 
         // 3. تصفير ScratchManager
-        if (scratch)
-        {
-            scratch.ResetScratchManager();
-        }
+        if (scratch) scratch.ResetScratchManager();
 
-        // 4. تفعيل الكرات
+        // 4. تحديث المراجع (لأن الكرات قد تكون تغيرت)
+        RefreshBallReferences();
+
+        // 5. تفعيل الكرات وتصفير فيزيائها
         if (ballScripts != null)
         {
             foreach (var b in ballScripts)
@@ -61,44 +89,28 @@ public class RestartButton : MonoBehaviour
                 if (!b) continue;
                 b.inPocket = false;
                 b.gameObject.SetActive(true);
+
+                if (b.rb)
+                {
+                    b.rb.isKinematic = false;
+                    b.rb.velocity = Vector3.zero;
+                    b.rb.angularVelocity = Vector3.zero;
+                    b.rb.Sleep();
+                }
             }
         }
 
-        // 5. تصفير الفيزياء للجميع (قبل الرص)
-        if (allBalls != null)
-        {
-            foreach (var rb in allBalls)
-            {
-                if (!rb) continue;
-                // نلغي الكينماتك أولاً لنتمكن من تصفير السرعة دون تحذيرات
-                rb.isKinematic = false;
-                rb.velocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-                rb.Sleep();
-            }
-        }
-
-        // 6. رص الكرات الملونة
+        // 6. رص الكرات (للوضع العادي فقط)
         float waitTime = 0.1f;
         if (rack)
         {
-            rack.RackBalls(); // هذا السكربت سيقوم بتجميد الكرات (Kinematic)
+            rack.RackBalls();
+            if (rack.animateRacking) waitTime = 2.0f;
 
-            if (rack.animateRacking)
-            {
-                waitTime = 2.0f;
-            }
-
-            // ✅✅ تصحيح مكان الكرة البيضاء ✅✅
             if (rack.cueBall)
             {
-                // نفرض الموقع المحدد بدقة
                 rack.cueBall.position = cueBallResetPos;
                 rack.cueBall.rotation = Quaternion.identity;
-
-                // ❌ أزلت كود تصفير الفيزياء من هنا
-                // لأن سكربت BallRack3D قام بجعلها Kinematic بالفعل
-                // ومحاولة تصفير السرعة الآن ستسبب التحذير الأصفر
             }
         }
 
@@ -107,7 +119,7 @@ public class RestartButton : MonoBehaviour
         {
             if (gameUI.winPanel) gameUI.winPanel.SetActive(false);
             if (gameUI.foulPanel) gameUI.foulPanel.SetActive(false);
-            if (gameUI.losePanel) gameUI.losePanel.SetActive(false); // إخفاء لوحة الخسارة أيضاً
+            if (gameUI.losePanel) gameUI.losePanel.SetActive(false);
             gameUI.MenuPanelHide();
         }
 
@@ -118,17 +130,14 @@ public class RestartButton : MonoBehaviour
 
     IEnumerator ResetCueAfterRack(float delay)
     {
-        // الانتظار حتى تنتهي حركة الكرات وتعود الفيزياء للعمل
         yield return new WaitForSeconds(delay);
         yield return new WaitForFixedUpdate();
 
         if (cueStick)
         {
             cueStick.ResetStickBehindCueBall(false);
-            // ✅✅ إضافة جديدة: فتح السلايدر الآن فقط
             cueStick.SetSliderInteractable(true);
         }
-
         resetCo = null;
     }
 }
