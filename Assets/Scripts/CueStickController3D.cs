@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
+
 public class CueStickController3D : MonoBehaviour
 {
     [Header("Refs")]
@@ -80,7 +81,12 @@ public class CueStickController3D : MonoBehaviour
     bool isSliderBeingDragged = false;
     bool stickPositionInitialized = false;
     public float power01 { get; private set; }
-    Vector3 shotDir = Vector3.right;
+
+    // ✅ للـAI: جعل shotDir قابل للوصول
+    internal Vector3 shotDir = Vector3.right;
+    internal Vector3 aimDirection = Vector3.right;
+    [Header("AI Reference")]
+    public AIPlayer aiPlayer; // 👈 اسحب كائن الـ AI هنا
     int activeFingerId = -1;
 
     Vector3 baseStickPos;
@@ -97,6 +103,12 @@ public class CueStickController3D : MonoBehaviour
             bodyBaseScale = stickBody.localScale;
 
         if (!gameState) gameState = GameStateManager.Instance;
+
+        // ✅✅✅ الإضافة هنا: البحث التلقائي عن Spin Controller
+        if (!spinController)
+        {
+            spinController = FindObjectOfType<SpinController>();
+        }
 
         if (powerSlider)
         {
@@ -125,6 +137,19 @@ public class CueStickController3D : MonoBehaviour
 
     void Update()
     {
+        // ✅ إذا كان الزمن متوقفاً (القائمة مفتوحة)، لا تفعل شيئاً
+        if (Time.timeScale == 0f) return;
+
+        // ✅✅ التعديل الذكي:
+        // نمنع التحكم فقط إذا:
+        // 1. يوجد سكربت AI
+        // 2. الـ AI مفعل (شغال)
+        // 3. الدور الحالي هو دور الـ AI
+        if (aiPlayer && aiPlayer.isAIEnabled && gameState && gameState.currentPlayer == aiPlayer.aiPlayerID)
+        {
+            return; // هذا دور الـ AI، لا تلمس العصا!
+        }
+
         if (!cueBall || !cam) return;
 
         if (gameState && gameState.gameOver) { Hide(); return; }
@@ -278,7 +303,7 @@ public class CueStickController3D : MonoBehaviour
         return false;
     }
 
-    void Shoot()
+    public void Shoot()
     {
         currentState = ShootState.Shooting;
 
@@ -308,7 +333,7 @@ public class CueStickController3D : MonoBehaviour
 
         if (gameState && gameState.isBreakShot)
             finalPower *= breakBoost;
-       
+
         // تشغيل صوت الضربة
         if (cueAudioSource && cueHitSound)
         {
@@ -660,5 +685,105 @@ public class CueStickController3D : MonoBehaviour
 
         // تحديث شكل العصا وخط التصويب فوراً
         UpdateStick(power01);
+    }
+
+
+    // ════════════════════════════════════════════════════════════════════
+    // 🤖 AI CONTROL FUNCTIONS
+    // ════════════════════════════════════════════════════════════════════
+    // هذه الدوال تسمح للـAI بالتحكم في العصا برمجياً
+
+    /// <summary>
+    /// للـAI: ضبط اتجاه التصويب
+    /// </summary>
+    public void SetAimDirection(Vector3 direction)
+    {
+        // تنظيف الاتجاه
+        direction.y = 0f;
+        direction.Normalize();
+
+        // ضبط الاتجاه
+        shotDir = direction;
+        aimDirection = direction;
+
+        // تحديث خط التصويب
+        if (aimLine)
+        {
+            aimLine.SetAimDirection(direction);
+        }
+
+        // تحديث موقع العصا
+        UpdateStick(power01);
+
+        Debug.Log($"🎯 AI aim set: {direction}");
+    }
+
+    /// <summary>
+    /// للـAI: ضبط قوة الضربة (0.0 - 1.0)
+    /// </summary>
+    public void SetPower(float powerValue)
+    {
+        power01 = Mathf.Clamp01(powerValue);
+
+        // تحديث السلايدر إذا موجود
+        if (powerSlider)
+        {
+            powerSlider.value = power01;
+        }
+
+        // تحديث موقع العصا
+        UpdateStick(power01);
+
+        Debug.Log($"⚡ AI power set: {power01:F2}");
+    }
+
+    /// <summary>
+    /// للـAI: تنفيذ الضربة مباشرة
+    /// </summary>
+    public void ExecuteAIShot()
+    {
+        if (currentState == ShootState.Shooting)
+        {
+            Debug.LogWarning("⚠️ Cannot shoot - already shooting!");
+            return;
+        }
+
+        // تأكد من تجهيز العصا
+        if (!stickPositionInitialized)
+        {
+            InitializeStickPosition();
+        }
+
+        // ضبط الحالة للـReadyToShoot
+        currentState = ShootState.ReadyToShoot;
+
+        // تنفيذ الضربة
+        Shoot();
+
+        Debug.Log("🤖 AI shot executed!");
+    }
+
+    // ════════════════════════════════════════════════════════════════════
+    // ✅ هذه الدالة مخصصة للذكاء الاصطناعي لكي يستطيع تحديد القوة
+    // ✅ التعديل الجديد: ربط الـ AI بوظائف العصا الرئيسية
+    public void Shoot(float power)
+    {
+        // 1. تحديث قيمة القوة الداخلية للعصا
+        power01 = Mathf.Clamp01(power);
+
+        // 2. إذا كان السلايدر موجوداً، نحدثه شكلياً
+        if (powerSlider) powerSlider.value = power01;
+
+        // 3. نضبط حالة العصا لتكون جاهزة للضرب
+        currentState = ShootState.ReadyToShoot;
+
+        // 4. نستدعي دالة الضرب الرئيسية (التي تشغل الصوت، وتحسب السبين، وتبلغ مدير اللعبة)
+        Shoot();
+
+        Debug.Log($"🤖 AI Fired with power: {power01}");
+
+
+        // تشغيل صوت الضربة إن وجد
+        // if (audioSource) audioSource.Play();
     }
 }

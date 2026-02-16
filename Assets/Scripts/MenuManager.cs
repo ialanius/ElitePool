@@ -1,19 +1,46 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] string gameSceneName = "Main";
     [SerializeField] GameObject settingsPanel; // اختياري
     [SerializeField] GameObject profilePanel;
     [SerializeField] GameObject MainMenuPanel;
     [SerializeField] GameObject ChangeNamePanel;
     
-    public void Play()
+    [Header("🎮 Main Menu Buttons")]
+    public Button playVsPlayerButton;
+    public Button playVsAIButton;
+
+    [Header("📝 Scene Names")]
+    public string pvpSceneName = "PvP_Scene";
+    public string pvaiSceneName = "PvAI_Scene";
+
+    void Start()
     {
-        SceneManager.LoadScene(gameSceneName);
+        SetupButtons();
     }
 
+    void SetupButtons()
+    {
+        if (playVsPlayerButton)
+            playVsPlayerButton.onClick.AddListener(LoadPvPScene);
+
+        if (playVsAIButton)
+            playVsAIButton.onClick.AddListener(LoadPvAIScene);
+    }
+
+    public void LoadPvPScene()
+    {
+        SceneManager.LoadScene(pvpSceneName);
+    }
+
+    public void LoadPvAIScene() 
+    {
+        SceneManager.LoadScene(pvaiSceneName);
+    }
+    //==========================================
     public void OpenSettings()
     {
         if (settingsPanel != null)

@@ -8,283 +8,174 @@ public class AimLine3D : MonoBehaviour
     public LineRenderer lineRenderer;
     public GameStateManager gameState;
 
-    [Header("Unified Settings")]
-    public float lineLength = 4f;
-    public float lineWidth = 0.03f;
-    public Color lineColor = Color.white;
-
-    [Header("Ball Size")]
-    public float ballRadius = 0.25f;
+    [Header("Settings")]
+    public float lineLength = 5f;
+    public float lineWidth = 0.02f;
+    public Color mainLineColor = Color.white;
+    public Color targetPathColor = Color.cyan;
+    public float ballRadius = 0.14f; // نصف قطر الكرة (تأكد من هذا الرقم في لعبتك)
 
     [Header("Visuals")]
-    public GameObject ghostBallPrefab;
+    public GameObject ghostBallPrefab;   // ضع بريفاب كرة شفافة هنا
     private GameObject ghostBallInstance;
-    public GameObject collisionPointPrefab;
-    private GameObject collisionPointInstance;
-    public bool showCollisionPoint = true;
 
-    [Header("Bounce Settings")]
-    public LineRenderer bounceLineRenderer;
-    public bool showBounce = true;
-    public float bounceLength = 2.0f;
-
-    [Header("Target Ball Path")]
-    public LineRenderer targetBallPathRenderer;
-    public bool showTargetPath = true;
-    public float targetPathLength = 2f;
+    [Header("Secondary Lines")]
+    public LineRenderer bounceLine;      // خط ارتداد الكرة البيضاء
+    public LineRenderer targetBallPath;  // مسار الكرة الهدف
 
     [Header("Masks")]
     public LayerMask ballMask;
     public LayerMask wallMask;
-    public LayerMask pocketMask; // ✅ 1. ماسك جديد للجيوب
-    public LayerMask boundsMask;
+    public LayerMask pocketMask;
 
     private Vector3 aimDirection = Vector3.right;
-    private Ball3D targetBall = null;
 
     void Awake()
     {
-        if (!lineRenderer) lineRenderer = GetComponent<LineRenderer>();
-
-        SetupLineRenderer();
-        SetupBounceRenderer();
-        SetupTargetPathRenderer();
-        SetupGhostBall();
-        SetupCollisionPoint();
+        SetupRenderers();
+        if (ghostBallPrefab)
+        {
+            ghostBallInstance = Instantiate(ghostBallPrefab);
+            ghostBallInstance.SetActive(false);
+            // إزالة الكولايدر من كرة الشبح لتجنب المشاكل
+            if (ghostBallInstance.GetComponent<Collider>()) Destroy(ghostBallInstance.GetComponent<Collider>());
+        }
     }
 
-    void Start()
+    void SetupRenderers()
     {
-        if (!gameState) gameState = GameStateManager.Instance;
+        if (!lineRenderer) lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.startWidth = lineWidth; lineRenderer.endWidth = lineWidth;
+
+        if (!bounceLine) bounceLine = CreateLine("BounceLine", mainLineColor);
+        if (!targetBallPath) targetBallPath = CreateLine("TargetBallPath", targetPathColor);
+    }
+
+    LineRenderer CreateLine(string name, Color col)
+    {
+        GameObject go = new GameObject(name);
+        go.transform.SetParent(transform);
+        LineRenderer lr = go.AddComponent<LineRenderer>();
+        lr.startWidth = lineWidth; lr.endWidth = lineWidth;
+        lr.material = new Material(Shader.Find("Sprites/Default"));
+        lr.startColor = col; lr.endColor = col;
+        lr.enabled = false;
+        return lr;
     }
 
     public void SetAimDirection(Vector3 direction)
     {
-        if (direction.sqrMagnitude < 0.00001f) return;
+        if (direction.sqrMagnitude < 0.001f) return;
         aimDirection = direction.normalized;
         aimDirection.y = 0f;
     }
-
-    public void SetPower01(float power) { }
 
     public void RenderLine()
     {
         if (!cueBall || !lineRenderer) return;
 
-        // إخفاء العناصر
-        HideBounce();
-        HideGhostBall();
-        HideCollisionPoint();
-        HideTargetPath();
+        HideAll();
 
         Vector3 startPos = cueBall.position;
-        List<Vector3> mainPoints = new List<Vector3>();
-        mainPoints.Add(startPos);
+        Vector3 endPos = startPos + aimDirection * lineLength;
 
         RaycastHit hit;
-        // ✅ 2. دمج الماسكات (كرات + جدران + جيوب)
-        int combinedMask = ballMask.value | wallMask.value | pocketMask.value | boundsMask.value;
+        int layerMask = ballMask | wallMask | pocketMask;
 
-        // ✅ 3. تفعيل Collide لاكتشاف الجيوب (لأنها غالباً Triggers)
-        bool hitSomething = Physics.Raycast(startPos, aimDirection, out hit, lineLength, combinedMask, QueryTriggerInteraction.Collide);
-
-        Vector3 endPoint;
-
-        if (hitSomething)
+        // ✅ SphereCast بدلاً من Raycast لمحاكاة حجم الكرة الحقيقي
+        if (Physics.SphereCast(startPos, ballRadius, aimDirection, out hit, lineLength, layerMask))
         {
-            endPoint = hit.point;
-            mainPoints.Add(endPoint);
+            endPos = startPos + aimDirection * hit.distance;
 
-            // التحقق مما اصطدمنا به
-
-            // أ) اصطدام بالجيب (الأولوية للتوقف)
-            if (((1 << hit.collider.gameObject.layer) & pocketMask.value & boundsMask.value) != 0)
+            // 1. اصطدام بكرة
+            if (((1 << hit.collider.gameObject.layer) & ballMask) != 0)
             {
-                // ✅ توقف هنا! لا ترسم ارتداد ولا كرة شبح
-                // الخط ينتهي عند فوهة الجيب فقط
-            }
-            // ب) اصطدام بكرة
-            else if (((1 << hit.collider.gameObject.layer) & ballMask.value) != 0)
-            {
-                Ball3D ball = hit.collider.GetComponent<Ball3D>();
-                if (ball && ball.type != BallType.Cue)
+                Ball3D targetBall = hit.collider.GetComponent<Ball3D>();
+                if (targetBall && targetBall.type != BallType.Cue)
                 {
-                    HandleBallHit(hit, ball);
+                    HandleBallHit(hit, targetBall);
                 }
             }
-            // ج) اصطدام بجدار (ارتداد)
-            else if (((1 << hit.collider.gameObject.layer) & wallMask.value) != 0)
+            // 2. اصطدام بحائط (ارتداد)
+            else if (((1 << hit.collider.gameObject.layer) & wallMask) != 0)
             {
-                if (showBounce)
-                {
-                    HandleWallBounce(hit.point, hit.normal, aimDirection);
-                }
+                HandleWallBounce(hit.point, hit.normal);
             }
         }
-        else
-        {
-            // لا يوجد اصطدام
-            endPoint = startPos + aimDirection * lineLength;
-            mainPoints.Add(endPoint);
-        }
 
-        // رسم الخط
-        lineRenderer.positionCount = mainPoints.Count;
-        lineRenderer.SetPositions(mainPoints.ToArray());
+        // رسم الخط الرئيسي
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, startPos);
+        lineRenderer.SetPosition(1, endPos);
         lineRenderer.enabled = true;
-    }
-
-    void HandleWallBounce(Vector3 hitPoint, Vector3 hitNormal, Vector3 incomingDir)
-    {
-        Vector3 reflectDir = Vector3.Reflect(incomingDir, hitNormal);
-        reflectDir.y = 0;
-        reflectDir.Normalize();
-
-        List<Vector3> bouncePoints = new List<Vector3>();
-        bouncePoints.Add(hitPoint);
-
-        Vector3 startBounceRay = hitPoint + (reflectDir * 0.05f);
-        RaycastHit hit2;
-
-        // في الارتداد نفحص الكرات والجدران والجيوب أيضاً
-        int combinedMask = ballMask.value | wallMask.value | pocketMask.value | boundsMask.value;
-
-        if (Physics.Raycast(startBounceRay, reflectDir, out hit2, bounceLength, combinedMask, QueryTriggerInteraction.Collide))
-        {
-            bouncePoints.Add(hit2.point);
-            // لو الارتداد دخل في جيب، يوقف عنده ولا يكمل
-        }
-        else
-        {
-            bouncePoints.Add(hitPoint + reflectDir * bounceLength);
-        }
-
-        if (bounceLineRenderer)
-        {
-            bounceLineRenderer.positionCount = bouncePoints.Count;
-            bounceLineRenderer.SetPositions(bouncePoints.ToArray());
-            bounceLineRenderer.enabled = true;
-        }
     }
 
     void HandleBallHit(RaycastHit hit, Ball3D ball)
     {
-        targetBall = ball;
-        Vector3 impactNormal = (hit.point - ball.transform.position).normalized;
-        Vector3 ghostPos = ball.transform.position + impactNormal * (ballRadius * 2f);
+        // حساب موقع "كرة الشبح" (المكان الذي ستكون فيه الكرة البيضاء لحظة الاصطدام)
+        Vector3 impactDir = (hit.point - cueBall.position).normalized;
+        // نرجع للخلف بمقدار نصف القطر لنحصل على مركز الكرة
+        Vector3 ghostPos = hit.point + (hit.normal * ballRadius);
+        // أو طريقة أدق: مركز الكرة الهدف + اتجاه الضرب * (2 * نصف القطر)
+        Vector3 toBall = (ball.transform.position - hit.point).normalized;
+        ghostPos = ball.transform.position - (toBall * (ballRadius * 2f));
+
         ghostPos.y = cueBall.position.y;
 
-        ShowGhostBall(ghostPos);
-        if (showCollisionPoint) ShowCollisionPoint(hit.point);
-        if (showTargetPath) ShowTargetBallPath(ball, hit.point);
-    }
-
-    // ================= HELPER SETUP FUNCTIONS =================
-
-    void SetupLineRenderer()
-    {
-        if (!lineRenderer) return;
-        lineRenderer.startWidth = lineWidth;
-        lineRenderer.endWidth = lineWidth;
-        lineRenderer.useWorldSpace = true;
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = lineColor;
-        lineRenderer.endColor = lineColor;
-    }
-
-    void SetupBounceRenderer()
-    {
-        if (!bounceLineRenderer)
+        // إظهار كرة الشبح
+        if (ghostBallInstance)
         {
-            GameObject bounceObj = new GameObject("BounceLineRenderer");
-            bounceObj.transform.SetParent(transform);
-            bounceLineRenderer = bounceObj.AddComponent<LineRenderer>();
+            ghostBallInstance.transform.position = ghostPos;
+            ghostBallInstance.transform.rotation = Quaternion.LookRotation(toBall);
+            ghostBallInstance.SetActive(true);
         }
-        bounceLineRenderer.startWidth = lineWidth;
-        bounceLineRenderer.endWidth = lineWidth;
-        bounceLineRenderer.useWorldSpace = true;
-        bounceLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        bounceLineRenderer.startColor = lineColor;
-        bounceLineRenderer.endColor = lineColor;
-        bounceLineRenderer.enabled = false;
-    }
 
-    void SetupTargetPathRenderer()
-    {
-        if (!targetBallPathRenderer)
+        // رسم مسار الكرة الهدف (إلى أين ستذهب؟)
+        // الكرة الملونة ستتحرك في خط مستقيم يربط بين مركز الكرة البيضاء ومركز الكرة الملونة لحظة التصادم
+        Vector3 targetMoveDir = (ball.transform.position - ghostPos).normalized;
+
+        if (targetBallPath)
         {
-            GameObject pathObj = new GameObject("TargetBallPath");
-            pathObj.transform.SetParent(transform);
-            targetBallPathRenderer = pathObj.AddComponent<LineRenderer>();
+            targetBallPath.positionCount = 2;
+            targetBallPath.SetPosition(0, ball.transform.position);
+            targetBallPath.SetPosition(1, ball.transform.position + targetMoveDir * 3f); // طول الخط 3 متر
+            targetBallPath.enabled = true;
         }
-        targetBallPathRenderer.startWidth = lineWidth;
-        targetBallPathRenderer.endWidth = lineWidth;
-        targetBallPathRenderer.useWorldSpace = true;
-        targetBallPathRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        targetBallPathRenderer.startColor = lineColor;
-        targetBallPathRenderer.endColor = lineColor;
-        targetBallPathRenderer.enabled = false;
+
+        // (اختياري) رسم ارتداد الكرة البيضاء بعد ضرب الكرة
+        // الكرة البيضاء ترتد بزاوية 90 درجة تقريباً عن مسار الكرة الملونة (Tangent Line)
+        Vector3 cueReflectDir = Vector3.Cross(targetMoveDir, Vector3.up); // اتجاه تقريبي
+        // تحتاج حسابات فيزيائية معقدة للدقة التامة، لكن هذا يكفي للتوجيه
     }
 
-    void SetupGhostBall()
+    void HandleWallBounce(Vector3 hitPoint, Vector3 normal)
     {
-        if (ghostBallInstance) return;
-        if (ghostBallPrefab != null)
+        Vector3 incoming = aimDirection;
+        Vector3 reflect = Vector3.Reflect(incoming, normal).normalized;
+
+        if (bounceLine)
         {
-            ghostBallInstance = Instantiate(ghostBallPrefab);
-            ghostBallInstance.transform.SetParent(transform);
-            Destroy(ghostBallInstance.GetComponent<Collider>());
-            ghostBallInstance.SetActive(false);
+            bounceLine.positionCount = 2;
+            bounceLine.SetPosition(0, hitPoint);
+            bounceLine.SetPosition(1, hitPoint + reflect * 2.0f); // طول خط الارتداد
+            bounceLine.enabled = true;
         }
     }
 
-    void SetupCollisionPoint()
-    {
-        if (collisionPointInstance) return;
-        if (collisionPointPrefab != null)
-        {
-            collisionPointInstance = Instantiate(collisionPointPrefab);
-            collisionPointInstance.transform.SetParent(transform);
-            Destroy(collisionPointInstance.GetComponent<Collider>());
-            collisionPointInstance.SetActive(false);
-        }
-    }
-
-    // ================= VISUAL HELPERS =================
-
-    void ShowGhostBall(Vector3 position)
-    {
-        if (ghostBallInstance) { ghostBallInstance.transform.position = position; ghostBallInstance.SetActive(true); }
-    }
-    void HideGhostBall() { if (ghostBallInstance) ghostBallInstance.SetActive(false); }
-
-    void ShowCollisionPoint(Vector3 point)
-    {
-        if (collisionPointInstance) { collisionPointInstance.transform.position = point; collisionPointInstance.SetActive(true); }
-    }
-    void HideCollisionPoint() { if (collisionPointInstance) collisionPointInstance.SetActive(false); }
-
-    void HideBounce() { if (bounceLineRenderer) bounceLineRenderer.positionCount = 0; }
-
-    void ShowTargetBallPath(Ball3D ball, Vector3 hitPoint)
-    {
-        if (!targetBallPathRenderer || !ball) return;
-        Vector3 moveDir = (ball.transform.position - hitPoint).normalized;
-        moveDir.y = 0;
-
-        targetBallPathRenderer.positionCount = 2;
-        targetBallPathRenderer.SetPosition(0, ball.transform.position);
-        targetBallPathRenderer.SetPosition(1, ball.transform.position + moveDir * targetPathLength);
-        targetBallPathRenderer.enabled = true;
-    }
-    void HideTargetPath() { if (targetBallPathRenderer) targetBallPathRenderer.enabled = false; }
-
-    public void Hide()
+    public void HideAll()
     {
         if (lineRenderer) lineRenderer.enabled = false;
-        HideBounce();
-        HideGhostBall();
-        HideCollisionPoint();
-        HideTargetPath();
+        if (bounceLine) bounceLine.enabled = false;
+        if (targetBallPath) targetBallPath.enabled = false;
+        if (ghostBallInstance) ghostBallInstance.SetActive(false);
     }
+
+    // لإخفاء الخط عند انتهاء الدور
+    public void Hide()
+    {
+        HideAll();
+    }
+
+    // دالة لتحديث قوة الخط (اختياري لتغيير اللون حسب القوة)
+    public void SetPower01(float p) { }
 }
