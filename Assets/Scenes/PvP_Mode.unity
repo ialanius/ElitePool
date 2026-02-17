@@ -3872,19 +3872,13 @@ MonoBehaviour:
   gameState: {fileID: 903815555}
   lineLength: 5
   lineWidth: 0.05
-  lineColor: {r: 1, g: 1, b: 1, a: 1}
+  mainLineColor: {r: 1, g: 1, b: 1, a: 1}
+  targetPathColor: {r: 0, g: 1, b: 1, a: 1}
   ballRadius: 0.25
   ghostBallPrefab: {fileID: 4726782335354609949, guid: 4e2c633cb8b86f046b6e1c318c92b3a6,
     type: 3}
-  collisionPointPrefab: {fileID: 3545000095359488887, guid: 1a64ccc232211444081978b0384259fe,
-    type: 3}
-  showCollisionPoint: 1
-  bounceLineRenderer: {fileID: 0}
-  showBounce: 1
-  bounceLength: 2.5
-  targetBallPathRenderer: {fileID: 0}
-  showTargetPath: 1
-  targetPathLength: 2
+  bounceLine: {fileID: 0}
+  targetBallPath: {fileID: 0}
   ballMask:
     serializedVersion: 2
     m_Bits: 512
@@ -3894,9 +3888,6 @@ MonoBehaviour:
   pocketMask:
     serializedVersion: 2
     m_Bits: 256
-  boundsMask:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!120 &309189570
 LineRenderer:
   serializedVersion: 2
@@ -11405,6 +11396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51bf8f4a6c36c3d438e9131bd34fc144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isChallengeMode: 0
   currentPlayer: 1
   player1: 1
   player2: 2
@@ -12204,6 +12196,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameState: {fileID: 903815555}
   cueStick: {fileID: 1611213189}
+  aiPlayer: {fileID: 0}
+  tutorialPanel: {fileID: 1754354792}
+  standardGamePanel: {fileID: 0}
+  challengePanel: {fileID: 0}
+  shotsLeftText: {fileID: 0}
+  levelNameText: {fileID: 0}
+  levelDescriptionText: {fileID: 0}
+  levelInfoPanel: {fileID: 0}
+  levelNameText2: {fileID: 0}
+  startButton: {fileID: 0}
   uiAudioSource: {fileID: 972813396}
   winSound: {fileID: 8300000, guid: 9a7630074f539bb43975b51f983a225f, type: 3}
   loseSound: {fileID: 8300000, guid: be55f2152308b224d9d9a297fd0dbbab, type: 3}
@@ -12257,9 +12259,11 @@ MonoBehaviour:
   messageDuration: 2
   winPanel: {fileID: 353293488}
   winnerText: {fileID: 1528341835}
-  restartButton: {fileID: 124449861}
   losePanel: {fileID: 1611259158}
   loseReasonText: {fileID: 612100285}
+  restartButton: {fileID: 124449861}
+  gameplayButtons: []
+  fineTuneWheel: {fileID: 856281873}
   foulPanel: {fileID: 634221224}
   foulText: {fileID: 1359372818}
   MenuPanel: {fileID: 717611085}
@@ -18638,7 +18642,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1524821954}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 972813395}
+        m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
+        m_MethodName: CloseTutorialAndStartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1528341833
 GameObject:
   m_ObjectHideFlags: 0
@@ -20047,6 +20063,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   breakBoost: 5
+  wheelButton: {fileID: 856281873}
   stickDistance: 0.16
   pullBackDistance: 0.8
   stopSpeed: 0.02
@@ -20074,6 +20091,7 @@ MonoBehaviour:
   cueAudioSource: {fileID: 1611213191}
   cueHitSound: {fileID: 8300000, guid: 2824fef5df763a847a670492de0c07ad, type: 3}
   spinController: {fileID: 0}
+  aiPlayer: {fileID: 0}
 --- !u!4 &1611213190
 Transform:
   m_ObjectHideFlags: 0

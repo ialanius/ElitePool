@@ -9,14 +9,22 @@ public class GameUI : MonoBehaviour
     public GameStateManager gameState;
     public CueStickController3D cueStick;
     public AIPlayer aiPlayer;
+    public GameObject tutorialPanel;
 
     [Header("Mode Panels")]
     public GameObject standardGamePanel;
     public GameObject challengePanel;
 
+    [Header("AI Mode Settings")]
+    public GameObject difficultyPanel; // تأكد أن هذا الكائن يحتوي على سكربت AIDifficultySelector
+
     [Header("Challenge UI")]
     public TextMeshProUGUI shotsLeftText;
     public TextMeshProUGUI levelNameText;
+    public TextMeshProUGUI levelDescriptionText;
+    public GameObject levelInfoPanel;
+    public TextMeshProUGUI levelNameText2;
+    public Button startButton;
 
     [Header("Audio Settings")]
     public AudioSource uiAudioSource;
@@ -46,7 +54,7 @@ public class GameUI : MonoBehaviour
 
     [Header("Messages")]
     public TextMeshProUGUI messageText;
-    public float messageDuration = 2f; // ✅ تمت إضافته (كان ناقصاً)
+    public float messageDuration = 2f;
     private float messageTimer = 0f;
 
     [Header("End Screens")]
@@ -56,10 +64,9 @@ public class GameUI : MonoBehaviour
     public TextMeshProUGUI loseReasonText;
     public Button restartButton;
 
-    // ✅✅✅ 1. قائمة الأزرار المراد قفلها
     [Header("Buttons Lock 🔒")]
-    public Button[] gameplayButtons; // اسحب هنا كل الأزرار (Spin, Camera, TopView, etc)
-    public GameObject fineTuneWheel; // 🎡 اسحب كائن العجلة هنا
+    public Button[] gameplayButtons;
+    public GameObject fineTuneWheel;
 
     [Header("Foul Indicator")]
     public GameObject foulPanel;
@@ -93,69 +100,58 @@ public class GameUI : MonoBehaviour
         if (foulPanel) foulPanel.SetActive(false);
         if (MenuPanel) MenuPanel.SetActive(false);
 
-        // ✅✅✅ الحل السحري: نادِ دالة التحديث فوراً
         RefreshReferences();
-
         SetupModeUI();
         UpdateUI();
     }
 
-    // ✅✅✅ 2. دالة الإيقاف الشاملة (المعدلة)
+    // ✅✅✅ 1. إصلاح دالة التحكم (لجعل العصا ظاهرة للـ AI)
     public void SetGameplayControlsActive(bool isActive)
     {
-        // 1. الأزرار (Spin, Camera, TopView)
+        // 1. الأزرار الجانبية (إخفاء كامل)
         if (gameplayButtons != null)
         {
             foreach (var btn in gameplayButtons)
             {
-                if (btn) btn.interactable = isActive;
+                if (btn) btn.gameObject.SetActive(isActive);
             }
         }
 
-        // 2. العجلة (إخفاء/إظهار)
-        if (fineTuneWheel)
-        {
-            fineTuneWheel.SetActive(isActive); // تخفي العجلة تماماً عند الخسارة
-        }
+        // 2. العجلة
+        if (fineTuneWheel) fineTuneWheel.SetActive(isActive);
 
-        // 3. العصا والسلايدر
+        // 3. العصا (التعديل الجوهري هنا 🔥)
         if (cueStick)
         {
-            cueStick.enabled = isActive; // شلل العصا
+            // نوقف استجابة السكربت للماوس، لكن نترك الكائن مفعلاً ليراه اللاعب
+            cueStick.enabled = isActive;
 
-            // قفل السلايدر (يصبح رمادي ولا يتحرك)
+            // ✅ نضمن أن جسم العصا ظاهر دائماً (لأن الـ AI يحركها أمامه)
+            cueStick.gameObject.SetActive(true);
+
+            // نقفل السلايدر فقط
             cueStick.SetSliderInteractable(isActive);
 
-            // إخفاء العصا عند التوقف
-            if (!isActive) cueStick.Hide();
-            else cueStick.ResetStickBehindCueBall(true); // إظهارها عند العودة
+            // إذا كان دور اللاعب البشري، نعيد العصا خلف الكرة
+            // أما إذا كان دور الـ AI (isActive = false)، نترك العصا حرة ليحركها الـ AI
+            if (isActive)
+            {
+                cueStick.ResetStickBehindCueBall(true);
+            }
         }
 
-        // تأكيد إضافي لقفل السلايدر
         if (powerSlider) powerSlider.interactable = isActive;
     }
 
-    // 👇👇 أضف هذه الدالة الجديدة في أي مكان في السكربت (مثلاً في النهاية)
     public void RefreshReferences()
     {
-        // 1. إذا العصا ضائعة، ابحث عنها في المشهد
-        if (cueStick == null)
-        {
-            cueStick = FindObjectOfType<CueStickController3D>();
-        }
+        if (cueStick == null) cueStick = FindObjectOfType<CueStickController3D>();
 
-        // 2. إذا وجدنا العصا، نعطيها السلايدر (حقن التبعيات)
         if (cueStick != null)
         {
             if (powerMeterPanel) cueStick.powerSliderPanel = powerMeterPanel;
             if (powerSlider) cueStick.powerSlider = powerSlider;
-
-            // تحديث إعدادات العصا لضمان ظهورها
             cueStick.SetSliderInteractable(true);
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ GameUI: Still cannot find CueStick!");
         }
     }
 
@@ -172,6 +168,7 @@ public class GameUI : MonoBehaviour
             {
                 UpdateChallengeText(ChallengeManager.Instance.currentLevel.maxShots);
                 if (levelNameText) levelNameText.text = ChallengeManager.Instance.currentLevel.levelName;
+                if (levelDescriptionText) levelDescriptionText.text = ChallengeManager.Instance.currentLevel.description;
             }
         }
     }
@@ -187,15 +184,13 @@ public class GameUI : MonoBehaviour
         if (shotsLeftText)
         {
             shotsLeftText.text = $"Shots: {shotsLeft}";
-            if (shotsLeft <= 1) shotsLeftText.color = Color.red;
-            else shotsLeftText.color = Color.white;
+            shotsLeftText.color = (shotsLeft <= 1) ? Color.red : Color.white;
         }
     }
 
     void UpdateUI()
     {
-        if (!gameState) return;
-        if (gameState.isChallengeMode) return;
+        if (!gameState || gameState.isChallengeMode) return;
 
         if (player1NameText) player1NameText.text = "Player 1";
         if (player2NameText) player2NameText.text = (aiPlayer && aiPlayer.isAIEnabled) ? "AI" : "Player 2";
@@ -271,8 +266,6 @@ public class GameUI : MonoBehaviour
     public void ShowWinPanel(string winnerName)
     {
         if (winPanel) winPanel.SetActive(true);
-
-        // 🛑 قفل كل شيء
         SetGameplayControlsActive(false);
 
         if (winnerText)
@@ -292,20 +285,15 @@ public class GameUI : MonoBehaviour
     public void ShowLosePanel(string reason)
     {
         if (losePanel) losePanel.SetActive(true);
-
-        // 🛑 قفل كل شيء
         SetGameplayControlsActive(false);
-
         if (loseReasonText) loseReasonText.text = reason;
         PlayLoseSound();
     }
 
-    // ====== Event Callbacks ======
     void OnPlayerChanged(Player newPlayer) { UpdateUI(); }
     void OnScoreChanged(Player p, int s) { UpdateUI(); }
     void OnGameWon(Player w) { ShowWinPanel(w.ToString()); }
 
-    // ✅✅✅ تمت إضافة الدالة الناقصة هنا
     void OnGroupAssigned(Player player, BallGroup group)
     {
         UpdateUI();
@@ -331,10 +319,9 @@ public class GameUI : MonoBehaviour
     {
         if (winPanel) winPanel.SetActive(false);
         if (losePanel) losePanel.SetActive(false);
-        // ✅✅✅ الإضافة هنا: إخفاء المينو أيضاً عند الريستارت
         MenuPanelHide();
 
-        // ▶️ تشغيل كل شيء
+        // إعادة تفعيل التحكم
         SetGameplayControlsActive(true);
 
         if (gameState && gameState.isChallengeMode && ChallengeManager.Instance)
@@ -361,4 +348,36 @@ public class GameUI : MonoBehaviour
 
     public void PlayWinSound() { if (uiAudioSource && winSound) uiAudioSource.PlayOneShot(winSound); }
     public void PlayLoseSound() { if (uiAudioSource && loseSound) uiAudioSource.PlayOneShot(loseSound); }
+
+    public void CloseTutorialAndStartGame()
+    {
+        if (tutorialPanel) tutorialPanel.SetActive(false);
+        SetGameplayControlsActive(true);
+
+        RestartButton restarter = FindObjectOfType<RestartButton>();
+        if (restarter) restarter.RestartGame();
+        else FindObjectOfType<BallRack3D>().RackBalls();
+    }
+
+    // ✅✅✅ 2. دالة لفتح قائمة الـ AI فقط (بدون بدء اللعبة مباشرة)
+    // اربط هذه الدالة بزر "AI Mode" في القائمة الرئيسية إذا كان لديك
+    public void OpenAIDifficultyPanel()
+    {
+        if (difficultyPanel)
+        {
+            difficultyPanel.SetActive(true);
+
+            // محاولة استدعاء تحديث الواجهة داخل السكربت الجديد
+            var selector = difficultyPanel.GetComponent<AIDifficultySelector>();
+            if (selector) selector.ReopenDifficultyPanel();
+        }
+    }
+
+    // تم إيقاف الدالة القديمة لتجنب التعارض (يمكنك حذفها)
+    /*
+    public void SelectDifficultyAndStart(int level)
+    {
+        // ... (Old Logic Removed to prevent conflicts) ...
+    }
+    */
 }

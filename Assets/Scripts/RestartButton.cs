@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RestartButton : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class RestartButton : MonoBehaviour
     public Ball3D[] ballScripts;
 
     [Header("Cue Ball Settings")]
+    // تأكد أن هذا الإحداثي يطابق مكان الكرة البيضاء في بداية اللعبة عندك
     public Vector3 cueBallResetPos = new Vector3(-5.1235f, 0.25f, -0.88f);
 
     Coroutine resetCo;
@@ -29,7 +31,7 @@ public class RestartButton : MonoBehaviour
     }
 
     // دالة مساعدة لتحديث مراجع الكرات
-    void RefreshBallReferences()
+    public void RefreshBallReferences()
     {
         allBalls = FindObjectsOfType<Rigidbody>();
         ballScripts = FindObjectsOfType<Ball3D>();
@@ -37,32 +39,38 @@ public class RestartButton : MonoBehaviour
 
     public void RestartGame()
     {
-        // ✅ 1. فحص ذكي: هل نحن في وضع التحدي؟
+        // ✅ 0. أهم سطر: ضمان أن الزمن يعمل (يحل مشاكل التوقف بعد القوائم)
+        Time.timeScale = 1f;
+
+        // ✅ 1. فحص وضع التحدي
         if (gameState && gameState.isChallengeMode)
         {
             Debug.Log("🔄 Restarting Challenge Level...");
 
-            // نخفي لوحات الفوز والخسارة أولاً
             if (gameUI)
             {
+                // إخفاء القوائم
                 if (gameUI.winPanel) gameUI.winPanel.SetActive(false);
                 if (gameUI.losePanel) gameUI.losePanel.SetActive(false);
                 if (gameUI.foulPanel) gameUI.foulPanel.SetActive(false);
+
+                // تأكد أن التحكم مفعل للتحدي
+                gameUI.SetGameplayControlsActive(true);
             }
 
-            // نوجه الأمر لمدير التحديات ليعيد بناء المرحلة
+            // إعادة بناء المرحلة عبر المدير
             if (ChallengeManager.Instance && ChallengeManager.Instance.currentLevel)
             {
                 ChallengeManager.Instance.StartChallenge(ChallengeManager.Instance.currentLevel);
             }
-            return; // 🛑 توقف هنا! لا تكمل كود الرص العادي
+            return; // 🛑 خروج، لا ننفذ باقي الكود
         }
 
         // ==========================================================
-        // 👇 كود اللعبة العادية (لن يتم تنفيذه إذا كنا في تحدي) 👇
+        // 👇 كود اللعبة العادية (Standard / AI Mode) 👇
         // ==========================================================
 
-        // 1. إخفاء العصا وقفل السلايدر
+        // 2. إيقاف العصا مؤقتاً
         if (cueStick)
         {
             cueStick.Hide();
@@ -72,16 +80,14 @@ public class RestartButton : MonoBehaviour
 
         if (resetCo != null) { StopCoroutine(resetCo); resetCo = null; }
 
-        // 2. تصفير الحالة
+        // 3. تصفير الحالة والسكور
         if (gameState) gameState.ResetGame();
 
-        // 3. تصفير ScratchManager
+        // 4. تصفير نظام الأخطاء (Scratch)
         if (scratch) scratch.ResetScratchManager();
 
-        // 4. تحديث المراجع (لأن الكرات قد تكون تغيرت)
+        // 5. تحديث المراجع وتصفير فيزياء الكرات
         RefreshBallReferences();
-
-        // 5. تفعيل الكرات وتصفير فيزيائها
         if (ballScripts != null)
         {
             foreach (var b in ballScripts)
@@ -100,21 +106,27 @@ public class RestartButton : MonoBehaviour
             }
         }
 
-        // 6. رص الكرات (للوضع العادي فقط)
+        // 6. رص الكرات في المثلث
         float waitTime = 0.1f;
         if (rack)
         {
             rack.RackBalls();
-            if (rack.animateRacking) waitTime = 2.0f;
+            // زيادة وقت الانتظار إذا كان هناك أنيميشن للرص
+            if (rack.animateRacking) waitTime = 1.5f;
 
+            // إعادة الكرة البيضاء لنقطة البداية بدقة
             if (rack.cueBall)
             {
                 rack.cueBall.position = cueBallResetPos;
                 rack.cueBall.rotation = Quaternion.identity;
+
+                // تأكيد تصفير السرعة
+                Rigidbody rb = rack.cueBall.GetComponent<Rigidbody>();
+                if (rb) { rb.velocity = Vector3.zero; rb.angularVelocity = Vector3.zero; }
             }
         }
 
-        // 7. إخفاء القوائم
+        // 7. تنظيف الواجهة (UI)
         if (gameUI)
         {
             if (gameUI.winPanel) gameUI.winPanel.SetActive(false);
@@ -123,16 +135,25 @@ public class RestartButton : MonoBehaviour
             gameUI.MenuPanelHide();
         }
 
-        // 8. تجهيز العصا
+        // 8. الانتظار قليلاً ثم بدء اللعب
         if (cueStick)
             resetCo = StartCoroutine(ResetCueAfterRack(waitTime));
     }
 
     IEnumerator ResetCueAfterRack(float delay)
     {
+        // انتظار انتهاء الرص
         yield return new WaitForSeconds(delay);
         yield return new WaitForFixedUpdate();
 
+        // ✅ إعادة تفعيل أزرار التحكم (Spin, Camera, TopView)
+        // هذا يضمن ظهور الأزرار حتى لو اختفت بسبب قائمة الصعوبة
+        if (gameUI)
+        {
+            gameUI.SetGameplayControlsActive(true);
+        }
+
+        // ✅ إعادة تفعيل العصا للعب
         if (cueStick)
         {
             cueStick.ResetStickBehindCueBall(false);

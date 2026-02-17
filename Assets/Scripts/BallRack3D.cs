@@ -43,9 +43,22 @@ public class BallRack3D : MonoBehaviour
 
     void Start()
     {
+        // 1. حساب نصف القطر (كودك الأصلي - نتركه كما هو)
         if (autoRadiusFromCueBall && cueBall)
             ballRadius = GetRadiusFromBall(cueBall, ballRadius);
 
+        // 2. البحث عن الواجهة (GameUI)
+        GameUI ui = FindObjectOfType<GameUI>();
+
+        // 3. التحقق: هل التتوريال (TutorialPanel) مفتوح الآن؟
+        if (ui != null && ui.tutorialPanel != null && ui.tutorialPanel.activeSelf)
+        {
+            // 🛑 إذا كان مفتوحاً، توقف هنا ولا ترص الكرات!
+            // (الرص سيحدث لاحقاً عندما يضغط اللاعب زر الإغلاق)
+            return;
+        }
+
+        // 4. إذا لم يكن التتوريال موجوداً أو مغلقاً، ابدأ الرص فوراً
         RackBalls();
     }
 

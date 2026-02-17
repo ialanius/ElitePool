@@ -636,7 +636,7 @@ PrefabInstance:
     - target: {fileID: 2720251490018482150, guid: 093ec74f1cb715047aac4f3e3e50d5b3,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3594361265749042226, guid: 093ec74f1cb715047aac4f3e3e50d5b3,
         type: 3}
@@ -2412,6 +2412,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 319303463}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1396309657 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2892818924279065209, guid: 093ec74f1cb715047aac4f3e3e50d5b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 319303463}
+  m_PrefabAsset: {fileID: 0}
 --- !u!54 &1416654924 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 6566389049618504974, guid: c3fe9d3f5e8fbf1499e8cf7cc7834aff,
@@ -2983,6 +2989,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   breakBoost: 5
+  wheelButton: {fileID: 1396309657}
   stickDistance: 0.16
   pullBackDistance: 0.8
   stopSpeed: 0.02

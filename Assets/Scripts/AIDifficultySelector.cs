@@ -3,25 +3,23 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-/// <summary>
-/// AI Difficulty Selector - Enhanced Version
-/// Clean interface with complete interaction blocking during selection
-/// </summary>
 public class AIDifficultySelector : MonoBehaviour
 {
     [Header("UI Panel")]
     public GameObject difficultyPanel;
 
     [Header("Interaction Blocking")]
-    [Tooltip("Main game Canvas - to block interaction")]
     public CanvasGroup gameCanvasGroup;
-    [Tooltip("Cue stick - to hide it")]
     public CueStickController3D cueStick;
 
     [Header("Difficulty Buttons")]
     public Button easyButton;
     public Button mediumButton;
     public Button hardButton;
+
+    // ✅✅✅ الإضافة الجديدة: زر التشغيل
+    [Header("Action Buttons")]
+    public Button playButton;
 
     [Header("AI Player")]
     public AIPlayer aiPlayer;
@@ -34,38 +32,38 @@ public class AIDifficultySelector : MonoBehaviour
     public TMP_Text selectedDifficultyText;
     public TMP_Text descriptionText;
 
-    [Header("Navigation")]
-    public Button backToMenuButton;
-    public string menuSceneName = "MainMenu";
-
-    [Header("Audio (Optional)")]
+    [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip buttonClickSound;
     public AudioClip gameStartSound;
 
     [Header("Settings")]
-    [Tooltip("Delay before starting game (for animation)")]
-    public float startGameDelay = 0.3f;
-    [Tooltip("Show difficulty description")]
     public bool showDifficultyDescription = true;
 
+    // المتغير الذي يحفظ اختيار اللاعب مؤقتاً
     private AIDifficulty selectedDifficulty = AIDifficulty.Medium;
     private bool isPanelActive = false;
 
     void Start()
     {
         SetupButtons();
+
+        // تفعيل القائمة عند البداية
         ShowDifficultyPanel();
 
-        // Enable AI
+        // تفعيل الـ AI في الخلفية
         if (aiPlayer)
         {
             aiPlayer.SetAIEnabled(true);
         }
+
+        // تحديث الواجهة لتظهر الـ Medium كمختار افتراضياً
+        UpdateUI();
     }
 
     void SetupButtons()
     {
+        // ربط أزرار الصعوبة (للاختيار فقط)
         if (easyButton)
             easyButton.onClick.AddListener(() => SelectDifficulty(AIDifficulty.Easy));
 
@@ -75,8 +73,9 @@ public class AIDifficultySelector : MonoBehaviour
         if (hardButton)
             hardButton.onClick.AddListener(() => SelectDifficulty(AIDifficulty.Hard));
 
-        if (backToMenuButton)
-            backToMenuButton.onClick.AddListener(BackToMenu);
+        // ✅✅✅ ربط زر اللعب ببدء اللعبة فعلياً
+        if (playButton)
+            playButton.onClick.AddListener(StartGame);
     }
 
     void ShowDifficultyPanel()
@@ -86,95 +85,87 @@ public class AIDifficultySelector : MonoBehaviour
         isPanelActive = true;
         difficultyPanel.SetActive(true);
 
-        // 1. Pause time
+        // إيقاف الزمن والتحكم
         Time.timeScale = 0f;
 
-        // 2. Block interaction with game UI
         if (gameCanvasGroup)
         {
             gameCanvasGroup.interactable = false;
             gameCanvasGroup.blocksRaycasts = false;
         }
 
-        // 3. Hide cue stick
-        if (cueStick)
-        {
-            cueStick.gameObject.SetActive(false);
-        }
+        if (cueStick) cueStick.gameObject.SetActive(false);
 
-        // Update texts
-        if (titleText)
-            titleText.text = "Select AI Difficulty";
-
-        // Update button colors
-        UpdateButtonColors();
-        UpdateDifficultyDescription();
+        UpdateUI();
     }
 
+    // هذه الدالة الآن تختار فقط ولا تبدأ اللعبة
     void SelectDifficulty(AIDifficulty difficulty)
     {
+        if (selectedDifficulty == difficulty) return; // لا تفعل شيئاً إذا ضغط نفس الزر
+
         selectedDifficulty = difficulty;
 
-        // Click sound
         PlaySound(buttonClickSound);
+        UpdateUI(); // تحديث الألوان والنصوص
 
-        // Update colors and description
-        UpdateButtonColors();
-        UpdateDifficultyDescription();
-
-        Debug.Log("[Selector] Difficulty selected: " + difficulty);
-
-        // Start game after slight delay
-        Invoke(nameof(StartGame), startGameDelay);
+        Debug.Log("[Selector] Difficulty Selected (Pending Play): " + difficulty);
     }
 
+    void UpdateUI()
+    {
+        UpdateButtonColors();
+        UpdateDifficultyDescription();
+    }
+
+    // ✅✅✅ هذه الدالة تعمل فقط عند ضغط زر Play
     void StartGame()
     {
-        // Set AI difficulty
+        Debug.Log("🚀 Play Button Clicked! Starting Game...");
+
+        // 1. تطبيق الصعوبة المختارة على الـ AI
         if (aiPlayer)
         {
             aiPlayer.SetDifficulty(selectedDifficulty);
         }
 
-        // Game start sound
         PlaySound(gameStartSound);
 
-        // Hide panel
-        if (difficultyPanel)
-        {
-            difficultyPanel.SetActive(false);
-        }
+        // 2. إخفاء القائمة
+        if (difficultyPanel) difficultyPanel.SetActive(false);
         isPanelActive = false;
 
-        // Resume time
+        // 3. إعادة الزمن للحياة (مهم جداً)
         Time.timeScale = 1f;
 
-        // Enable game UI
+        // 4. إعادة تفعيل واجهة اللعبة
         if (gameCanvasGroup)
         {
             gameCanvasGroup.interactable = true;
             gameCanvasGroup.blocksRaycasts = true;
         }
 
-        // Show and prepare cue stick
-        if (cueStick)
-        {
-            cueStick.gameObject.SetActive(true);
-            cueStick.ResetStickBehindCueBall(true);
-        }
+        // 5. إظهار العصا
+        if (cueStick) cueStick.gameObject.SetActive(true);
 
-        // Reset game
-        if (gameState)
+        // 6. استدعاء زر الريستارت لرص الكرات وبدء اللعب
+        RestartButton restarter = FindObjectOfType<RestartButton>();
+        if (restarter)
         {
-            gameState.ResetGame();
+            restarter.RestartGame();
         }
-
-        Debug.Log("[Selector] Game started with " + selectedDifficulty + " AI");
+        else
+        {
+            // كود احتياطي
+            if (gameState) gameState.ResetGame();
+            BallRack3D rack = FindObjectOfType<BallRack3D>();
+            if (rack) rack.RackBalls();
+        }
     }
 
     void UpdateButtonColors()
     {
-        Color selectedColor = new Color(0.3f, 1f, 0.3f);     // Green
+        Color selectedColor = new Color(0.5485938f, 0.7294118f, 0.4039216f); // أخضر
         Color normalColor = Color.white;
 
         UpdateButtonColor(easyButton, selectedDifficulty == AIDifficulty.Easy, selectedColor, normalColor);
@@ -185,9 +176,9 @@ public class AIDifficultySelector : MonoBehaviour
     void UpdateButtonColor(Button button, bool isSelected, Color selectedColor, Color normalColor)
     {
         if (!button) return;
-
         var colors = button.colors;
         colors.normalColor = isSelected ? selectedColor : normalColor;
+        colors.selectedColor = isSelected ? selectedColor : normalColor;
         button.colors = colors;
     }
 
@@ -200,82 +191,32 @@ public class AIDifficultySelector : MonoBehaviour
         switch (selectedDifficulty)
         {
             case AIDifficulty.Easy:
-                description = "EASY\n\n" +
-                             "* AI makes many mistakes\n" +
-                             "* Random shot selection\n" +
-                             "* Perfect for beginners";
+                description = "EASY MODE\n\n- AI makes mistakes\n- Low accuracy\n- Best for learning";
                 break;
 
             case AIDifficulty.Medium:
-                description = "MEDIUM\n\n" +
-                             "* Balanced gameplay\n" +
-                             "* Good accuracy\n" +
-                             "* Fair challenge";
+                description = "MEDIUM MODE\n\n- Balanced gameplay\n- Decent accuracy\n- Good challenge";
                 break;
 
             case AIDifficulty.Hard:
-                description = "HARD\n\n" +
-                             "* Professional level\n" +
-                             "* Very high accuracy\n" +
-                             "* Tough challenge!";
+                description = "HARD MODE\n\n- Professional AI\n- Pinpoint accuracy\n- No mercy!";
                 break;
         }
 
         descriptionText.text = description;
-
-        // Update short text
-        if (selectedDifficultyText)
-        {
-            selectedDifficultyText.text = selectedDifficulty.ToString();
-        }
-    }
-
-    void BackToMenu()
-    {
-        PlaySound(buttonClickSound);
-
-        Debug.Log("[Selector] Returning to main menu...");
-
-        // Resume time
-        Time.timeScale = 1f;
-
-        // Load main menu
-        SceneManager.LoadScene(menuSceneName);
+        if (selectedDifficultyText) selectedDifficultyText.text = selectedDifficulty.ToString();
     }
 
     void PlaySound(AudioClip clip)
     {
-        if (!audioSource || !clip) return;
-
-        // Play with unscaled time (works even when time is paused)
-        audioSource.PlayOneShot(clip);
+        if (audioSource && clip) audioSource.PlayOneShot(clip);
     }
 
-    // Public Methods (for external use)
-
-    /// <summary>
-    /// Reopen difficulty panel (useful for changing difficulty during game)
-    /// </summary>
     public void ReopenDifficultyPanel()
     {
         if (!isPanelActive)
         {
             ShowDifficultyPanel();
         }
-    }
-
-    /// <summary>
-    /// Set difficulty directly without opening panel
-    /// </summary>
-    public void SetDifficultyDirectly(AIDifficulty difficulty)
-    {
-        selectedDifficulty = difficulty;
-
-        if (aiPlayer)
-        {
-            aiPlayer.SetDifficulty(difficulty);
-        }
-
-        Debug.Log("[Selector] Difficulty set directly to: " + difficulty);
     }
 }

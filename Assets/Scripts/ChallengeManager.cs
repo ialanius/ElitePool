@@ -7,22 +7,25 @@ public class ChallengeManager : MonoBehaviour
 {
     public static ChallengeManager Instance;
 
-    [Header("⚙️ Essential Prefabs & Data")]
+    [Header("Essential Prefabs & Data")]
     public ChallengeLevelData currentLevel; // اسحب ملف المرحلة هنا
     public GameObject ballPrefab;           // اسحب بريفاب الكرة هنا (مهم جداً!)
 
-    [Header("🎨 Materials")]
+    [Header("Levels List 📚")]
+    public ChallengeLevelData[] allLevels; // ضع كل ملفات المراحل هنا
+
+    [Header("Materials")]
     public Material cueBallMaterial;
     public Material eightBallMaterial;
     public Material[] randomBallMaterials;
 
-    [Header("🔍 Auto-Detected References (Don't touch)")]
+    [Header("Auto-Detected References (Don't touch)")]
     public GameStateManager gameState;
     public CueStickController3D cueStick;
     public GameUI gameUI;
     public CameraController mainCamera;
 
-    [Header("📊 Status")]
+    [Header("Status")]
     public int shotsTaken = 0;
     public bool isChallengeActive = false;
 
@@ -117,13 +120,13 @@ public class ChallengeManager : MonoBehaviour
         shotsTaken = 0;
         isChallengeActive = true;
 
-        // تنظيف الطاولة بالكامل
+        // 1. تنظيف الطاولة بالكامل
         ClearTable();
 
-        // وضع الكرة البيضاء
+        // 2. وضع الكرة البيضاء
         SpawnCueBall(level.cueBallPosition);
 
-        // وضع باقي الكرات
+        // 3. وضع باقي الكرات
         if (level.targetBalls != null)
         {
             foreach (var target in level.targetBalls)
@@ -132,7 +135,33 @@ public class ChallengeManager : MonoBehaviour
             }
         }
 
-        // ✅✅✅ هام جداً: تحديث مراجع الفيزياء ليعرف المدير عن الكرات الجديدة
+        // 4. ✅ تحديث الواجهة (UI) بما فيها الوصف الجديد
+        if (gameUI)
+        {
+            // تحديث عدد الضربات
+            gameUI.UpdateChallengeText(level.maxShots);
+
+            // تحديث اسم المرحلة
+            if (gameUI.levelNameText)
+                gameUI.levelNameText.text = level.levelName;
+
+            if (gameUI.levelNameText2)
+                gameUI.levelNameText2.text = level.levelName;
+
+            if (gameUI.levelDescriptionText)
+                gameUI.levelDescriptionText.text = level.description;
+
+            if (gameUI.levelInfoPanel)
+            {
+                gameUI.levelInfoPanel.SetActive(true);
+                gameUI.SetGameplayControlsActive(false);
+            }
+
+            // إظهار رسالة ترحيبية
+            //gameUI.ShowMessage($"Challenge: {level.maxShots} Shots Left");
+        }
+
+        // 5. ✅ تحديث مراجع الفيزياء ليعرف المدير عن الكرات الجديدة
         if (gameState) gameState.RefreshBallReferences();
         if (PoolGameManager3D.Instance) PoolGameManager3D.Instance.RefreshRefs();
     }
@@ -265,5 +294,42 @@ public class ChallengeManager : MonoBehaviour
         isChallengeActive = false;
         Debug.Log("💀 Challenge Lost!");
         if (gameUI) gameUI.ShowLosePanel("Out of shots!");
+    }
+
+    public void LoadNextLevel()
+    {
+        // 1. البحث عن فهرس المرحلة الحالية
+        int currentIndex = -1;
+        for (int i = 0; i < allLevels.Length; i++)
+        {
+            if (allLevels[i] == currentLevel)
+            {
+                currentIndex = i;
+                break;
+            }
+        }
+
+        // 2. هل توجد مرحلة بعدها؟
+        if (currentIndex != -1 && currentIndex < allLevels.Length - 1)
+        {
+            // نعم، شغل المرحلة التالية
+            StartChallenge(allLevels[currentIndex + 1]);
+        }
+        else
+        {
+            Debug.Log("You Finished All Levels!");
+            // هنا ممكن ترجعه للقائمة الرئيسية أو تعيد المرحلة الأولى
+            if (gameUI) gameUI.ShowMessage("ALL LEVELS COMPLETED!");
+        }
+    }
+
+    public void closeInfoPanel()
+    {
+
+        if (gameUI.levelInfoPanel)
+        {
+            gameUI.levelInfoPanel.SetActive(false);
+            gameUI.SetGameplayControlsActive(true);
+        }
     }
 }
