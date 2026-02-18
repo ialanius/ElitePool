@@ -12,7 +12,7 @@ public class InGameMenuButtons : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f; // مهم لو عندك Pause
-        SceneManager.LoadScene(mainMenuSceneName);
+        SceneTransitionManager.Instance.LoadScene(mainMenuSceneName);
     }
 
     public void MenuPanelDisplay()

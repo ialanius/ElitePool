@@ -7,6 +7,7 @@ public class MainMenuController : MonoBehaviour
     // دالة زر البدء
     public void PlayGame()
     {
+        Haptics.Selection(); // أول سطر
         // 1. إجبار الصوت على العمل (لحل مشكلة الويب)
         AudioListener.pause = false; // إلغاء الإيقاف المؤقت للصوت
         AudioListener.volume = 1.0f; // التأكد أن الصوت مرفوع 100%
@@ -15,7 +16,7 @@ public class MainMenuController : MonoBehaviour
         Time.timeScale = 1;
 
         // 3. الانتقال للمشهد التالي
-        SceneManager.LoadScene(mainMenuSceneName);
+        SceneTransitionManager.Instance.LoadScene(mainMenuSceneName);
     }
 
     public void QuitGame()

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37cc2be1ed07944f896bad449c2a410, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  levelName: Level 1
+  levelName: The Bodyguard
   description: Sink the 8-ball in 1 shot!
   maxShots: 1
   cueBallPosition: {x: -5.1235, y: 0.25, z: -0.88}

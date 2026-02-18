@@ -67,9 +67,11 @@ public class PocketTrigger3D : MonoBehaviour
 
     void PocketBall(Ball3D ball)
     {
+        // Haptic feedback
+        Haptics.Medium();
         // ✅✅✅ تشغيل الصوت قبل إخفاء الكرة
         PlayPocketSound();
-
+        
         ball.inPocket = true;
 
         if (ball.rb)

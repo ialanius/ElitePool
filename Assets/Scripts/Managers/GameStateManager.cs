@@ -296,7 +296,7 @@ public class GameStateManager : MonoBehaviour
 
         if (foulCommitted)
         {
-            OnFoulCommitted?.Invoke(); TriggerFoulSound(); SwitchPlayer(); ResetShotTracking(); return;
+            OnFoulCommitted?.Invoke(); Haptics.Error(); TriggerFoulSound(); SwitchPlayer(); ResetShotTracking(); return;
         }
 
         if (pocketedEightBall)
@@ -320,7 +320,19 @@ public class GameStateManager : MonoBehaviour
     {
         gameOver = true; winner = player; canShoot = false; shotInProgress = false;
         OnGameWon?.Invoke(player);
-        if (gameUI) { gameUI.ShowWinPanel(player.ToString()); if (player == Player.Player1) gameUI.PlayWinSound(); else gameUI.PlayLoseSound(); }
+        if (gameUI) { gameUI.ShowWinPanel(player.ToString());
+            if (player == Player.Player1)
+            {
+                Haptics.Success(); // فزت!
+                gameUI.PlayWinSound();
+            }
+            else
+            {
+                Haptics.Error();   // خسرت
+                gameUI.PlayLoseSound();
+            }
+             
+        }
     }
 
     void LoseGame(string reason)

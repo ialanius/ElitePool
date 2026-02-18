@@ -287,6 +287,18 @@ public class ChallengeManager : MonoBehaviour
         isChallengeActive = false;
         Debug.Log("🎉 Challenge Won!");
         if (gameUI) gameUI.ShowWinPanel("Challenge Complete!");
+
+        // 1. معرفة رقم المرحلة الحالية (مثلاً index + 1)
+        int currentLevelIndex = System.Array.IndexOf(allLevels, currentLevel);
+        int nextLevelNum = currentLevelIndex + 2; // +1 للترتيب و +1 للمرحلة القادمة
+
+        // 2. إذا كان اللاعب قد فتح مرحلة جديدة، نحفظها
+        if (nextLevelNum > PlayerPrefs.GetInt("LevelReached", 1))
+        {
+            PlayerPrefs.SetInt("LevelReached", nextLevelNum);
+            PlayerPrefs.Save();
+            Debug.Log("🔓 Level " + nextLevelNum + " Unlocked!");
+        }
     }
 
     public void LoseChallenge()

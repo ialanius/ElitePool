@@ -36,12 +36,14 @@ public class TutorialManager : MonoBehaviour
 
     void ShowTutorial()
     {
+
         tutorialPanel.SetActive(true);
         ActivateGame(false); // تجميد التحكم بالعصا
     }
 
     public void CloseTutorial()
     {
+        Haptics.Selection(); // أول سطر
         tutorialPanel.SetActive(false);
         ActivateGame(true); // تفعيل التحكم بالعصا
 

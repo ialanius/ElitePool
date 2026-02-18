@@ -91,7 +91,7 @@ public class GameUI : MonoBehaviour
             gameState.OnFoulCommitted.AddListener(OnFoulCommitted);
         }
 
-        if (restartButton) restartButton.onClick.AddListener(OnRestartButtonClicked);
+        if (restartButton) restartButton.onClick.AddListener(OnRestartButtonClicked);  
 
         // إخفاء اللوحات المبدئية
         if (powerMeterPanel) powerMeterPanel.SetActive(false);
@@ -317,6 +317,7 @@ public class GameUI : MonoBehaviour
 
     public void OnRestartButtonClicked()
     {
+        Haptics.Selection(); // أول سطر
         if (winPanel) winPanel.SetActive(false);
         if (losePanel) losePanel.SetActive(false);
         MenuPanelHide();
@@ -332,7 +333,12 @@ public class GameUI : MonoBehaviour
         {
             var restartBtn = FindObjectOfType<RestartButton>();
             if (restartBtn) restartBtn.RestartGame();
-            else SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            else
+            {
+                Haptics.Medium();
+                SceneTransitionManager.Instance.ReloadCurrentScene();
+            }
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         UpdateUI();
     }
@@ -340,7 +346,8 @@ public class GameUI : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(mainMenuSceneName);
+        Haptics.Light(); // Haptic feedback
+        SceneTransitionManager.Instance.LoadScene(mainMenuSceneName);
     }
 
     public void MenuPanelDisplay() { if (MenuPanel) MenuPanel.SetActive(true); }

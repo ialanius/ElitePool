@@ -27,23 +27,32 @@ public class MenuManager : MonoBehaviour
     void SetupButtons()
     {
         if (playVsPlayerButton)
+        {
+            Haptics.Selection(); // أول سطر
             playVsPlayerButton.onClick.AddListener(LoadPvPScene);
+        }
 
         if (playVsAIButton)
+        {
+            Haptics.Selection(); // أول سطر
             playVsAIButton.onClick.AddListener(LoadPvAIScene);
-        
+        }
+
         if (ChallengesButton)
+        {
+            Haptics.Selection(); // أول سطر
             ChallengesButton.onClick.AddListener(LoadChallengesScene);
+        }
     }
 
     public void LoadPvPScene()
     {
-        SceneManager.LoadScene(pvpSceneName);
+        SceneTransitionManager.Instance.LoadScene(pvpSceneName);
     }
 
     public void LoadPvAIScene() 
     {
-        SceneManager.LoadScene(pvaiSceneName);
+        SceneTransitionManager.Instance.LoadSceneWithLoading(pvaiSceneName);
     }
 
     public void LoadChallengesScene() 
@@ -103,8 +112,5 @@ public class MenuManager : MonoBehaviour
             ChangeNamePanel.SetActive(false);
         }
     }
-    public void Quit()
-    {
-        Application.Quit();
-    }
+    
 }

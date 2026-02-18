@@ -334,7 +334,13 @@ public class CueStickController3D : MonoBehaviour
 
         if (gameState && gameState.isBreakShot)
             finalPower *= breakBoost;
-
+        // Haptic feedback حسب قوة الضربة
+        if (power01 < 0.3f)
+            Haptics.Light();        // ضربة خفيفة
+        else if (power01 < 0.7f)
+            Haptics.Medium();       // ضربة متوسطة
+        else
+            Haptics.Heavy();        // ضربة قوية
         // تشغيل صوت الضربة
         if (cueAudioSource && cueHitSound)
         {
