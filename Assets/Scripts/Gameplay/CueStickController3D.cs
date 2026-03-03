@@ -72,7 +72,7 @@ public class CueStickController3D : MonoBehaviour
     public AudioClip cueHitSound;
 
     [Header("Spin System")]
-    public SpinController spinController;
+    public SpinControllerAdvanced spinController;
 
     // State
     enum ShootState { Aiming, ReadyToShoot, Shooting }
@@ -108,7 +108,7 @@ public class CueStickController3D : MonoBehaviour
         // ✅✅✅ الإضافة هنا: البحث التلقائي عن Spin Controller
         if (!spinController)
         {
-            spinController = FindObjectOfType<SpinController>();
+            spinController = FindObjectOfType<SpinControllerAdvanced>();
         }
 
         if (powerSlider)

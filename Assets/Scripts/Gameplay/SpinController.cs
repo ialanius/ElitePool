@@ -235,6 +235,37 @@ public class SpinController : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public void SetLeftSpin() { horizontalSpin = -1f; verticalSpin = 0f; UpdateDotPosition(); }
     public void SetRightSpin() { horizontalSpin = 1f; verticalSpin = 0f; UpdateDotPosition(); }
     public void SetCenterHit() { ResetSpin(); }
+    // أعلى يمين
+    public void SetTopRightSpin()
+    {
+        verticalSpin = 0.707f;
+        horizontalSpin = 0.707f;
+        UpdateDotPosition();
+    }
+
+    // أعلى يسار
+    public void SetTopLeftSpin()
+    {
+        verticalSpin = 0.707f;
+        horizontalSpin = -0.707f;
+        UpdateDotPosition();
+    }
+
+    // أسفل يمين
+    public void SetBackRightSpin()
+    {
+        verticalSpin = -0.707f;
+        horizontalSpin = 0.707f;
+        UpdateDotPosition();
+    }
+
+    // أسفل يسار
+    public void SetBackLeftSpin()
+    {
+        verticalSpin = -0.707f;
+        horizontalSpin = -0.707f;
+        UpdateDotPosition();
+    }
 
     void UpdateDotPosition()
     {

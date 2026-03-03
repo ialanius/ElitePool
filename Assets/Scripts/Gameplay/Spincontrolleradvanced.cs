@@ -13,10 +13,9 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
     public float maxRadius = 60f;
 
     [Header("🔌 Link to Panel")]
-    public SpinPanelToggle spinPanelToggle; // 👈 اسحب كائن SpinManager هنا
+    public SpinPanelToggle spinPanelToggle;
 
     [Header("UI Adjustment")]
-    // ✅ 1. أضفنا هذا المتغير لتتمكن من تعديل الرقم لاحقاً من الـ Inspector بسهولة
     public Vector3 defaultOffset = new Vector3(0, -17, 0);
 
     [Header("Spin Values")]
@@ -60,9 +59,9 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
     public float arrowDistance = 0.4f;
 
     [Header("Colors - Enhanced")]
-    public Color topSpinColor = new Color(0f, 1f, 0.3f, 1f);      // أخضر فاتح
-    public Color backSpinColor = new Color(1f, 0.2f, 0f, 1f);     // أحمر برتقالي
-    public Color sideSpinColor = new Color(1f, 0.9f, 0f, 1f);     // أصفر ذهبي
+    public Color topSpinColor = new Color(0f, 1f, 0.3f, 1f);
+    public Color backSpinColor = new Color(1f, 0.2f, 0f, 1f);
+    public Color sideSpinColor = new Color(1f, 0.9f, 0f, 1f);
     public Color centerColor = Color.white;
 
     [Header("UI Animation")]
@@ -81,7 +80,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
     public bool showSpinText = true;
     public Text spinInfoText;
 
-    // Private variables
     private Vector2 spinOffset = Vector2.zero;
     private bool isDragging = false;
     private GameObject spinIndicatorInstance;
@@ -125,7 +123,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
 
     void SetupAdvancedVisuals()
     {
-        // Setup Glow
         if (enableGlow && !glowSprite && cueBall)
         {
             if (glowPrefab)
@@ -139,14 +136,12 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             }
         }
 
-        // Setup Trail
         if (enableTrail && !ballTrail && cueBall)
         {
             ballTrail = cueBall.gameObject.AddComponent<TrailRenderer>();
             SetupTrail();
         }
 
-        // Setup Particles
         if (enableParticles && !spinParticles && cueBall)
         {
             if (spinParticlePrefab)
@@ -160,13 +155,11 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             }
         }
 
-        // Setup Direction Arrow
         if (enableDirectionArrow)
         {
             SetupDirectionArrow();
         }
 
-        // Setup Spin Indicator on Ball
         if (showSpinOnBall && cueBall)
         {
             SetupSpinIndicator();
@@ -183,7 +176,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
 
         glowSprite = glowObj.AddComponent<SpriteRenderer>();
 
-        // Create circular sprite
         Texture2D tex = new Texture2D(128, 128);
         Color[] pixels = new Color[128 * 128];
         Vector2 center = new Vector2(64, 64);
@@ -194,7 +186,7 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             {
                 float dist = Vector2.Distance(new Vector2(x, y), center);
                 float alpha = 1f - Mathf.Clamp01(dist / 64f);
-                alpha = Mathf.Pow(alpha, 2); // Smoother falloff
+                alpha = Mathf.Pow(alpha, 2);
                 pixels[y * 128 + x] = new Color(1f, 1f, 1f, alpha);
             }
         }
@@ -279,7 +271,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
         );
 
         colorOverLifetime.color = new ParticleSystem.MinMaxGradient(grad);
-
         spinParticles.Stop();
     }
 
@@ -294,7 +285,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
         }
         else
         {
-            // Create simple arrow
             arrowInstance = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             arrowInstance.name = "SpinDirectionArrow";
             arrowInstance.transform.SetParent(cueBall);
@@ -311,7 +301,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
                 renderer.material.SetColor("_EmissionColor", Color.yellow);
             }
         }
-
         arrowInstance.SetActive(false);
     }
 
@@ -332,7 +321,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             renderer.material = new Material(Shader.Find("Standard"));
             renderer.material.EnableKeyword("_EMISSION");
         }
-
         spinIndicatorInstance.SetActive(false);
     }
 
@@ -349,7 +337,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
         PlaySound(spinDragSound);
     }
 
-    // ✅ استبدل دالة OnPointerUp بهذه النسخة المعدلة
     public void OnPointerUp(PointerEventData eventData)
     {
         isDragging = false;
@@ -362,15 +349,12 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
 
         PlaySound(spinReleaseSound);
 
-        // ✅✅ الإضافة الجديدة: إغلاق القائمة تلقائياً عند رفع الإصبع
         if (spinPanelToggle != null && spinPanelToggle.autoHide)
         {
-            // نستخدم Invoke لتطبيق التأخير الموجود في إعدادات الـ Panel
             spinPanelToggle.Invoke("ClosePanel", spinPanelToggle.hideDelay);
         }
     }
 
-    // ✅ 3. نحتاج أيضاً لتحديث دالة OnDrag لتبدأ الحساب من النقطة الجديدة
     public void OnDrag(PointerEventData eventData)
     {
         if (!isDragging) return;
@@ -383,7 +367,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             out localPoint
         );
 
-        // خصم الإزاحة لكي يكون الحساب دقيقاً بالنسبة للمركز الجديد
         Vector2 adjustedPoint = localPoint - (Vector2)defaultOffset;
 
         float distance = adjustedPoint.magnitude;
@@ -395,7 +378,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
 
         spinOffset = localPoint;
 
-        // حساب السبين بناءً على النقطة المعدلة
         horizontalSpin = Mathf.Clamp(adjustedPoint.x / maxRadius, -1f, 1f);
         verticalSpin = Mathf.Clamp(adjustedPoint.y / maxRadius, -1f, 1f);
 
@@ -409,7 +391,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
         Color targetColor = GetSpinColor();
         spinDotImage.color = targetColor;
 
-        // Glow effect
         if (enableGlow && glowSprite)
         {
             bool hasSpinbool = Mathf.Abs(verticalSpin) > 0.01f || Mathf.Abs(horizontalSpin) > 0.01f;
@@ -472,7 +453,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             }
         }
 
-        // Direction Arrow
         if (enableDirectionArrow && arrowInstance)
         {
             arrowInstance.SetActive(hasSpin);
@@ -542,7 +522,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
     {
         if (!rb) return;
 
-        // Apply spin physics
         if (Mathf.Abs(verticalSpin) > 0.01f)
         {
             Vector3 spinAxis = Vector3.Cross(shotDirection, Vector3.up).normalized;
@@ -559,7 +538,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             rb.AddForce(sideForce * horizontalSpin * shotPower * 0.2f, ForceMode.Impulse);
         }
 
-        // Visual effects
         StartCoroutine(SpinVisualEffects(shotPower));
 
         if (resetAfterShot)
@@ -570,7 +548,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
 
     IEnumerator SpinVisualEffects(float power)
     {
-        // Particles
         if (enableParticles && spinParticles)
         {
             var emission = spinParticles.emission;
@@ -581,7 +558,6 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             spinParticles.Stop();
         }
 
-        // Trail
         if (enableTrail && ballTrail)
         {
             ballTrail.enabled = true;
@@ -619,12 +595,10 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
         verticalSpin = 0f;
         horizontalSpin = 0f;
 
-        // استخدام الإحداثيات الجديدة كنقطة الصفر
         spinOffset = new Vector2(defaultOffset.x, defaultOffset.y);
 
         if (spinDot)
         {
-            // تطبيق الإزاحة المطلوبة (0, -17, 0)
             spinDot.anchoredPosition3D = defaultOffset;
         }
 
@@ -643,16 +617,32 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
         return new Vector3(horizontalSpin, 0f, verticalSpin) * spinMultiplier;
     }
 
-    // Quick preset functions
+    // ==========================================
+    // 🎯 أزرار السبين الأساسية (5 ضربات)
+    // ==========================================
     public void SetTopSpin() { verticalSpin = 1f; horizontalSpin = 0f; UpdateDotPosition(); }
     public void SetBackSpin() { verticalSpin = -1f; horizontalSpin = 0f; UpdateDotPosition(); }
     public void SetLeftSpin() { horizontalSpin = -1f; verticalSpin = 0f; UpdateDotPosition(); }
     public void SetRightSpin() { horizontalSpin = 1f; verticalSpin = 0f; UpdateDotPosition(); }
     public void SetCenterHit() { ResetSpin(); }
 
+    // ==========================================
+    // 🔥 أزرار السبين المركب (الزوايا الأربع)
+    // ==========================================
+    public void SetTopRightSpin() { verticalSpin = 0.707f; horizontalSpin = 0.707f; UpdateDotPosition(); }
+    public void SetTopLeftSpin() { verticalSpin = 0.707f; horizontalSpin = -0.707f; UpdateDotPosition(); }
+    public void SetBackRightSpin() { verticalSpin = -0.707f; horizontalSpin = 0.707f; UpdateDotPosition(); }
+    public void SetBackLeftSpin() { verticalSpin = -0.707f; horizontalSpin = -0.707f; UpdateDotPosition(); }
+
+    // ✅ تم تحديث هذه الدالة لتأخذ defaultOffset في الحسبان (حل مشكلة الإزاحة للأزرار)
     void UpdateDotPosition()
     {
-        spinOffset = new Vector2(horizontalSpin * maxRadius, verticalSpin * maxRadius);
+        // حساب الموقع النسبي
+        Vector2 calculatedPos = new Vector2(horizontalSpin * maxRadius, verticalSpin * maxRadius);
+
+        // إضافة الإزاحة الافتراضية للمركز
+        spinOffset = calculatedPos + new Vector2(defaultOffset.x, defaultOffset.y);
+
         if (spinDot) spinDot.anchoredPosition = spinOffset;
     }
 }

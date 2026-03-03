@@ -165,4 +165,39 @@ public class SpinPanelToggle : MonoBehaviour
             Invoke(nameof(ClosePanel), hideDelay);
         }
     }
+    /// <summary>
+    /// Top Right Spin (أعلى يمين)
+    /// </summary>
+    public void OnTopRightSpin()
+    {
+        if (spinController != null) spinController.SendMessage("SetTopRightSpin", SendMessageOptions.DontRequireReceiver);
+        if (autoHide) Invoke(nameof(ClosePanel), hideDelay);
+    }
+
+    /// <summary>
+    /// Top Left Spin (أعلى يسار)
+    /// </summary>
+    public void OnTopLeftSpin()
+    {
+        if (spinController != null) spinController.SendMessage("SetTopLeftSpin", SendMessageOptions.DontRequireReceiver);
+        if (autoHide) Invoke(nameof(ClosePanel), hideDelay);
+    }
+
+    /// <summary>
+    /// Back Right Spin (أسفل يمين)
+    /// </summary>
+    public void OnBackRightSpin()
+    {
+        if (spinController != null) spinController.SendMessage("SetBackRightSpin", SendMessageOptions.DontRequireReceiver);
+        if (autoHide) Invoke(nameof(ClosePanel), hideDelay);
+    }
+
+    /// <summary>
+    /// Back Left Spin (أسفل يسار)
+    /// </summary>
+    public void OnBackLeftSpin()
+    {
+        if (spinController != null) spinController.SendMessage("SetBackLeftSpin", SendMessageOptions.DontRequireReceiver);
+        if (autoHide) Invoke(nameof(ClosePanel), hideDelay);
+    }
 }
