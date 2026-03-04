@@ -35,6 +35,7 @@ public class RestartButton : MonoBehaviour
 
     public void RestartGame()
     {
+        Haptics.Medium(); // ✅ اهتزاز متوسط عند إعادة رص الكرات
         Time.timeScale = 1f;
 
         // ✅ 1. فحص وضع التحدي

@@ -39,6 +39,7 @@ public class SpinModeSwitcher : MonoBehaviour
 
     public void SetDragMode()
     {
+        Haptics.Selection(); // ✅ إضافة
         isDragMode = true;
 
         if (dragMode) dragMode.SetActive(true);

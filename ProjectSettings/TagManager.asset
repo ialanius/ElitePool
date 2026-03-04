@@ -8,6 +8,7 @@ TagManager:
   - Pockets
   - Balls
   - Bounds
+  - Table
   layers:
   - Default
   - TransparentFX

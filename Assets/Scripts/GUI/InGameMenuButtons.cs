@@ -5,30 +5,47 @@ public class InGameMenuButtons : MonoBehaviour
 {
     [Header("Scene Names")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
-    // زر: رجوع للقائمة الرئيسية
+
     [Header("Menu")]
     public GameObject MenuPanel;
-   
+
     public void GoToMainMenu()
     {
-        Time.timeScale = 1f; // مهم لو عندك Pause
+        Haptics.Selection(); // ✅ اهتزاز الخروج
+        Time.timeScale = 1f;
         SceneTransitionManager.Instance.LoadScene(mainMenuSceneName);
     }
 
     public void MenuPanelDisplay()
     {
-        if (MenuPanel != null)
-        {
-            MenuPanel.SetActive(true);
-        }
+        Haptics.Light(); // ✅ اهتزاز فتح القائمة
+        if (MenuPanel != null) MenuPanel.SetActive(true);
     }
 
     public void MenuPanelHide()
     {
-        if (MenuPanel != null)
-        {
-            MenuPanel.SetActive(false);
+        if (HapticManager.Instance != null) Haptics.Light();
 
+        // ✅ التعديل السحري هنا: أضفنا (MenuPanel.activeInHierarchy) 
+        // لنتأكد أن القائمة ظاهرة فعلاً قبل أن نحاول إخفاءها أو تشغيل الأنيميشن!
+        if (MenuPanel != null && MenuPanel.activeInHierarchy)
+        {
+            var anim = MenuPanel.GetComponent<PanelAnimator>();
+            if (anim != null)
+            {
+                anim.Hide(); // تشغيل حركة الإغلاق
+                StartCoroutine(DisableMenuPanelRealtime(MenuPanel, 0.4f));
+            }
+            else
+            {
+                MenuPanel.SetActive(false); // إخفاء فوري إذا لم يوجد أنيميشن
+            }
         }
+    }
+
+    private System.Collections.IEnumerator DisableMenuPanelRealtime(GameObject panel, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        if (panel != null) panel.SetActive(false);
     }
 }

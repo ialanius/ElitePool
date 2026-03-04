@@ -65,7 +65,8 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OpenPanel()
     {
-        spinPanel.SetActive(true);
+        Haptics.Light(); // ✅
+        spinPanel.GetComponent<PanelAnimator>().Show();
         isOpen = true;
         Debug.Log("✅ Spin Panel opened");
     }
@@ -75,7 +76,8 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void ClosePanel()
     {
-        spinPanel.SetActive(false);
+        Haptics.Light(); // ✅
+        spinPanel.GetComponent<PanelAnimator>().Hide();
         isOpen = false;
         Debug.Log("✅ Spin Panel closed");
     }
@@ -89,6 +91,7 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OnTopSpin()
     {
+        Haptics.Selection(); // ✅ تضيفها في كل دوال الأزرار
         // استدعي الدالة من SpinController
         if (spinController != null)
         {
@@ -107,6 +110,7 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OnBackSpin()
     {
+        Haptics.Selection(); // ✅ تضيفها في كل دوال الأزرار
         if (spinController != null)
         {
             spinController.SendMessage("SetBackSpin", SendMessageOptions.DontRequireReceiver);
@@ -123,6 +127,7 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OnLeftSpin()
     {
+        Haptics.Selection(); // ✅ تضيفها في كل دوال الأزرار
         if (spinController != null)
         {
             spinController.SendMessage("SetLeftSpin", SendMessageOptions.DontRequireReceiver);
@@ -139,6 +144,7 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OnRightSpin()
     {
+        Haptics.Selection(); // ✅ تضيفها في كل دوال الأزرار
         if (spinController != null)
         {
             spinController.SendMessage("SetRightSpin", SendMessageOptions.DontRequireReceiver);
@@ -155,6 +161,7 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OnCenterHit()
     {
+        Haptics.Selection(); // ✅ تضيفها في كل دوال الأزرار
         if (spinController != null)
         {
             spinController.SendMessage("SetCenterHit", SendMessageOptions.DontRequireReceiver);
@@ -170,6 +177,7 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OnTopRightSpin()
     {
+        Haptics.Selection(); // ✅ تضيفها في كل دوال الأزرار
         if (spinController != null) spinController.SendMessage("SetTopRightSpin", SendMessageOptions.DontRequireReceiver);
         if (autoHide) Invoke(nameof(ClosePanel), hideDelay);
     }
@@ -179,6 +187,7 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OnTopLeftSpin()
     {
+        Haptics.Selection(); // ✅ تضيفها في كل دوال الأزرار
         if (spinController != null) spinController.SendMessage("SetTopLeftSpin", SendMessageOptions.DontRequireReceiver);
         if (autoHide) Invoke(nameof(ClosePanel), hideDelay);
     }
@@ -188,6 +197,7 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OnBackRightSpin()
     {
+        Haptics.Selection(); // ✅ تضيفها في كل دوال الأزرار
         if (spinController != null) spinController.SendMessage("SetBackRightSpin", SendMessageOptions.DontRequireReceiver);
         if (autoHide) Invoke(nameof(ClosePanel), hideDelay);
     }
@@ -197,6 +207,7 @@ public class SpinPanelToggle : MonoBehaviour
     /// </summary>
     public void OnBackLeftSpin()
     {
+        Haptics.Selection(); // ✅ تضيفها في كل دوال الأزرار
         if (spinController != null) spinController.SendMessage("SetBackLeftSpin", SendMessageOptions.DontRequireReceiver);
         if (autoHide) Invoke(nameof(ClosePanel), hideDelay);
     }

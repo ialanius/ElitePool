@@ -17,12 +17,11 @@ public class LevelSelectorUI : MonoBehaviour
 
     void UpdateLevelButtons()
     {
-        // 1. جلب أعلى مرحلة وصل لها اللاعب (الافتراضي 1)
         int reachedLevel = PlayerPrefs.GetInt("LevelReached", 1);
 
         for (int i = 0; i < levelButtons.Length; i++)
         {
-            int levelNum = i + 1; // لأن المصفوفة تبدأ من 0 والمراحل من 1
+            int levelNum = i + 1;
 
             if (levelNum <= reachedLevel)
             {
@@ -30,17 +29,24 @@ public class LevelSelectorUI : MonoBehaviour
                 levelButtons[i].interactable = true;
                 if (unlockedSprite) levelButtons[i].image.sprite = unlockedSprite;
 
-                // إضافة وظيفة الزر برمجياً
-                int levelIndex = i; // نحتاج متغير محلي للكلوجر
+                int levelIndex = i;
                 levelButtons[i].onClick.RemoveAllListeners();
-                Haptics.Selection(); // أول سطر
-                levelButtons[i].onClick.AddListener(() => SelectLevel(levelIndex));
+
+                // ✅ الإصلاح هنا: وضعنا الاهتزاز داخل قوسين ليعمل عند الضغط فقط
+                levelButtons[i].onClick.AddListener(() => {
+                    Haptics.Selection();
+                    SelectLevel(levelIndex);
+                });
             }
             else
             {
                 // 🔒 المرحلة مغلقة
                 levelButtons[i].interactable = false;
                 if (lockedSprite) levelButtons[i].image.sprite = lockedSprite;
+
+                // إضافة اهتزاز "خطأ" عند محاولة ضغط مرحلة مغلقة (اختياري وجميل)
+                levelButtons[i].onClick.RemoveAllListeners();
+                levelButtons[i].onClick.AddListener(() => Haptics.Error());
             }
         }
     }

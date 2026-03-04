@@ -74,6 +74,11 @@ public class CueStickController3D : MonoBehaviour
     [Header("Spin System")]
     public SpinControllerAdvanced spinController;
 
+    [Header("Cue Elevation (Rail Fix)")]
+    public bool autoElevateStick = true;    // تفعيل الرفع التلقائي
+    public float stickLength = 1.5f;        // طول العصا التقريبي
+    public float maxElevationAngle = 35f;   // أقصى زاوية لرفع العصا للأعلى
+    public LayerMask cushionLayer;          // الطبقة (Layer) الخاصة بحواف الطاولة
     // State
     enum ShootState { Aiming, ReadyToShoot, Shooting }
     ShootState currentState = ShootState.Aiming;
@@ -437,7 +442,28 @@ public class CueStickController3D : MonoBehaviour
         Vector3 pos = cueBall.position + stickDir * (cueBallRadius + stickDistance + pull + tipOffset);
         visualRoot.position = pos;
 
+        // التدوير الأساسي باتجاه الكرة
         Quaternion rot = Quaternion.LookRotation(-stickDir, Vector3.up);
+
+        // ✅ نظام الرفع التلقائي لتفادي اختراق الطاولة
+        if (autoElevateStick)
+        {
+            float elevationAngle = 0f;
+
+            // نطلق شعاعاً خلف الكرة البيضاء باتجاه العصا
+            if (Physics.Raycast(cueBall.position, stickDir, out RaycastHit hit, stickLength, cushionLayer))
+            {
+                // إذا ضرب الشعاع حافة الطاولة، نحسب المسافة
+                float distanceToCushion = hit.distance;
+
+                // كلما كان الجدار أقرب، زادت زاوية رفع العصا
+                float elevationPercent = 1f - (distanceToCushion / stickLength);
+                elevationAngle = Mathf.Lerp(0f, maxElevationAngle, elevationPercent);
+            }
+
+            // نطبق زاوية الرفع على محور X
+            rot *= Quaternion.Euler(elevationAngle, 0f, 0f);
+        }
         if (modelForwardIsWrong) rot *= Quaternion.Euler(0f, 180f, 0f);
         visualRoot.rotation = rot;
 

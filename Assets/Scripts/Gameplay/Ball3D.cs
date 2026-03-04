@@ -14,44 +14,43 @@ public class Ball3D : MonoBehaviour
 
     private bool hasReportedFirstHit = false;
 
-    // متغيرات جديدة
-    public AudioSource rollingSource; // ضع فيه ملف صوت الدحرجة (Loop)
+    // متغيرات الصوت
+    public AudioSource rollingSource;
     public float maxRollSpeed = 10f;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
 
-        rb.useGravity = false;
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
-
-        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationY;
+        // ❌ تم حذف الأسطر التي تلغي الجاذبية وتجمد السقوط.
+        // ✅ الآن الكرة ستأخذ إعداداتها الفيزيائية من الـ Inspector مباشرة!
     }
 
     void Update()
-{
-    if (rollingSource)
     {
-        float speed = rb.velocity.magnitude;
+        if (rollingSource)
+        {
+            float speed = rb.velocity.magnitude;
 
-        // إذا كانت السرعة قليلة جداً، نوقف الصوت
-        if (speed < 0.1f)
-        {
-            rollingSource.volume = 0;
-            if (rollingSource.isPlaying) rollingSource.Pause();
-        }
-        else
-        {
-            if (!rollingSource.isPlaying) rollingSource.Play();
-            
-            // جعل الصوت يعلو وينخفض حسب السرعة
-            rollingSource.volume = Mathf.Clamp01(speed / maxRollSpeed);
-            
-            // تغيير الـ Pitch قليلاً ليعطي واقعية (كلما أسرعت، زادت حدة الصوت)
-            rollingSource.pitch = 0.8f + (speed / maxRollSpeed) * 0.4f;
+            // إذا كانت السرعة قليلة جداً، نوقف الصوت
+            if (speed < 0.1f)
+            {
+                rollingSource.volume = 0;
+                if (rollingSource.isPlaying) rollingSource.Pause();
+            }
+            else
+            {
+                if (!rollingSource.isPlaying) rollingSource.Play();
+
+                // جعل الصوت يعلو وينخفض حسب السرعة
+                rollingSource.volume = Mathf.Clamp01(speed / maxRollSpeed);
+
+                // تغيير الـ Pitch قليلاً ليعطي واقعية (كلما أسرعت، زادت حدة الصوت)
+                rollingSource.pitch = 0.8f + (speed / maxRollSpeed) * 0.4f;
+            }
         }
     }
-}
+
     public bool IsMoving(float t = 0.03f)
     {
         if (!rb) return false;
@@ -76,7 +75,7 @@ public class Ball3D : MonoBehaviour
         hasReportedFirstHit = false;
     }
 
-    // ✅ تتبع الاصطدامات
+    // تتبع الاصطدامات
     void OnCollisionEnter(Collision collision)
     {
         // 1) لو الكرة البيضاء ضربت كرة ثانية
@@ -94,8 +93,7 @@ public class Ball3D : MonoBehaviour
             }
         }
 
-        // 2) ✅ جديد: لو أي كرة ضربت جدار (Cushion/Wall)
-        // تحقق من الـTag أو الـLayer
+        // 2) لو أي كرة ضربت جدار (Cushion/Wall)
         if (collision.gameObject.CompareTag("Wall") ||
             collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {

@@ -67,6 +67,7 @@ public class ScratchManager : MonoBehaviour
 
     public void OnScratch(Transform cueBallTransform)
     {
+        Haptics.Error(); // ✅ اهتزاز مميز للفاول (Scratch)
         if (IsPlacing) return;
 
         cueBall = cueBallTransform;
@@ -166,7 +167,7 @@ public class ScratchManager : MonoBehaviour
         {
             if (OverlapsOtherBall()) return;
             if (InPocketArea()) return;
-
+            Haptics.Success(); // ✅ اهتزاز تأكيد وضع الكرة في المكان الصحيح
             var rb = cueBall.GetComponent<Rigidbody>();
             if (rb)
             {

@@ -4,23 +4,19 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private string mainMenuSceneName = "MainMenu";
-    // دالة زر البدء
+
     public void PlayGame()
     {
-        Haptics.Selection(); // أول سطر
-        // 1. إجبار الصوت على العمل (لحل مشكلة الويب)
-        AudioListener.pause = false; // إلغاء الإيقاف المؤقت للصوت
-        AudioListener.volume = 1.0f; // التأكد أن الصوت مرفوع 100%
-
-        // 2. التأكد من أن الزمن يعمل (في حال توقف بسبب كود التدوير السابق)
+        Haptics.Selection();
+        AudioListener.pause = false;
+        AudioListener.volume = 1.0f;
         Time.timeScale = 1;
-
-        // 3. الانتقال للمشهد التالي
         SceneTransitionManager.Instance.LoadScene(mainMenuSceneName);
     }
 
     public void QuitGame()
     {
+        Haptics.Selection(); // ✅ اهتزاز عند الخروج من اللعبة
         Application.Quit();
     }
 }

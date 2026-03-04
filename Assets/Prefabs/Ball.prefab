@@ -16,9 +16,11 @@ GameObject:
   - component: {fileID: 2309751977705382585}
   - component: {fileID: -812328668770328323}
   - component: {fileID: -9061540616900915793}
-  m_Layer: 0
+  - component: {fileID: -6862948879343289054}
+  - component: {fileID: 6830315571236080869}
+  m_Layer: 9
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Balls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,7 +119,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480741577189424880}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0.8
   m_AngularDrag: 1.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -131,10 +133,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 36
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!114 &2309751977705382585
 MonoBehaviour:
@@ -273,3 +275,95 @@ MonoBehaviour:
   randomizePitch: 1
   minPitch: 0.95
   maxPitch: 1.05
+--- !u!114 &-6862948879343289054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480741577189424880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f168441d61287a74e9bec84d9f735d88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationDuration: 0.8
+  animationType: 3
+  sinkDistance: 1.5
+  sinkCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  targetScale: 0
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rotationSpeed: 720
+  rotationAxis: {x: 0, y: 1, z: 0}
+  fadeOut: 0
+  pocketParticle: {fileID: 0}
+  particleAtBall: 1
+  animationSound: {fileID: 0}
+  soundVolume: 1
+--- !u!114 &6830315571236080869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480741577189424880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791c7834f78f00c45b0efe5773f75679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxVelocity: 20
+  maxAngularVelocity: 50
+  stopThreshold: 0.02
+  stopDelay: 0.5
+  outOfBoundsY: -5
+  resetPosition: {x: 0, y: 1, z: 0}
+  useInitialPosition: 1
+  maxWallCollisions: 50
+  showDebugLogs: 0

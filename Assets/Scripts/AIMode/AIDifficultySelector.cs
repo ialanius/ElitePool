@@ -102,14 +102,13 @@ public class AIDifficultySelector : MonoBehaviour
     // هذه الدالة الآن تختار فقط ولا تبدأ اللعبة
     void SelectDifficulty(AIDifficulty difficulty)
     {
-        if (selectedDifficulty == difficulty) return; // لا تفعل شيئاً إذا ضغط نفس الزر
+        if (selectedDifficulty == difficulty) return;
 
+        Haptics.Selection(); // ✅ اهتزاز عند تغيير الصعوبة
         selectedDifficulty = difficulty;
 
         PlaySound(buttonClickSound);
-        UpdateUI(); // تحديث الألوان والنصوص
-
-        Debug.Log("[Selector] Difficulty Selected (Pending Play): " + difficulty);
+        UpdateUI();
     }
 
     void UpdateUI()
@@ -121,6 +120,8 @@ public class AIDifficultySelector : MonoBehaviour
     // ✅✅✅ هذه الدالة تعمل فقط عند ضغط زر Play
     void StartGame()
     {
+        Haptics.Heavy(); // ✅ اهتزاز قوي إيذاناً ببدء المباراة!
+        
         Debug.Log("🚀 Play Button Clicked! Starting Game...");
 
         // 1. تطبيق الصعوبة المختارة على الـ AI

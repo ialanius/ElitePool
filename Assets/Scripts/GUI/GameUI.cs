@@ -265,7 +265,7 @@ public class GameUI : MonoBehaviour
 
     public void ShowWinPanel(string winnerName)
     {
-        if (winPanel) winPanel.SetActive(true);
+        if (winPanel) winPanel.GetComponent<PanelAnimator>().Show();
         SetGameplayControlsActive(false);
 
         if (winnerText)
@@ -284,7 +284,7 @@ public class GameUI : MonoBehaviour
 
     public void ShowLosePanel(string reason)
     {
-        if (losePanel) losePanel.SetActive(true);
+        if (losePanel) losePanel.GetComponent<PanelAnimator>().Show();
         SetGameplayControlsActive(false);
         if (loseReasonText) loseReasonText.text = reason;
         PlayLoseSound();
@@ -306,14 +306,14 @@ public class GameUI : MonoBehaviour
     {
         if (foulPanel)
         {
-            foulPanel.SetActive(true);
+            foulPanel.GetComponent<PanelAnimator>().Show(); ;
             if (foulText) foulText.text = "FOUL!";
             Invoke(nameof(HideFoulPanel), 1.5f);
         }
         ShowMessage("Foul committed!");
     }
 
-    void HideFoulPanel() { if (foulPanel) foulPanel.SetActive(false); }
+    void HideFoulPanel() { if (foulPanel) foulPanel.GetComponent<PanelAnimator>().Hide(); }
 
     public void OnRestartButtonClicked()
     {
@@ -350,15 +350,47 @@ public class GameUI : MonoBehaviour
         SceneTransitionManager.Instance.LoadScene(mainMenuSceneName);
     }
 
-    public void MenuPanelDisplay() { if (MenuPanel) MenuPanel.SetActive(true); }
-    public void MenuPanelHide() { if (MenuPanel) MenuPanel.SetActive(false); }
+    public void MenuPanelDisplay()
+    {
+        // تأكد من وجود مدير الاهتزاز قبل الاهتزاز
+        if (HapticManager.Instance != null) Haptics.Light();
 
-    public void PlayWinSound() { if (uiAudioSource && winSound) uiAudioSource.PlayOneShot(winSound); }
-    public void PlayLoseSound() { if (uiAudioSource && loseSound) uiAudioSource.PlayOneShot(loseSound); }
+        // تأكد من وجود اللوحة قبل محاولة إظهارها
+        if (MenuPanel != null) MenuPanel.SetActive(true);
+    }
+
+    public void MenuPanelHide()
+    {
+        if (HapticManager.Instance != null) Haptics.Light();
+
+        // ✅ التعديل السحري هنا: أضفنا (MenuPanel.activeInHierarchy) 
+        // لنتأكد أن القائمة ظاهرة فعلاً قبل أن نحاول إخفاءها أو تشغيل الأنيميشن!
+        if (MenuPanel != null && MenuPanel.activeInHierarchy)
+        {
+            var anim = MenuPanel.GetComponent<PanelAnimator>();
+            if (anim != null)
+            {
+                anim.Hide(); // تشغيل حركة الإغلاق
+                StartCoroutine(DisableMenuPanelRealtime(MenuPanel, 0.4f));
+            }
+            else
+            {
+                MenuPanel.SetActive(false); // إخفاء فوري إذا لم يوجد أنيميشن
+            }
+        }
+    }
+
+    // دالة الانتظار المستقلة عن زمن اللعبة
+    private System.Collections.IEnumerator DisableMenuPanelRealtime(GameObject panel, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay); // يعمل حتى لو اللعبة متوقفة (Pause)
+        if (panel != null) panel.SetActive(false);
+    }
 
     public void CloseTutorialAndStartGame()
     {
-        if (tutorialPanel) tutorialPanel.SetActive(false);
+        Haptics.Selection(); // ✅ إضافة
+        
         SetGameplayControlsActive(true);
 
         RestartButton restarter = FindObjectOfType<RestartButton>();
@@ -366,25 +398,18 @@ public class GameUI : MonoBehaviour
         else FindObjectOfType<BallRack3D>().RackBalls();
     }
 
-    // ✅✅✅ 2. دالة لفتح قائمة الـ AI فقط (بدون بدء اللعبة مباشرة)
-    // اربط هذه الدالة بزر "AI Mode" في القائمة الرئيسية إذا كان لديك
     public void OpenAIDifficultyPanel()
     {
+        Haptics.Selection(); // ✅ إضافة
         if (difficultyPanel)
         {
             difficultyPanel.SetActive(true);
-
-            // محاولة استدعاء تحديث الواجهة داخل السكربت الجديد
             var selector = difficultyPanel.GetComponent<AIDifficultySelector>();
             if (selector) selector.ReopenDifficultyPanel();
         }
     }
 
-    // تم إيقاف الدالة القديمة لتجنب التعارض (يمكنك حذفها)
-    /*
-    public void SelectDifficultyAndStart(int level)
-    {
-        // ... (Old Logic Removed to prevent conflicts) ...
-    }
-    */
+    public void PlayWinSound() { if (uiAudioSource && winSound) uiAudioSource.PlayOneShot(winSound); }
+    public void PlayLoseSound() { if (uiAudioSource && loseSound) uiAudioSource.PlayOneShot(loseSound); }
+
 }

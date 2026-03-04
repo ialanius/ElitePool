@@ -326,6 +326,7 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Haptics.Selection(); // ✅ اهتزاز عند مسك نقطة السبين
         isDragging = true;
 
         if (animateUI)
@@ -339,6 +340,7 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        Haptics.Light(); // ✅ اهتزاز خفيف عند إفلات نقطة السبين
         isDragging = false;
 
         if (animateUI)
@@ -522,6 +524,7 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
     {
         if (!rb) return;
 
+        // تطبيق فيزياء السبين
         if (Mathf.Abs(verticalSpin) > 0.01f)
         {
             Vector3 spinAxis = Vector3.Cross(shotDirection, Vector3.up).normalized;
@@ -538,15 +541,29 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             rb.AddForce(sideForce * horizontalSpin * shotPower * 0.2f, ForceMode.Impulse);
         }
 
-        StartCoroutine(SpinVisualEffects(shotPower));
+        // حفظ لون السبين الحالي قبل تصفيره
+        Color currentSpinColor = GetSpinColor();
 
+        // ✅ الحل: تفويض الكرة البيضاء بتشغيل المؤثرات لأن القائمة قد تكون مخفية
+        Ball3D cueBallScript = rb.GetComponent<Ball3D>();
+
+        if (cueBallScript != null && cueBallScript.gameObject.activeInHierarchy)
+        {
+            cueBallScript.StartCoroutine(SpinVisualEffects(shotPower, currentSpinColor));
+        }
+        else if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(SpinVisualEffects(shotPower, currentSpinColor));
+        }
+
+        // تصفير السبين فوراً للضربة القادمة (بدل الـ Invoke الذي يتعطل عند إخفاء القائمة)
         if (resetAfterShot)
         {
-            Invoke(nameof(ResetSpin), 0.5f);
+            ResetSpin();
         }
     }
 
-    IEnumerator SpinVisualEffects(float power)
+    IEnumerator SpinVisualEffects(float power, Color spinColor)
     {
         if (enableParticles && spinParticles)
         {
@@ -555,16 +572,16 @@ public class SpinControllerAdvanced : MonoBehaviour, IPointerDownHandler, IPoint
             spinParticles.Play();
 
             yield return new WaitForSeconds(0.5f);
-            spinParticles.Stop();
+            if (spinParticles) spinParticles.Stop();
         }
 
         if (enableTrail && ballTrail)
         {
             ballTrail.enabled = true;
-            ballTrail.colorGradient = CreateTrailGradient(GetSpinColor());
+            ballTrail.colorGradient = CreateTrailGradient(spinColor);
 
             yield return new WaitForSeconds(2f);
-            ballTrail.enabled = false;
+            if (ballTrail) ballTrail.enabled = false;
         }
     }
 
