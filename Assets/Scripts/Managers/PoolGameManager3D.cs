@@ -21,6 +21,19 @@ public class PoolGameManager3D : MonoBehaviour
     public float angularDamping = 0.970f;
     public bool enableRealisticRolling = true;
 
+    [Header("3D Table Settings")]
+    [Tooltip("Enable true 3D physics (balls can fall in pockets)")]
+    public bool enable3DPhysics = true;
+
+    [Tooltip("Apply Y-lock only to balls on table (not falling)")]
+    public bool smartYLock = true;
+
+    [Tooltip("Table height - balls above this are 'on table'")]
+    public float tableHeight = 0.5f;
+
+    [Tooltip("Y threshold - balls below this are 'falling'")]
+    public float fallingThreshold = 0.3f;
+
     Dictionary<int, int> ignoreFrames = new Dictionary<int, int>();
     Dictionary<int, int> stillFrames = new Dictionary<int, int>();
     private bool allBallsWereStopped = false;
@@ -36,12 +49,10 @@ public class PoolGameManager3D : MonoBehaviour
 
     public void RefreshRefs()
     {
-        // جلب الكرات من المشهد
         var all = FindObjectsOfType<Ball3D>();
         cueBall = all.FirstOrDefault(b => b && b.type == BallType.Cue);
         balls = all.Where(b => b && b.type != BallType.Cue).ToArray();
 
-        // ✅ ربط مع GameState
         if (GameStateManager.Instance)
         {
             GameStateManager.Instance.RefreshBallReferences();
@@ -50,7 +61,6 @@ public class PoolGameManager3D : MonoBehaviour
 
     void FixedUpdate()
     {
-        // تطبيق الفيزياء على كل كرة موجودة
         if (balls != null)
         {
             foreach (var ball in balls)
@@ -63,11 +73,6 @@ public class PoolGameManager3D : MonoBehaviour
         CheckAllBallsStopped();
     }
 
-    // ... (باقي دوال الفيزياء ApplyEnhancedPhysics و CheckAllBallsStopped اتركها كما هي في الكود السابق) ...
-    // لقد قمت فقط بتعديل RefreshRefs و Start لضمان عدم التعارض
-
-    // (انسخ باقي دوال الفيزياء من الكود السابق وضعها هنا)
-
     public void RegisterShot(Rigidbody rb)
     {
         if (!rb) return;
@@ -77,7 +82,6 @@ public class PoolGameManager3D : MonoBehaviour
 
     void SetupEnhancedPhysics()
     {
-        // نفس الكود السابق...
         if (balls != null)
         {
             foreach (var ball in balls)
@@ -85,25 +89,42 @@ public class PoolGameManager3D : MonoBehaviour
                 if (ball && ball.rb)
                 {
                     ConfigureBallPhysics(ball.rb);
+
+                    // 💥 السر الاحترافي: "الفوضى المجهرية" (Micro-Chaos)
+                    // نقوم بإزاحة كل كرة بمسافة عشوائية ضئيلة جداً (2 مليمتر) لكسر الترتيب المثالي
+                    float randomX = UnityEngine.Random.Range(-0.002f, 0.002f);
+                    float randomZ = UnityEngine.Random.Range(-0.002f, 0.002f);
+                    ball.transform.position += new Vector3(randomX, 0f, randomZ);
                 }
             }
         }
-        if (cueBall && cueBall.rb) ConfigureBallPhysics(cueBall.rb);
+
+        if (cueBall && cueBall.rb)
+        {
+            ConfigureBallPhysics(cueBall.rb);
+            // جعل الكرة البيضاء أثقل لتعمل كـ "مطرقة" تكسر المثلث
+            cueBall.rb.mass = 0.25f;
+        }
     }
 
     void ConfigureBallPhysics(Rigidbody rb)
     {
-        rb.mass = 0.17f;
-        rb.drag = 0.05f;
-        rb.angularDrag = 0.3f;
-        rb.useGravity = false;
+        // 🪶 وزن خفيف للكرات الملونة لتتطاير بسهولة
+        rb.mass = 0.14f;
+        rb.drag = 0.02f;
+        rb.angularDrag = 0.05f;
+
+        rb.useGravity = enable3DPhysics;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
         PhysicMaterial ballMaterial = new PhysicMaterial("BallPhysics_Optimized");
-        ballMaterial.dynamicFriction = 0.15f;
-        ballMaterial.staticFriction = 0.15f;
-        ballMaterial.bounciness = 0.85f;
+
+        // 🧊 كرات زلقة جداً ومرنة للغاية
+        ballMaterial.dynamicFriction = 0.01f;
+        ballMaterial.staticFriction = 0.01f;
+        ballMaterial.bounciness = 0.98f;
+
         ballMaterial.frictionCombine = PhysicMaterialCombine.Minimum;
         ballMaterial.bounceCombine = PhysicMaterialCombine.Maximum;
 
@@ -125,11 +146,44 @@ public class PoolGameManager3D : MonoBehaviour
             return;
         }
 
-        Vector3 velocity = rb.velocity;
-        velocity.y = 0f;
-        float speed = velocity.magnitude;
+        bool isFalling = IsBallFalling(ball);
+        if (isFalling)
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            return;
+        }
 
-        // ✅ توقف أسرع
+        Vector3 velocity = rb.velocity;
+        bool onSurface = smartYLock && IsOnTableSurface(ball);
+
+        if (onSurface)
+        {
+            // 1. ✅ إطفاء الجاذبية تماماً لمنع ضغط الكرة على الأرضية (يقتل الاهتزاز)
+            rb.useGravity = false;
+
+            // 2. التجميد المطلق لمحرك الفيزياء
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
+
+            velocity.y = 0f;
+            rb.velocity = new Vector3(velocity.x, 0f, velocity.z);
+
+            if (Mathf.Abs(ball.transform.position.y - tableHeight) > 0.001f)
+            {
+                Vector3 fixedPos = ball.transform.position;
+                fixedPos.y = tableHeight;
+                ball.transform.position = fixedPos;
+            }
+        }
+        else
+        {
+            // ✅ إعادة تشغيل الجاذبية وفك القيود بمجرد أن تصبح الكرة فوق الجيب
+            rb.useGravity = enable3DPhysics;
+            rb.constraints = RigidbodyConstraints.None;
+        }
+
+        // تجاهل السرعة العمودية عند حساب سرعة التوقف لتجنب منع النوم بسبب الاهتزاز
+        float speed = onSurface ? new Vector3(velocity.x, 0f, velocity.z).magnitude : velocity.magnitude;
+
         if (speed <= stopSpeed)
         {
             rb.velocity = Vector3.zero;
@@ -139,12 +193,9 @@ public class PoolGameManager3D : MonoBehaviour
         }
 
         bool isSliding = speed > slideToRollSpeed;
-
-        // ✅ تطبيق الاحتكاك
         float frictionFactor = isSliding ? slidingFriction : rollingFriction;
         velocity *= frictionFactor;
 
-        // Magnus effect (Spin)
         if (spinInfluence > 0f && !isSliding)
         {
             Vector3 angularVel = rb.angularVelocity;
@@ -156,30 +207,72 @@ public class PoolGameManager3D : MonoBehaviour
             }
         }
 
-        rb.velocity = new Vector3(velocity.x, 0f, velocity.z);
+        if (onSurface)
+        {
+            rb.velocity = new Vector3(velocity.x, 0f, velocity.z);
+        }
+        else
+        {
+            rb.velocity = velocity;
+        }
 
         if (enableRealisticRolling)
         {
             ApplyRealisticRolling(ball, speed, isSliding);
         }
 
-        // ✅ تخفيف الدوران الزاوي
         rb.angularVelocity *= angularDamping;
 
-        // ✅ فحص التوقف
+        // حساب السكون بناءً على المحاور الأفقية فقط إذا كانت الكرة على الطاولة
         float stopThreshold = stopSpeed * stopSpeed;
-        bool isSlow = (velocity.sqrMagnitude < stopThreshold) &&
-                      (rb.angularVelocity.sqrMagnitude < stopThreshold);
+        float currentSqrVel = onSurface ? new Vector3(rb.velocity.x, 0f, rb.velocity.z).sqrMagnitude : rb.velocity.sqrMagnitude;
+
+        bool isSlow = (currentSqrVel < stopThreshold) && (rb.angularVelocity.sqrMagnitude < stopThreshold);
 
         if (!stillFrames.ContainsKey(id)) stillFrames[id] = 0;
         stillFrames[id] = isSlow ? stillFrames[id] + 1 : 0;
 
-        // ✅ توقف بعد 2 فريمات (كان 3)
         if (stillFrames[id] >= 2)
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            rb.Sleep();
+            rb.Sleep(); // تنويم الكرة إجبارياً
+        }
+    }
+
+    bool IsBallFalling(Ball3D ball)
+    {
+        if (!ball || !ball.rb) return false;
+        if (ball.transform.position.y < fallingThreshold) return true;
+        if (ball.rb.velocity.y < -0.2f && !IsOnTableSurface(ball)) return true;
+        return false;
+    }
+
+    /// <summary>
+    /// ✅ دالة الليزر الخفي: تكتشف هل الكرة فوق الطاولة أم فوق الجيب
+    /// </summary>
+    bool IsOnTableSurface(Ball3D ball)
+    {
+        if (!ball) return false;
+
+        if (ball.transform.position.y < fallingThreshold) return false;
+
+        // ✅ التعديل الأهم: نبدأ الشعاع من منطقة (أعلى) من مركز الكرة بقليل
+        // لضمان أن الليزر يضرب الطاولة حتى لو غاصت الكرة نصفها تحت القماش!
+        Vector3 rayOrigin = ball.transform.position + (Vector3.up * 0.15f);
+        float checkDistance = 0.4f;
+
+        bool hitSurface = Physics.Raycast(rayOrigin, Vector3.down, checkDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+
+        if (hitSurface)
+        {
+            Debug.DrawRay(rayOrigin, Vector3.down * checkDistance, Color.green);
+            return true;
+        }
+        else
+        {
+            Debug.DrawRay(rayOrigin, Vector3.down * checkDistance, Color.red);
+            return false;
         }
     }
 
@@ -250,6 +343,8 @@ public class PoolGameManager3D : MonoBehaviour
                 if (!ball || ball.inPocket) continue;
                 if (!ball.rb || ball.rb.isKinematic) continue;
 
+                if (IsBallFalling(ball)) continue;
+
                 if (ball.rb.velocity.sqrMagnitude > s2) return false;
                 if (ball.rb.angularVelocity.sqrMagnitude > s2) return false;
             }
@@ -259,8 +354,11 @@ public class PoolGameManager3D : MonoBehaviour
         {
             if (cueBall.rb && !cueBall.rb.isKinematic)
             {
-                if (cueBall.rb.velocity.sqrMagnitude > s2) return false;
-                if (cueBall.rb.angularVelocity.sqrMagnitude > s2) return false;
+                if (!IsBallFalling(cueBall))
+                {
+                    if (cueBall.rb.velocity.sqrMagnitude > s2) return false;
+                    if (cueBall.rb.angularVelocity.sqrMagnitude > s2) return false;
+                }
             }
         }
 

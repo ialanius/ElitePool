@@ -13,11 +13,13 @@ public class MenuManager : MonoBehaviour
     public Button playVsPlayerButton;
     public Button playVsAIButton;
     public Button ChallengesButton;
+    public Button TestingButton;
 
     [Header("📝 Scene Names")]
     public string pvpSceneName = "PvP_Mode";
     public string pvaiSceneName = "PvAI_Mode";
     public string ChallengessceneName = "Challenges_Mode";
+    public string TestingsceneName = "Testing";
 
     void Start()
     {
@@ -30,6 +32,7 @@ public class MenuManager : MonoBehaviour
         if (playVsPlayerButton) playVsPlayerButton.onClick.AddListener(LoadPvPScene);
         if (playVsAIButton) playVsAIButton.onClick.AddListener(LoadPvAIScene);
         if (ChallengesButton) ChallengesButton.onClick.AddListener(LoadChallengesScene);
+        if (TestingButton) TestingButton.onClick.AddListener(LoadTestingScene);
     }
 
     public void LoadPvPScene()
@@ -48,6 +51,11 @@ public class MenuManager : MonoBehaviour
     {
         Haptics.Selection(); // ✅ تم النقل هنا
         SceneManager.LoadScene(ChallengessceneName);
+    }
+    public void LoadTestingScene()
+    {
+        Haptics.Selection(); // ✅ تم النقل هنا
+        SceneManager.LoadScene(TestingsceneName);
     }
 
     //==========================================

@@ -64,6 +64,9 @@ public class BallRack3D : MonoBehaviour
 
     public void RackBalls()
     {
+        // ✅ التعديل السحري: إجبار الكائن على العمل (التفعيل) قبل بدء الكوروتين
+        gameObject.SetActive(true);
+
         CalculatePositionsDynamic();
 
         if (randomizeOrder)

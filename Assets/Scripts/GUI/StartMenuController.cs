@@ -11,7 +11,7 @@ public class MainMenuController : MonoBehaviour
         AudioListener.pause = false;
         AudioListener.volume = 1.0f;
         Time.timeScale = 1;
-        SceneTransitionManager.Instance.LoadScene(mainMenuSceneName);
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 
     public void QuitGame()

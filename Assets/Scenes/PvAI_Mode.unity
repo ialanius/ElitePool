@@ -3291,13 +3291,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
+  pocketRadius: 0.6
+  useSimplifiedDetection: 1
   minSpeed: 0.01
   dotThreshold: 0.25
   pocketCenter: {fileID: 1013130340}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
+  useAnimation: 1
+  notificationDelay: 0.15
+  pocketParticle: {fileID: 0}
+  fallingHeightThreshold: 0.24
+  autoPocketY: -0.5
+  disableColliderOnPocket: 1
 --- !u!135 &246222500
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7938,13 +7944,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
+  pocketRadius: 0.6
+  useSimplifiedDetection: 1
   minSpeed: 0.01
   dotThreshold: 0.25
   pocketCenter: {fileID: 1985563293}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
+  useAnimation: 1
+  notificationDelay: 0.15
+  pocketParticle: {fileID: 0}
+  fallingHeightThreshold: 0.24
+  autoPocketY: -0.5
+  disableColliderOnPocket: 1
 --- !u!135 &598830945
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8921,13 +8933,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
+  pocketRadius: 0.6
+  useSimplifiedDetection: 1
   minSpeed: 0.01
   dotThreshold: 0.25
   pocketCenter: {fileID: 5412058}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
+  useAnimation: 1
+  notificationDelay: 0.15
+  pocketParticle: {fileID: 0}
+  fallingHeightThreshold: 0.24
+  autoPocketY: -0.5
+  disableColliderOnPocket: 1
 --- !u!135 &642667457
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -14583,13 +14601,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
+  pocketRadius: 0.6
+  useSimplifiedDetection: 1
   minSpeed: 0.01
   dotThreshold: 0.25
   pocketCenter: {fileID: 1887538474}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
+  useAnimation: 1
+  notificationDelay: 0.15
+  pocketParticle: {fileID: 0}
+  fallingHeightThreshold: 0.24
+  autoPocketY: -0.5
+  disableColliderOnPocket: 1
 --- !u!135 &1125624616
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -17045,13 +17069,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
+  pocketRadius: 0.6
+  useSimplifiedDetection: 1
   minSpeed: 0.01
   dotThreshold: 0.25
   pocketCenter: {fileID: 779744911}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
+  useAnimation: 1
+  notificationDelay: 0.15
+  pocketParticle: {fileID: 0}
+  fallingHeightThreshold: 0.24
+  autoPocketY: -0.5
+  disableColliderOnPocket: 1
 --- !u!135 &1321285763
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -19343,13 +19373,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
+  pocketRadius: 0.6
+  useSimplifiedDetection: 1
   minSpeed: 0.01
   dotThreshold: 0.25
   pocketCenter: {fileID: 1285558740}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
+  useAnimation: 1
+  notificationDelay: 0.15
+  pocketParticle: {fileID: 0}
+  fallingHeightThreshold: 0.24
+  autoPocketY: -0.5
+  disableColliderOnPocket: 1
 --- !u!135 &1478671038
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -21410,6 +21446,12 @@ MonoBehaviour:
   cueAudioSource: {fileID: 1611213191}
   cueHitSound: {fileID: 8300000, guid: 2824fef5df763a847a670492de0c07ad, type: 3}
   spinController: {fileID: 0}
+  autoElevateStick: 1
+  stickLength: 1.5
+  maxElevationAngle: 35
+  cushionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   aiPlayer: {fileID: 1350608218}
 --- !u!4 &1611213190
 Transform:
@@ -21837,6 +21879,10 @@ MonoBehaviour:
   spinInfluence: 0.15
   angularDamping: 0.97
   enableRealisticRolling: 1
+  enable3DPhysics: 1
+  smartYLock: 1
+  tableHeight: 0.25
+  fallingThreshold: 0.24
 --- !u!1 &1642413115
 GameObject:
   m_ObjectHideFlags: 0
@@ -28176,6 +28222,11 @@ PrefabInstance:
     - target: {fileID: 1879089559930187231, guid: c3fe9d3f5e8fbf1499e8cf7cc7834aff,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2309751977705382585, guid: c3fe9d3f5e8fbf1499e8cf7cc7834aff,
+        type: 3}
+      propertyPath: type
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2309751977705382585, guid: c3fe9d3f5e8fbf1499e8cf7cc7834aff,

@@ -3877,6 +3877,12 @@ MonoBehaviour:
   cueAudioSource: {fileID: 1611213191}
   cueHitSound: {fileID: 8300000, guid: 2824fef5df763a847a670492de0c07ad, type: 3}
   spinController: {fileID: 0}
+  autoElevateStick: 1
+  stickLength: 1.5
+  maxElevationAngle: 35
+  cushionLayer:
+    serializedVersion: 2
+    m_Bits: 0
   aiPlayer: {fileID: 0}
 --- !u!4 &1611213190
 Transform:
@@ -4622,6 +4628,8 @@ MonoBehaviour:
   - {fileID: 1293294166}
   lockedSprite: {fileID: 0}
   unlockedSprite: {fileID: 0}
+  unlockAllLevelsForTesting: 1
+  gameUI: {fileID: 264934779}
 --- !u!1 &2131592134
 GameObject:
   m_ObjectHideFlags: 0
@@ -4962,6 +4970,16 @@ PrefabInstance:
       propertyPath: gameState
       value: 
       objectReference: {fileID: 903815555}
+    - target: {fileID: 5416283388822168870, guid: 1e492574ff47c584c891d1a523501a99,
+        type: 3}
+      propertyPath: tableHeight
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5416283388822168870, guid: 1e492574ff47c584c891d1a523501a99,
+        type: 3}
+      propertyPath: fallingThreshold
+      value: 0.24
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5312,6 +5330,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2309751977705382585, guid: c3fe9d3f5e8fbf1499e8cf7cc7834aff,
         type: 3}
+      propertyPath: type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2309751977705382585, guid: c3fe9d3f5e8fbf1499e8cf7cc7834aff,
+        type: 3}
       propertyPath: inPocket
       value: 0
       objectReference: {fileID: 0}
@@ -5353,6 +5376,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 769767621466859839, guid: 602a98f035c472b40bb535b79fa39906,
+        type: 3}
+      propertyPath: pocketRadius
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695301834191277129, guid: 602a98f035c472b40bb535b79fa39906,
+        type: 3}
+      propertyPath: pocketRadius
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695301834191277129, guid: 602a98f035c472b40bb535b79fa39906,
+        type: 3}
+      propertyPath: fallingHeightThreshold
+      value: 0.24
+      objectReference: {fileID: 0}
     - target: {fileID: 3055035654653524825, guid: 602a98f035c472b40bb535b79fa39906,
         type: 3}
       propertyPath: cam
@@ -5443,6 +5481,11 @@ PrefabInstance:
       propertyPath: allBalls.Array.data[15]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6790521425043238097, guid: 602a98f035c472b40bb535b79fa39906,
+        type: 3}
+      propertyPath: pocketRadius
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6861796083409892514, guid: 602a98f035c472b40bb535b79fa39906,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5493,6 +5536,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7557417584867769992, guid: 602a98f035c472b40bb535b79fa39906,
+        type: 3}
+      propertyPath: pocketRadius
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 7580172605164636171, guid: 602a98f035c472b40bb535b79fa39906,
         type: 3}
       propertyPath: m_Name
@@ -5502,6 +5550,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195751246365219826, guid: 602a98f035c472b40bb535b79fa39906,
+        type: 3}
+      propertyPath: pocketRadius
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8803659571667267753, guid: 602a98f035c472b40bb535b79fa39906,
+        type: 3}
+      propertyPath: pocketRadius
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

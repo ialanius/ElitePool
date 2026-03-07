@@ -306,14 +306,40 @@ public class GameUI : MonoBehaviour
     {
         if (foulPanel)
         {
-            foulPanel.GetComponent<PanelAnimator>().Show(); ;
+            // محاولة البحث عن الأنيميشن لتشغيله بأمان
+            var anim = foulPanel.GetComponent<PanelAnimator>();
+            if (anim != null)
+            {
+                anim.Show();
+            }
+            else
+            {
+                // إذا لم يكن هناك أنيميشن، أظهر اللوحة فوراً
+                foulPanel.SetActive(true);
+            }
+
             if (foulText) foulText.text = "FOUL!";
             Invoke(nameof(HideFoulPanel), 1.5f);
         }
         ShowMessage("Foul committed!");
     }
 
-    void HideFoulPanel() { if (foulPanel) foulPanel.GetComponent<PanelAnimator>().Hide(); }
+    void HideFoulPanel()
+    {
+        if (foulPanel)
+        {
+            // محاولة إخفاء اللوحة بأمان
+            var anim = foulPanel.GetComponent<PanelAnimator>();
+            if (anim != null)
+            {
+                anim.Hide();
+            }
+            else
+            {
+                foulPanel.SetActive(false);
+            }
+        }
+    }
 
     public void OnRestartButtonClicked()
     {
@@ -347,7 +373,8 @@ public class GameUI : MonoBehaviour
     {
         Time.timeScale = 1f;
         Haptics.Light(); // Haptic feedback
-        SceneTransitionManager.Instance.LoadScene(mainMenuSceneName);
+        //SceneTransitionManager.Instance.LoadScene(mainMenuSceneName);
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 
     public void MenuPanelDisplay()

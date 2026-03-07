@@ -1,0 +1,359 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8580398530122975696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3276223612433896584}
+  - component: {fileID: 378198742055888318}
+  - component: {fileID: 2034641529982534250}
+  m_Layer: 0
+  m_Name: CueStick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3276223612433896584
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8580398530122975696}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.3, y: 0.25, z: -0.88}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7448300274574880176}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &378198742055888318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8580398530122975696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5159b65700aa24281947e8455a9646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cueBall: {fileID: 0}
+  cam: {fileID: 0}
+  scratch: {fileID: 0}
+  allBalls:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  gameState: {fileID: 0}
+  visualRoot: {fileID: 7448300274574880176}
+  hideWhenReleased: 1
+  powerSlider: {fileID: 0}
+  powerSliderPanel: {fileID: 0}
+  minPower: 4
+  maxPower: 20
+  powerCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  breakBoost: 5
+  wheelButton: {fileID: 0}
+  stickDistance: 0.16
+  pullBackDistance: 0.8
+  stopSpeed: 0.02
+  invertStickDirection: 0
+  modelForwardIsWrong: 0
+  tipOffset: 0.05
+  cueBallRadius: 0.25
+  dragStickHandle: 1
+  stickDistancee: 0.14
+  animateShot: 1
+  shootForwardDistance: 0.33
+  shootForwardTime: 0.04
+  recoilBackTime: 0.06
+  returnTime: 0.08
+  aimLine: {fileID: 0}
+  stickBody: {fileID: 948326237069928964}
+  enableCameraKick: 1
+  camKickMin: 0.01
+  camKickMax: 0.04
+  camKickTime: 0.06
+  tableMask:
+    serializedVersion: 2
+    m_Bits: 64
+  defaultAimDir: {x: 1, y: 0, z: 0}
+  cueAudioSource: {fileID: 2034641529982534250}
+  cueHitSound: {fileID: 8300000, guid: 2824fef5df763a847a670492de0c07ad, type: 3}
+  spinController: {fileID: 0}
+  autoElevateStick: 1
+  stickLength: 1.5
+  maxElevationAngle: 35
+  cushionLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  aiPlayer: {fileID: 0}
+--- !u!82 &2034641529982534250
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8580398530122975696}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &9157035135661738233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7448300274574880176}
+  m_Layer: 0
+  m_Name: 'CueStickRoot '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7448300274574880176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9157035135661738233}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 4.26}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 948326237069928964}
+  m_Father: {fileID: 3276223612433896584}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1873811839655400659
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7448300274574880176}
+    m_Modifications:
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045739154240234605, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_Name
+      value: MyCueStick
+      objectReference: {fileID: 0}
+    - target: {fileID: 2900698783193615315, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608463595132740239, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: aimLine
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608463595132740239, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608463595132740239, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+        type: 3}
+      propertyPath: cueAudioSource
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2900698783193615315, guid: f1dfdc668e7a7eb4795ee47e2ff828ea, type: 3}
+    - {fileID: 3608463595132740239, guid: f1dfdc668e7a7eb4795ee47e2ff828ea, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f1dfdc668e7a7eb4795ee47e2ff828ea, type: 3}
+--- !u!4 &948326237069928964 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1668649910153035479, guid: f1dfdc668e7a7eb4795ee47e2ff828ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 1873811839655400659}
+  m_PrefabAsset: {fileID: 0}
