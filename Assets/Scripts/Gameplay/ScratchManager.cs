@@ -88,6 +88,9 @@ public class ScratchManager : MonoBehaviour
         {
             var rb = cueBall.GetComponent<Rigidbody>();
             if (rb) rb.detectCollisions = true;
+
+            var col = cueBall.GetComponent<Collider>();
+            if (col) col.enabled = true;
         }
     }
 
@@ -99,10 +102,14 @@ public class ScratchManager : MonoBehaviour
 
         cueBall.gameObject.SetActive(true);
 
+        var cueCollider = cueBall.GetComponent<Collider>();
+        if (cueCollider) cueCollider.enabled = true;
+
         var rb = cueBall.GetComponent<Rigidbody>();
         if (rb)
         {
             rb.isKinematic = false;
+            rb.useGravity = true;
             rb.WakeUp();
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
@@ -172,11 +179,15 @@ public class ScratchManager : MonoBehaviour
             if (rb)
             {
                 rb.isKinematic = false;
+                rb.useGravity = true;
                 rb.detectCollisions = prevDetect;
                 rb.WakeUp();
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
+
+            var cueCollider = cueBall.GetComponent<Collider>();
+            if (cueCollider) cueCollider.enabled = true;
 
             var b = cueBall.GetComponent<Ball3D>();
             if (b) b.inPocket = false;

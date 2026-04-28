@@ -11,6 +11,7 @@ public class Ball3D : MonoBehaviour
     public bool inPocket;
 
     public Rigidbody rb { get; private set; }
+    public Vector3 PreviousPhysicsPosition { get; private set; }
 
     private bool hasReportedFirstHit = false;
 
@@ -21,9 +22,15 @@ public class Ball3D : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        PreviousPhysicsPosition = rb ? rb.position : transform.position;
 
         // ❌ تم حذف الأسطر التي تلغي الجاذبية وتجمد السقوط.
         // ✅ الآن الكرة ستأخذ إعداداتها الفيزيائية من الـ Inspector مباشرة!
+    }
+
+    void FixedUpdate()
+    {
+        PreviousPhysicsPosition = rb ? rb.position : transform.position;
     }
 
     void Update()

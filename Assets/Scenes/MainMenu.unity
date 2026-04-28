@@ -4916,7 +4916,8 @@ MonoBehaviour:
   stopSpeed: 0.02
   solverIterations: 6
   solverVelocityIterations: 1
-  useContinuousCollision: 0
+  useContinuousCollision: 1
+  preserveExistingCollisionMode: 1
   showDebugInfo: 1
 --- !u!4 &1023019550
 Transform:

@@ -9,10 +9,13 @@ public class BallSafety : MonoBehaviour
 {
     [Header("Velocity Limits")]
     [Tooltip("Maximum velocity (prevents balls from going too fast)")]
-    public float maxVelocity = 20f;
+    public float maxVelocity = 14f;
 
     [Tooltip("Maximum angular velocity (prevents infinite spinning)")]
     public float maxAngularVelocity = 50f;
+
+    [Tooltip("Maximum upward speed for normal table play")]
+    public float maxUpwardVelocity = 0.12f;
 
     [Header("Auto Stop")]
     [Tooltip("Stop ball if below this speed")]
@@ -74,6 +77,7 @@ public class BallSafety : MonoBehaviour
     {
         // ✅ التعديل الأهم: الخروج فوراً إذا كانت الكرة Kinematic
         if (!rb || rb.isKinematic) return;
+        if (ballScript && ballScript.inPocket) return;
 
         // Limit velocity
         LimitVelocity();
@@ -103,6 +107,14 @@ public class BallSafety : MonoBehaviour
         if (rb.angularVelocity.magnitude > maxAngularVelocity)
         {
             rb.angularVelocity = rb.angularVelocity.normalized * maxAngularVelocity;
+        }
+
+        if (rb.velocity.y > maxUpwardVelocity)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, maxUpwardVelocity, rb.velocity.z);
+
+            if (showDebugLogs)
+                Debug.LogWarning("[BallSafety] Upward velocity clamped on " + gameObject.name);
         }
     }
 
@@ -137,6 +149,8 @@ public class BallSafety : MonoBehaviour
 
     void CheckOutOfBounds()
     {
+        if (ballScript && ballScript.inPocket) return;
+
         // Check if ball fell below table
         if (transform.position.y < outOfBoundsY)
         {
@@ -174,8 +188,11 @@ public class BallSafety : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if (ballScript && ballScript.inPocket) return;
+
         // Count wall collisions
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall") ||
+            collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
             wallCollisionCount++;
             wallCollisionTimer = 0f;
@@ -193,6 +210,8 @@ public class BallSafety : MonoBehaviour
 
     public void ResetBall()
     {
+        if (ballScript && ballScript.inPocket) return;
+
         // ✅ التأكد أنها ليست Kinematic قبل التصفير
         if (rb) rb.isKinematic = false;
 

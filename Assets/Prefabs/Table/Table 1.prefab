@@ -5397,7 +5397,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6790521425043238097
 MonoBehaviour:
@@ -5411,10 +5411,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
-  minSpeed: 0.01
-  dotThreshold: 0.25
+  pocketRadius: 0.65
+  enterDepth: 0.12
+  minSpeed: 0.02
+  dotThreshold: 0.2
   pocketCenter: {fileID: 4186960149573272467}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
@@ -7978,7 +7978,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8803659571667267753
 MonoBehaviour:
@@ -7992,10 +7992,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
-  minSpeed: 0.01
-  dotThreshold: 0.25
+  pocketRadius: 0.65
+  enterDepth: 0.12
+  minSpeed: 0.02
+  dotThreshold: 0.2
   pocketCenter: {fileID: 4164385866147769142}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
@@ -8361,7 +8361,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8195751246365219826
 MonoBehaviour:
@@ -8375,10 +8375,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
-  minSpeed: 0.01
-  dotThreshold: 0.25
+  pocketRadius: 0.65
+  enterDepth: 0.12
+  minSpeed: 0.02
+  dotThreshold: 0.2
   pocketCenter: {fileID: 6929438468616630900}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
@@ -8671,7 +8671,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1695301834191277129
 MonoBehaviour:
@@ -8685,10 +8685,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
-  minSpeed: 0.01
-  dotThreshold: 0.25
+  pocketRadius: 0.65
+  enterDepth: 0.12
+  minSpeed: 0.02
+  dotThreshold: 0.2
   pocketCenter: {fileID: 8461801645095376081}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
@@ -10194,7 +10194,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &769767621466859839
 MonoBehaviour:
@@ -10208,10 +10208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
-  minSpeed: 0.01
-  dotThreshold: 0.25
+  pocketRadius: 0.65
+  enterDepth: 0.12
+  minSpeed: 0.02
+  dotThreshold: 0.2
   pocketCenter: {fileID: 8007452705732934524}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}
@@ -10365,7 +10365,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.5
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7557417584867769992
 MonoBehaviour:
@@ -10379,10 +10379,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d758742f03733a54eb3d719f5bbe32e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pocketRadius: 2
-  enterDepth: 0.15
-  minSpeed: 0.01
-  dotThreshold: 0.25
+  pocketRadius: 0.65
+  enterDepth: 0.12
+  minSpeed: 0.02
+  dotThreshold: 0.2
   pocketCenter: {fileID: 6817545141223070931}
   pocketSounds:
   - {fileID: 8300000, guid: 106bc3ab88ec2dd4784164c9331a4426, type: 3}

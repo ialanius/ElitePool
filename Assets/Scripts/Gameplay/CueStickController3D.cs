@@ -370,6 +370,8 @@ public class CueStickController3D : MonoBehaviour
             spinController.ApplySpin(rb, dir, finalPower);
         }
 
+        ClampLaunchVelocity(rb);
+
         if (PoolGameManager3D.Instance)
             PoolGameManager3D.Instance.RegisterShot(rb);
 
@@ -388,6 +390,25 @@ public class CueStickController3D : MonoBehaviour
         else
         {
             Hide();
+        }
+    }
+
+    void ClampLaunchVelocity(Rigidbody rb)
+    {
+        if (!rb) return;
+
+        BallSafety safety = rb.GetComponent<BallSafety>();
+        float maxSpeed = safety ? safety.maxVelocity : 14f;
+        float maxUpward = safety ? safety.maxUpwardVelocity : 0.12f;
+
+        if (maxSpeed > 0f && rb.velocity.sqrMagnitude > maxSpeed * maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+
+        if (maxUpward > 0f && rb.velocity.y > maxUpward)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, maxUpward, rb.velocity.z);
         }
     }
 

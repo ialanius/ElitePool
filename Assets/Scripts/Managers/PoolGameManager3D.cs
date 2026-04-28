@@ -22,34 +22,88 @@ public class PoolGameManager3D : MonoBehaviour
     public bool enableRealisticRolling = true;
 
     [Header("3D Table Settings")]
-    [Tooltip("Enable true 3D physics (balls can fall in pockets)")]
+    [Tooltip("Enable true 3D physics so balls can drop into pockets.")]
     public bool enable3DPhysics = true;
 
-    [Tooltip("Apply Y-lock only to balls on table (not falling)")]
+    [Tooltip("Keep balls pinned to the table plane unless they are clearly entering a pocket.")]
     public bool smartYLock = true;
 
-    [Tooltip("Table height - balls above this are 'on table'")]
-    public float tableHeight = 0.5f;
+    [Tooltip("Resting center Y for a ball on the cloth. In this project that is 0.25.")]
+    public float tableHeight = 0.25f;
 
-    [Tooltip("Y threshold - balls below this are 'falling'")]
-    public float fallingThreshold = 0.3f;
+    [Tooltip("Absolute Y below which a ball is always considered to be falling.")]
+    public float fallingThreshold = 0f;
 
-    Dictionary<int, int> ignoreFrames = new Dictionary<int, int>();
-    Dictionary<int, int> stillFrames = new Dictionary<int, int>();
+    [Tooltip("Allowed drift around the resting Y before the manager snaps a ball back to tableHeight.")]
+    public float surfaceSnapTolerance = 0.04f;
+
+    [Tooltip("How far below tableHeight a ball must drop before Y-lock fully releases.")]
+    public float surfaceReleaseDepth = 0.08f;
+
+    [Tooltip("How far above the cloth a ball may rise before it is treated as an unwanted hop.")]
+    public float surfaceHopTolerance = 0.015f;
+
+    [Header("Pocket Release")]
+    [Tooltip("Release Y-lock when a ball overlaps a pocket trigger.")]
+    public bool releaseYLockNearPockets = true;
+
+    [Tooltip("Extra probe radius used to detect nearby pocket openings.")]
+    public float pocketReleasePadding = 0.05f;
+
+    [Tooltip("Minimum vertical speed that disables Y-lock for a frame.")]
+    public float pocketReleaseVerticalSpeed = 0.05f;
+
+    [Tooltip("Release Y-lock earlier when a fast ball is clearly approaching a pocket mouth.")]
+    public float highSpeedPocketBypassSpeed = 5.5f;
+
+    [Tooltip("Extra reach beyond pocketRadius for fast pocket-approach detection.")]
+    public float highSpeedPocketApproachPadding = 0.08f;
+
+    [Tooltip("Minimum inward alignment to treat a fast shot as a real pocket approach.")]
+    [Range(-1f, 1f)]
+    public float highSpeedPocketApproachDot = 0.05f;
+
+    [Header("3D Stability")]
+    [Tooltip("Optional tiny rack jitter. Keep off for stable 3D tables.")]
+    public bool addRackMicroChaos = false;
+
+    [Tooltip("Clamp unexpected upward launch speed so balls stay on the table.")]
+    public float maxBallRiseSpeed = 0.2f;
+
+    private readonly Dictionary<int, int> ignoreFrames = new Dictionary<int, int>();
+    private readonly Dictionary<int, int> stillFrames = new Dictionary<int, int>();
     private bool allBallsWereStopped = false;
+    private int pocketLayerMask;
+    private PocketTrigger3D[] pocketTriggers;
 
-    void Awake() => Instance = this;
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
+        CacheLayerMasks();
+        CachePocketTriggers();
         RefreshRefs();
         if (!gameState) gameState = GameStateManager.Instance;
         SetupEnhancedPhysics();
     }
 
+    void CacheLayerMasks()
+    {
+        int pocketsLayer = LayerMask.NameToLayer("Pockets");
+        pocketLayerMask = pocketsLayer >= 0 ? (1 << pocketsLayer) : 0;
+    }
+
+    void CachePocketTriggers()
+    {
+        pocketTriggers = FindObjectsOfType<PocketTrigger3D>();
+    }
+
     public void RefreshRefs()
     {
-        var all = FindObjectsOfType<Ball3D>();
+        Ball3D[] all = FindObjectsOfType<Ball3D>();
         cueBall = all.FirstOrDefault(b => b && b.type == BallType.Cue);
         balls = all.Where(b => b && b.type != BallType.Cue).ToArray();
 
@@ -63,12 +117,16 @@ public class PoolGameManager3D : MonoBehaviour
     {
         if (balls != null)
         {
-            foreach (var ball in balls)
+            foreach (Ball3D ball in balls)
+            {
                 if (ball) ApplyEnhancedPhysics(ball);
+            }
         }
 
         if (cueBall && cueBall.gameObject.activeInHierarchy && !cueBall.inPocket)
+        {
             ApplyEnhancedPhysics(cueBall);
+        }
 
         CheckAllBallsStopped();
     }
@@ -84,16 +142,16 @@ public class PoolGameManager3D : MonoBehaviour
     {
         if (balls != null)
         {
-            foreach (var ball in balls)
+            foreach (Ball3D ball in balls)
             {
-                if (ball && ball.rb)
-                {
-                    ConfigureBallPhysics(ball.rb);
+                if (!ball || !ball.rb) continue;
 
-                    // 💥 السر الاحترافي: "الفوضى المجهرية" (Micro-Chaos)
-                    // نقوم بإزاحة كل كرة بمسافة عشوائية ضئيلة جداً (2 مليمتر) لكسر الترتيب المثالي
-                    float randomX = UnityEngine.Random.Range(-0.002f, 0.002f);
-                    float randomZ = UnityEngine.Random.Range(-0.002f, 0.002f);
+                ConfigureBallPhysics(ball.rb);
+
+                if (addRackMicroChaos)
+                {
+                    float randomX = Random.Range(-0.002f, 0.002f);
+                    float randomZ = Random.Range(-0.002f, 0.002f);
                     ball.transform.position += new Vector3(randomX, 0f, randomZ);
                 }
             }
@@ -102,34 +160,14 @@ public class PoolGameManager3D : MonoBehaviour
         if (cueBall && cueBall.rb)
         {
             ConfigureBallPhysics(cueBall.rb);
-            // جعل الكرة البيضاء أثقل لتعمل كـ "مطرقة" تكسر المثلث
-            cueBall.rb.mass = 0.25f;
         }
     }
 
     void ConfigureBallPhysics(Rigidbody rb)
     {
-        // 🪶 وزن خفيف للكرات الملونة لتتطاير بسهولة
-        rb.mass = 0.14f;
-        rb.drag = 0.02f;
-        rb.angularDrag = 0.05f;
-
         rb.useGravity = enable3DPhysics;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
-        PhysicMaterial ballMaterial = new PhysicMaterial("BallPhysics_Optimized");
-
-        // 🧊 كرات زلقة جداً ومرنة للغاية
-        ballMaterial.dynamicFriction = 0.01f;
-        ballMaterial.staticFriction = 0.01f;
-        ballMaterial.bounciness = 0.98f;
-
-        ballMaterial.frictionCombine = PhysicMaterialCombine.Minimum;
-        ballMaterial.bounceCombine = PhysicMaterialCombine.Maximum;
-
-        var collider = rb.GetComponent<Collider>();
-        if (collider) collider.material = ballMaterial;
     }
 
     void ApplyEnhancedPhysics(Ball3D ball)
@@ -139,6 +177,7 @@ public class PoolGameManager3D : MonoBehaviour
 
         Rigidbody rb = ball.rb;
         int id = rb.GetInstanceID();
+        ClampUnexpectedRise(rb);
 
         if (ignoreFrames.TryGetValue(id, out int left) && left > 0)
         {
@@ -146,43 +185,63 @@ public class PoolGameManager3D : MonoBehaviour
             return;
         }
 
+        bool nearPocketOpening = IsNearPocketOpening(ball);
+        bool insidePocketReleaseZone = IsInsidePocketReleaseZone(ball);
         bool isFalling = IsBallFalling(ball);
         if (isFalling)
         {
+            rb.useGravity = enable3DPhysics;
             rb.constraints = RigidbodyConstraints.None;
             return;
         }
 
+        float restingY = GetRestingY(ball);
+        bool nearRestingHeight = IsNearRestingHeight(ball);
         Vector3 velocity = rb.velocity;
-        bool onSurface = smartYLock && IsOnTableSurface(ball);
+        Vector3 planarVelocity = new Vector3(velocity.x, 0f, velocity.z);
+        float planarSpeed = planarVelocity.magnitude;
+        bool fastPocketApproach = IsFastPocketApproach(ball, planarSpeed);
+
+        if (!insidePocketReleaseZone &&
+            rb.position.y > restingY + surfaceHopTolerance &&
+            rb.velocity.y > 0f)
+        {
+            rb.position = new Vector3(rb.position.x, restingY, rb.position.z);
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            velocity = rb.velocity;
+            planarVelocity = new Vector3(velocity.x, 0f, velocity.z);
+            planarSpeed = planarVelocity.magnitude;
+        }
+
+        bool allowYLock = smartYLock &&
+                          !insidePocketReleaseZone &&
+                          !fastPocketApproach &&
+                          (nearRestingHeight || !nearPocketOpening || Mathf.Abs(velocity.y) < pocketReleaseVerticalSpeed);
+
+        bool onSurface = allowYLock && (nearRestingHeight || IsOnTableSurface(ball));
 
         if (onSurface)
         {
-            // 1. ✅ إطفاء الجاذبية تماماً لمنع ضغط الكرة على الأرضية (يقتل الاهتزاز)
             rb.useGravity = false;
-
-            // 2. التجميد المطلق لمحرك الفيزياء
             rb.constraints = RigidbodyConstraints.FreezePositionY;
+
+            if (Mathf.Abs(rb.position.y - restingY) > 0.0005f)
+            {
+                rb.position = new Vector3(rb.position.x, restingY, rb.position.z);
+            }
 
             velocity.y = 0f;
             rb.velocity = new Vector3(velocity.x, 0f, velocity.z);
-
-            if (Mathf.Abs(ball.transform.position.y - tableHeight) > 0.001f)
-            {
-                Vector3 fixedPos = ball.transform.position;
-                fixedPos.y = tableHeight;
-                ball.transform.position = fixedPos;
-            }
         }
         else
         {
-            // ✅ إعادة تشغيل الجاذبية وفك القيود بمجرد أن تصبح الكرة فوق الجيب
             rb.useGravity = enable3DPhysics;
             rb.constraints = RigidbodyConstraints.None;
         }
 
-        // تجاهل السرعة العمودية عند حساب سرعة التوقف لتجنب منع النوم بسبب الاهتزاز
-        float speed = onSurface ? new Vector3(velocity.x, 0f, velocity.z).magnitude : velocity.magnitude;
+        float speed = onSurface
+            ? new Vector3(rb.velocity.x, 0f, rb.velocity.z).magnitude
+            : rb.velocity.magnitude;
 
         if (speed <= stopSpeed)
         {
@@ -194,27 +253,26 @@ public class PoolGameManager3D : MonoBehaviour
 
         bool isSliding = speed > slideToRollSpeed;
         float frictionFactor = isSliding ? slidingFriction : rollingFriction;
-        velocity *= frictionFactor;
+        Vector3 adjustedVelocity = rb.velocity * frictionFactor;
 
         if (spinInfluence > 0f && !isSliding)
         {
             Vector3 angularVel = rb.angularVelocity;
             angularVel.y = 0f;
+
             if (angularVel.magnitude > 0.1f)
             {
                 Vector3 spinForce = Vector3.Cross(angularVel, Vector3.up) * spinInfluence;
-                velocity += spinForce * Time.fixedDeltaTime;
+                adjustedVelocity += spinForce * Time.fixedDeltaTime;
             }
         }
 
         if (onSurface)
         {
-            rb.velocity = new Vector3(velocity.x, 0f, velocity.z);
+            adjustedVelocity.y = 0f;
         }
-        else
-        {
-            rb.velocity = velocity;
-        }
+
+        rb.velocity = adjustedVelocity;
 
         if (enableRealisticRolling)
         {
@@ -223,57 +281,121 @@ public class PoolGameManager3D : MonoBehaviour
 
         rb.angularVelocity *= angularDamping;
 
-        // حساب السكون بناءً على المحاور الأفقية فقط إذا كانت الكرة على الطاولة
         float stopThreshold = stopSpeed * stopSpeed;
-        float currentSqrVel = onSurface ? new Vector3(rb.velocity.x, 0f, rb.velocity.z).sqrMagnitude : rb.velocity.sqrMagnitude;
+        float currentSqrVel = onSurface
+            ? new Vector3(rb.velocity.x, 0f, rb.velocity.z).sqrMagnitude
+            : rb.velocity.sqrMagnitude;
 
-        bool isSlow = (currentSqrVel < stopThreshold) && (rb.angularVelocity.sqrMagnitude < stopThreshold);
+        bool isSlow = currentSqrVel < stopThreshold && rb.angularVelocity.sqrMagnitude < stopThreshold;
 
-        if (!stillFrames.ContainsKey(id)) stillFrames[id] = 0;
+        if (!stillFrames.ContainsKey(id))
+        {
+            stillFrames[id] = 0;
+        }
+
         stillFrames[id] = isSlow ? stillFrames[id] + 1 : 0;
 
         if (stillFrames[id] >= 2)
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            rb.Sleep(); // تنويم الكرة إجبارياً
+            rb.Sleep();
         }
     }
 
     bool IsBallFalling(Ball3D ball)
     {
         if (!ball || !ball.rb) return false;
-        if (ball.transform.position.y < fallingThreshold) return true;
-        if (ball.rb.velocity.y < -0.2f && !IsOnTableSurface(ball)) return true;
+
+        float currentY = ball.rb.position.y;
+        float releaseY = Mathf.Max(fallingThreshold, GetRestingY(ball) - surfaceReleaseDepth);
+
+        if (currentY < releaseY) return true;
+
+        bool movingDown = ball.rb.velocity.y < -Mathf.Max(0.1f, pocketReleaseVerticalSpeed);
+        if (movingDown && !IsNearRestingHeight(ball) && !IsOnTableSurface(ball))
+        {
+            return true;
+        }
+
         return false;
     }
 
-    /// <summary>
-    /// ✅ دالة الليزر الخفي: تكتشف هل الكرة فوق الطاولة أم فوق الجيب
-    /// </summary>
     bool IsOnTableSurface(Ball3D ball)
     {
-        if (!ball) return false;
+        if (!ball || !ball.rb) return false;
 
-        if (ball.transform.position.y < fallingThreshold) return false;
+        float currentY = ball.rb.position.y;
+        float releaseY = Mathf.Max(fallingThreshold, GetRestingY(ball) - surfaceReleaseDepth);
+        if (currentY < releaseY) return false;
 
-        // ✅ التعديل الأهم: نبدأ الشعاع من منطقة (أعلى) من مركز الكرة بقليل
-        // لضمان أن الليزر يضرب الطاولة حتى لو غاصت الكرة نصفها تحت القماش!
-        Vector3 rayOrigin = ball.transform.position + (Vector3.up * 0.15f);
-        float checkDistance = 0.4f;
+        float ballRadius = GetBallRadius(ball);
+        float rayStartOffset = Mathf.Max(ballRadius + 0.06f, 0.2f);
+        float checkDistance = Mathf.Max((ballRadius * 2f) + surfaceReleaseDepth + 0.05f, 0.55f);
+        Vector3 rayOrigin = ball.rb.position + (Vector3.up * rayStartOffset);
 
-        bool hitSurface = Physics.Raycast(rayOrigin, Vector3.down, checkDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
-
-        if (hitSurface)
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, checkDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore))
         {
             Debug.DrawRay(rayOrigin, Vector3.down * checkDistance, Color.green);
-            return true;
+            return hit.normal.y > 0.2f;
         }
-        else
+
+        Debug.DrawRay(rayOrigin, Vector3.down * checkDistance, Color.red);
+        return false;
+    }
+
+    bool IsNearPocketOpening(Ball3D ball)
+    {
+        if (!releaseYLockNearPockets || !ball) return false;
+        if (pocketLayerMask == 0) return false;
+
+        float probeRadius = pocketReleasePadding + GetBallRadius(ball);
+        Vector3 probeCenter = ball.transform.position + Vector3.up * 0.02f;
+        return Physics.CheckSphere(probeCenter, probeRadius, pocketLayerMask, QueryTriggerInteraction.Collide);
+    }
+
+    bool IsInsidePocketReleaseZone(Ball3D ball)
+    {
+        if (!releaseYLockNearPockets || !ball) return false;
+
+        if (pocketTriggers == null || pocketTriggers.Length == 0)
         {
-            Debug.DrawRay(rayOrigin, Vector3.down * checkDistance, Color.red);
-            return false;
+            CachePocketTriggers();
         }
+
+        if (pocketTriggers == null) return false;
+
+        foreach (PocketTrigger3D pocketTrigger in pocketTriggers)
+        {
+            if (!pocketTrigger || !pocketTrigger.isActiveAndEnabled) continue;
+            if (pocketTrigger.ShouldReleaseTableSupport(ball)) return true;
+        }
+
+        return false;
+    }
+
+    bool IsFastPocketApproach(Ball3D ball, float planarSpeed)
+    {
+        if (!releaseYLockNearPockets || !ball) return false;
+        if (planarSpeed < highSpeedPocketBypassSpeed) return false;
+
+        if (pocketTriggers == null || pocketTriggers.Length == 0)
+        {
+            CachePocketTriggers();
+        }
+
+        if (pocketTriggers == null) return false;
+
+        foreach (PocketTrigger3D pocketTrigger in pocketTriggers)
+        {
+            if (!pocketTrigger || !pocketTrigger.isActiveAndEnabled) continue;
+            if (pocketTrigger.IsApproachingPocketMouth(ball, highSpeedPocketApproachPadding, highSpeedPocketApproachDot))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     void ApplyRealisticRolling(Ball3D ball, float speed, bool isSliding)
@@ -285,36 +407,37 @@ public class PoolGameManager3D : MonoBehaviour
 
         if (velocity.magnitude < 0.01f) return;
 
-        float radius = 0.25f;
-        var sphereCollider = ball.GetComponent<SphereCollider>();
-        if (sphereCollider)
-        {
-            radius = sphereCollider.radius * Mathf.Max(
-               ball.transform.lossyScale.x,
-               Mathf.Max(ball.transform.lossyScale.y, ball.transform.lossyScale.z)
-           );
-        }
-
+        float radius = GetBallRadius(ball);
         if (radius < 0.01f) radius = 0.25f;
+
+        Vector3 rollAxis = Vector3.Cross(Vector3.up, velocity.normalized);
+        float rollSpeed = speed / radius;
 
         if (isSliding)
         {
-            Vector3 rollAxis = Vector3.Cross(Vector3.up, velocity.normalized);
-            float rollSpeed = speed / radius;
-            ball.rb.angularVelocity = Vector3.Lerp(ball.rb.angularVelocity, rollAxis * rollSpeed * 0.7f, Time.fixedDeltaTime * 2f);
+            ball.rb.angularVelocity = Vector3.Lerp(
+                ball.rb.angularVelocity,
+                rollAxis * rollSpeed * 0.7f,
+                Time.fixedDeltaTime * 2f
+            );
         }
         else
         {
-            Vector3 rollAxis = Vector3.Cross(Vector3.up, velocity.normalized);
-            float rollSpeed = speed / radius;
             Vector3 targetAngular = rollAxis * rollSpeed;
-
             ball.rb.angularVelocity = Vector3.Lerp(
                 ball.rb.angularVelocity,
                 targetAngular,
                 Time.fixedDeltaTime * 15f
             );
         }
+    }
+
+    void ClampUnexpectedRise(Rigidbody rb)
+    {
+        if (!rb || maxBallRiseSpeed <= 0f) return;
+        if (rb.velocity.y <= maxBallRiseSpeed) return;
+
+        rb.velocity = new Vector3(rb.velocity.x, maxBallRiseSpeed, rb.velocity.z);
     }
 
     void CheckAllBallsStopped()
@@ -338,11 +461,10 @@ public class PoolGameManager3D : MonoBehaviour
 
         if (balls != null)
         {
-            foreach (var ball in balls)
+            foreach (Ball3D ball in balls)
             {
                 if (!ball || ball.inPocket) continue;
                 if (!ball.rb || ball.rb.isKinematic) continue;
-
                 if (IsBallFalling(ball)) continue;
 
                 if (ball.rb.velocity.sqrMagnitude > s2) return false;
@@ -352,16 +474,41 @@ public class PoolGameManager3D : MonoBehaviour
 
         if (cueBall && cueBall.gameObject.activeInHierarchy && !cueBall.inPocket)
         {
-            if (cueBall.rb && !cueBall.rb.isKinematic)
+            if (cueBall.rb && !cueBall.rb.isKinematic && !IsBallFalling(cueBall))
             {
-                if (!IsBallFalling(cueBall))
-                {
-                    if (cueBall.rb.velocity.sqrMagnitude > s2) return false;
-                    if (cueBall.rb.angularVelocity.sqrMagnitude > s2) return false;
-                }
+                if (cueBall.rb.velocity.sqrMagnitude > s2) return false;
+                if (cueBall.rb.angularVelocity.sqrMagnitude > s2) return false;
             }
         }
 
         return true;
+    }
+
+    float GetRestingY(Ball3D ball)
+    {
+        return tableHeight;
+    }
+
+    bool IsNearRestingHeight(Ball3D ball)
+    {
+        if (!ball) return false;
+
+        float currentY = ball.rb ? ball.rb.position.y : ball.transform.position.y;
+        return Mathf.Abs(currentY - GetRestingY(ball)) <= surfaceSnapTolerance;
+    }
+
+    float GetBallRadius(Ball3D ball)
+    {
+        if (!ball) return 0.25f;
+
+        SphereCollider sphereCollider = ball.GetComponent<SphereCollider>();
+        if (!sphereCollider) return 0.25f;
+
+        float maxScale = Mathf.Max(
+            ball.transform.lossyScale.x,
+            Mathf.Max(ball.transform.lossyScale.y, ball.transform.lossyScale.z)
+        );
+
+        return sphereCollider.radius * maxScale;
     }
 }

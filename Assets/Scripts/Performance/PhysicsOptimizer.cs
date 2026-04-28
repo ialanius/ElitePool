@@ -41,10 +41,13 @@ public class PhysicsOptimizer : MonoBehaviour
 
     [Tooltip("Solver velocity iterations")]
     [Range(1, 8)]
-    public int solverVelocityIterations = 1;
+    public int solverVelocityIterations = 4;
 
     [Tooltip("Continuous collision detection")]
-    public bool useContinuousCollision = false;
+    public bool useContinuousCollision = true;
+
+    [Tooltip("Do not downgrade balls that already use a stronger collision mode")]
+    public bool preserveExistingCollisionMode = true;
 
     [Header("Debug")]
     public bool showDebugInfo = true;
@@ -113,9 +116,14 @@ public class PhysicsOptimizer : MonoBehaviour
 
             // Collision detection
             if (useContinuousCollision)
-                rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            else
+            {
+                if (rb.collisionDetectionMode != CollisionDetectionMode.ContinuousDynamic)
+                    rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            }
+            else if (!preserveExistingCollisionMode)
+            {
                 rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+            }
 
             // Interpolation for smooth movement
             rb.interpolation = RigidbodyInterpolation.Interpolate;

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ElitePool Repo Summary</title>
+  <style>
+    @page {
+      size: Letter;
+      margin: 0.42in;
+    }
+
+    :root {
+      --ink: #16202a;
+      --muted: #5b6773;
+      --line: #d9e1e7;
+      --accent: #0d6e6e;
+      --accent-soft: #e8f5f3;
+      --panel: #f7fafc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: white;
+      font-size: 10.2pt;
+      line-height: 1.24;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 0.14in;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 0.18in;
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.08in;
+    }
+
+    h1 {
+      margin: 0 0 0.03in;
+      font-size: 24pt;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .tagline {
+      margin: 0;
+      color: var(--muted);
+      font-size: 10pt;
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--accent-soft), white);
+      border: 1px solid #cfe5e1;
+      border-radius: 12px;
+      padding: 0.11in 0.14in;
+    }
+
+    .eyebrow {
+      margin: 0 0 0.04in;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 8.6pt;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h2 {
+      margin: 0 0 0.04in;
+      font-size: 10pt;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 0.16in;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.11in 0.13in;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 0.18in;
+    }
+
+    li { margin: 0 0 0.04in; }
+    li:last-child { margin-bottom: 0; }
+
+    .steps li { margin-bottom: 0.03in; }
+
+    .arch {
+      font-size: 9.5pt;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding-top: 0.06in;
+      color: var(--muted);
+      font-size: 8.3pt;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.12in;
+    }
+
+    .small {
+      font-size: 9pt;
+      color: var(--muted);
+    }
+
+    strong.note {
+      color: #8a3b12;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Repo Summary</p>
+        <h1>ElitePool</h1>
+        <p class="tagline">Unity project summary generated from repo evidence only.</p>
+      </div>
+      <aside class="card">
+        <h2>Who It’s For</h2>
+        <p>Players who want a mobile-friendly single-device pool game with local play, AI practice, and short challenge levels.</p>
+      </aside>
+    </section>
+
+    <section class="panel">
+      <h2>What It Is</h2>
+      <p>ElitePool is a Unity 2022.3 pool game project with scene-based modes for PvP, PvAI, and challenge play. Repo evidence shows a 3D table/ball simulation, mobile UX helpers, and menu-driven scene flow rather than a backend-connected live service.</p>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>What It Does</h2>
+        <ul>
+          <li>Offers separate scenes for `Start`, `MainMenu`, `PvP_Mode`, `PvAI_Mode`, `Challenges_Mode`, and `Testing`.</li>
+          <li>Runs 8-ball style turn, foul, scoring, and win/loss logic through `GameStateManager`.</li>
+          <li>Simulates 3D ball motion, friction, spin, pockets, and rack resets via gameplay/manager scripts.</li>
+          <li>Includes an AI opponent with easy, medium, and hard aiming behavior.</li>
+          <li>Supports scripted challenge levels using `ChallengeLevelData` assets and unlock progress in `PlayerPrefs`.</li>
+          <li>Shows in-game UI for score, turns, challenge text, restart, win/lose, and foul feedback.</li>
+          <li>Adds mobile-focused helpers such as haptics, safe-area fitting, orientation warning, and performance tuning.</li>
+        </ul>
+      </div>
+
+      <div class="panel arch">
+        <h2>How It Works</h2>
+        <p><strong>Scenes/UI:</strong> `MainMenuController`, `MenuManager`, and `SceneTransitionManager` move players between menu and gameplay scenes with fade/loading behavior.</p>
+        <p><strong>Core loop:</strong> `CueStickController3D` drives shots; `Ball3D` handles rigidbody state/collisions; `PoolGameManager3D` applies ball physics and detects end-of-turn; `GameStateManager` evaluates rules, fouls, score, and victory.</p>
+        <p><strong>Modes:</strong> `AIPlayer` acts on Player 2 turns in PvAI; `ChallengeManager` spawns cue/target balls from `ChallengeLevelData` ScriptableObjects for challenge scenes.</p>
+        <p><strong>State/data:</strong> runtime state is mainly in scene objects/singletons; challenge unlocks are stored in `PlayerPrefs`; backend/network service code was <strong class="note">Not found in repo.</strong></p>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>How To Run</h2>
+        <ol class="steps">
+          <li>Open the project in Unity `2022.3.62f3`.</li>
+          <li>Let Unity restore packages from `Packages/manifest.json`.</li>
+          <li>Open `Assets/Scenes/Start.unity` or use the enabled scenes listed in `ProjectSettings/EditorBuildSettings.asset`.</li>
+          <li>Press Play, then use the main menu to enter PvP, PvAI, or Challenges.</li>
+          <li>Exact external setup, CI/CD, and build pipeline steps were <strong class="note">Not found in repo.</strong></li>
+        </ol>
+      </div>
+
+      <div class="panel">
+        <h2>Evidence Notes</h2>
+        <ul>
+          <li>Unity version: `ProjectSettings/ProjectVersion.txt`.</li>
+          <li>Product name/company: `ProjectSettings/ProjectSettings.asset`.</li>
+          <li>Enabled scenes: `ProjectSettings/EditorBuildSettings.asset`.</li>
+          <li>Core scripts reviewed: managers, gameplay, AI, GUI, challenge, and performance folders under `Assets/Scripts`.</li>
+        </ul>
+        <p class="small" style="margin-top:0.08in;">Repo did not surface a top-level README or user-facing setup guide.</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>Product: ElitePool v1.0.2</div>
+      <div>Format target: single-page PDF</div>
+    </footer>
+  </main>
+</body>
+</html>
